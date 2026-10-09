@@ -8,7 +8,7 @@ applicability:
   cli: light
   sdk-api: n/a
   ai-feature: light
-applicability_note: 'run when the product is data-heavy (tables, dashboards, search)'
+applicability_note: run when the product is data-heavy (tables, dashboards, search)
 phases:
 - design
 - build

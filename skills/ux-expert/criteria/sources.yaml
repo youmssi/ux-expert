@@ -1,0 +1,165 @@
+# Sources behind the numbers and claims in this skill.
+# status:
+#   primary     checked against the source's own text (or its official source repository)
+#   secondary   confirmed through reputable secondary sources quoting it; primary not reachable
+#   unconfirmed searched for, and could not be confirmed; do not state its numbers as fact
+#   unchecked   classic, widely cited reference whose numbers this skill does not rely on
+sources:
+  - id: wcag22
+    title: Web Content Accessibility Guidelines (WCAG) 2.2
+    publisher: W3C
+    year: 2023
+    url: https://www.w3.org/TR/WCAG22/
+    status: primary
+    verified_on: '2026-10-09'
+    verified_against: w3c/wcag@23bad59, guidelines/sc/20–22 and terms/20/large-scale
+    supports: Every WCAG success criterion and threshold cited (contrast 4.5:1 and 3:1, large text 18pt or 14pt bold, non-text contrast, reflow at 320 CSS px, text spacing, target size 24 and 44 CSS px, timing 20 s and 10×, three flashes, focus, redundant entry, accessible authentication, consistent help, dragging).
+  - id: web-vitals
+    title: Core Web Vitals thresholds (web-vitals library)
+    publisher: Google Chrome team
+    year: 2026
+    url: https://github.com/GoogleChrome/web-vitals
+    status: primary
+    verified_on: '2026-10-09'
+    verified_against: GoogleChrome/web-vitals@400d019, src/onLCP.ts, onINP.ts, onCLS.ts, onTTFB.ts
+    supports: LCP good ≤ 2,500 ms, poor > 4,000 ms; INP 200 / 500 ms; CLS 0.1 / 0.25; TTFB 800 / 1,800 ms.
+  - id: w3c-text-size
+    title: Text size in translation
+    publisher: W3C Internationalization
+    url: https://www.w3.org/International/articles/article-text-size
+    status: primary
+    verified_on: '2026-10-09'
+    verified_against: w3c/i18n-drafts@59e5e64, articles/article-text-size.en.html
+    supports: Translated length relative to English, by source length — up to 10 characters 200–300 %, 11–20 180–200 %, 21–30 160–180 %, 31–50 140–160 %, 51–70 151–170 %, over 70 about 130 %.
+  - id: govuk-validation
+    title: Recover from validation errors (pattern)
+    publisher: GOV.UK Design System
+    url: https://design-system.service.gov.uk/patterns/validation/
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Search results quoting the pattern page (the page itself was not reachable)
+    supports: Validate on submit; do not validate when the user moves away from a field; keep answers, add an error summary with focus, show messages next to fields; use novalidate.
+  - id: cms-validation
+    title: Error validation (pattern)
+    publisher: CMS Design System (US Centers for Medicare & Medicaid Services)
+    url: https://design.cms.gov/patterns/Forms/error-validation/
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Search results quoting the pattern page
+    supports: Validation on submit for most cases; instant validation only where answers are not obvious or fields are hard to complete.
+  - id: nist-800-63b-4
+    title: Digital Identity Guidelines, Authentication and Lifecycle Management (SP 800-63B-4)
+    publisher: NIST
+    year: 2025
+    url: https://pages.nist.gov/800-63-4/sp800-63b/passwords
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Secondary summaries of the final revision (the NIST site was not reachable)
+    supports: Passwords at least 15 characters when used alone (8 when part of multi-factor authentication); accept at least 64 characters; no composition rules; no periodic forced changes; check against breached and common passwords.
+  - id: apple-hig-targets
+    title: Human Interface Guidelines and design tips (hit targets)
+    publisher: Apple
+    url: https://developer.apple.com/design/tips/
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Search results quoting Apple's design tips page
+    supports: Controls of at least 44 × 44 pt; the visible control can be smaller than the tappable area.
+  - id: material-targets
+    title: Material Design accessibility (touch targets)
+    publisher: Google
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Secondary sources citing Material's touch-target guidance
+    supports: Touch targets of at least 48 × 48 dp, with the visible element allowed inside a larger target.
+  - id: gds-automated-2017
+    title: Automated accessibility testing (audit of tools against 142 known issues)
+    publisher: UK Government Digital Service, cited by the DWP Accessibility Manual
+    year: 2017
+    url: https://accessibility-manual.dwp.gov.uk/tools-and-resources/automated-accessibility-testing
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: DWP Accessibility Manual and GOV.UK guidance (search results)
+    supports: The best automated tools found about 30–40 % of 142 known issues on a deliberately inaccessible page.
+  - id: deque-coverage-2021
+    title: Automated testing coverage report
+    publisher: Deque Systems (vendor data)
+    year: 2021
+    url: https://www.businesswire.com/news/home/20210310005156/en
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Deque press releases (2021, 2022)
+    supports: Automated tests covered about 57 % of issues by volume across about 2,000 audits; a vendor figure measured by issue count, not by success criteria.
+  - id: nielsen-response-times
+    title: Response Times — The 3 Important Limits (Usability Engineering, ch. 5); after Miller (1968)
+    publisher: Jakob Nielsen
+    year: 1993
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Search results quoting the chapter and Miller (1968)
+    supports: 0.1 s feels instant; 1 s keeps the flow of thought; 10 s is the limit of attention, beyond which progress feedback is needed.
+  - id: doherty-thadani-1982
+    title: The Economic Value of Rapid Response Time (IBM GE20-0752)
+    publisher: W. J. Doherty and A. J. Thadani, IBM
+    year: 1982
+    url: https://www.vm.ibm.com/devpages/jelliott/evrrt1.html
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: IBM-hosted copy (figure titles only) and secondary accounts
+    supports: Productivity rises sharply when system response is under about 400 ms (the "Doherty threshold").
+  - id: bringhurst-line-length
+    title: The Elements of Typographic Style (3rd ed., pp. 36–37)
+    publisher: Robert Bringhurst
+    year: 2004
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Secondary sources quoting the book
+    supports: 45–75 characters per line for single-column printed text, 66 as a common ideal.
+  - id: nielsen-landauer-1993
+    title: A mathematical model of the finding of usability problems (INTERCHI '93)
+    publisher: J. Nielsen and T. K. Landauer
+    year: 1993
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Secondary summaries (CACM 2012 "Sample size in usability studies")
+    supports: Problems found ≈ N(1 − (1 − λ)^n); with the average λ ≈ 0.31, five users find about 85 % of problems on average. Later studies found 55–100 % for groups of five (Faulkner 2003), so treat five as a per-round minimum for one user group, not a guarantee.
+  - id: sauro-sus
+    title: System Usability Scale benchmarks
+    publisher: Jeff Sauro, MeasuringU
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Secondary sources citing the 500-study analysis
+    supports: The average SUS score is about 68 (50th percentile); scores are not percentages.
+  - id: bailey-first-click
+    title: First-click studies (Bob Bailey and Cari Wolfson)
+    status: unconfirmed
+    verified_on: '2026-10-09'
+    verified_against: Searched; no primary or reliable secondary source found
+    supports: 'Only the direction is used: a correct first click strongly predicts task success. The often-quoted 87 % versus 46 % is not stated as fact.'
+  - id: wroblewski-inline-2009
+    title: Inline validation in web forms (A List Apart, 2009)
+    publisher: Luke Wroblewski
+    year: 2009
+    status: unconfirmed
+    verified_on: '2026-10-09'
+    verified_against: Searched; the 22 % figure appears only in uncited summaries, and later studies report more errors with validation on leaving a field
+    supports: Not used for any default. Recorded so the old claim is not reintroduced.
+  - id: penzo-labels-2006
+    title: Label placement in forms (UXmatters, 2006)
+    publisher: Matteo Penzo
+    year: 2006
+    status: unconfirmed
+    verified_on: '2026-10-09'
+    verified_against: Searched; secondary sources report findings favouring left alignment for scanning, and the "top-aligned is fastest" claim is disputed
+    supports: Not used as evidence. Top-aligned labels remain the default for other reasons (narrow screens, translation, design-system practice).
+  - id: classic-laws
+    title: Classic HCI laws (Fitts 1954, Hick 1952, Miller 1956, Cowan 2001, Gestalt principles, Iyengar & Lepper 2000, Kurosu & Kashimura 1995, Kivetz et al. 2006)
+    status: unchecked
+    supports: Qualitative principles only (target size and distance, choice count, memory limits, grouping, choice overload, aesthetic-usability, goal gradient). No numeric threshold in the skill depends on them.
+  - id: medlineplus-cvd
+    title: Color vision deficiency
+    publisher: MedlinePlus, US National Library of Medicine
+    url: https://medlineplus.gov/genetics/condition/color-vision-deficiency
+    status: secondary
+    verified_on: '2026-10-09'
+    verified_against: Search results quoting MedlinePlus; consistent with Birch (2010, Eye) and a 2025 pooled analysis
+    supports: Red–green color vision deficiency affects about 1 in 12 males and 1 in 200 females of Northern European ancestry; rates are lower in other populations.

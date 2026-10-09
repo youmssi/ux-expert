@@ -8,7 +8,7 @@ applicability:
   cli: conditional
   sdk-api: conditional
   ai-feature: conditional
-applicability_note: 'run in pre-launch gate mode'
+applicability_note: run in pre-launch gate mode
 phases:
 - design
 - build

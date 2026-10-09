@@ -43,6 +43,10 @@ criteria:
   name: Touch target size and spacing
   fail_signal: < 44 pt / 48 dp; cramped adjacent targets
   severity: S2–S3
+  sources:
+  - wcag22
+  - apple-hig-targets
+  - material-targets
 - id: RESP-08
   name: No hover dependence
   fail_signal: Hover-only menus, actions or info on touch devices
@@ -61,6 +65,8 @@ criteria:
   name: Orientation support
   fail_signal: Locked or broken in landscape
   severity: S2
+  sources:
+  - wcag22
 - id: RESP-12
   name: Platform conventions followed (iOS)
   fail_signal: Blocked back swipe; non-standard nav; no Dynamic Type

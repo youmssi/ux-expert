@@ -58,6 +58,8 @@ criteria:
   check: max-width on text and forms
   fail_signal: Text lines > ~90 characters; full-width forms on desktop
   severity: S2
+  sources:
+  - bringhurst-line-length
 - id: LAY-09
   name: Appropriate density
   check: Elements competing above the fold; whitespace use
@@ -79,6 +81,10 @@ criteria:
   fail_signal: < 24×24 CSS px (WCAG AA fail); < 44 pt / 48 dp on touch
   severity: S2–S3
   phases: *id001
+  sources:
+  - wcag22
+  - apple-hig-targets
+  - material-targets
 - id: LAY-13
   name: Thumb-zone-aware mobile placement
   check: Primary actions in the reachable zone
@@ -107,6 +113,8 @@ criteria:
   fail_signal: '> ~25% of mobile viewport; focused element hidden'
   severity: S2
   phases: *id001
+  sources:
+  - wcag22
 - id: LAY-17
   name: Predictable layering (z-index)
   check: z-index values and overlay system

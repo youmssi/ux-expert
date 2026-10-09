@@ -32,11 +32,15 @@ criteria:
   check: Visual response ≤ 100 ms
   fail_signal: No pressed state; clicks feel ignored, causing double clicks
   severity: S2
+  sources:
+  - nielsen-response-times
 - id: INT-05
   name: Progress for longer operations
   check: Indicators at 1 s and 10 s
   fail_signal: No feedback during multi-second actions
   severity: S3
+  sources:
+  - nielsen-response-times
 - id: INT-06
   name: Clear completion feedback
   check: Success is confirmed proportionally
@@ -57,6 +61,8 @@ criteria:
   check: '`prefers-reduced-motion` handling'
   fail_signal: Large/parallax/auto motion with no reduction
   severity: S2–S3
+  sources:
+  - wcag22
 - id: INT-10
   name: No harmful flashing
   check: Flash frequency
@@ -65,6 +71,8 @@ criteria:
   severity_note: WCAG 2.3.1
   phases: &id001
   - build
+  sources:
+  - wcag22
 - id: INT-11
   name: Modal behavior correct
   check: Focus trap, Esc, focus return, scroll lock, close button
@@ -80,6 +88,8 @@ criteria:
   check: Hover + focus, dismissible, not essential
   fail_signal: Essential info only in a tooltip; hover-only
   severity: S2
+  sources:
+  - wcag22
 - id: INT-14
   name: Toasts well behaved
   check: Duration, placement, error persistence, actions reachable
@@ -101,6 +111,8 @@ criteria:
   fail_signal: Reorder/move only by drag
   severity: S2–S3
   severity_note: WCAG 2.5.7
+  sources:
+  - wcag22
 - id: INT-18
   name: Hover-only actions reachable
   check: Focus and touch alternatives
@@ -123,6 +135,8 @@ criteria:
   severity: S2
   severity_note: WCAG 2.5.2
   phases: *id001
+  sources:
+  - wcag22
 - id: INT-22
   name: Scroll behavior sane
   check: No scroll-jacking, no nested-scroll traps, restore scroll position on back

@@ -84,6 +84,8 @@ criteria:
   fail_signal: Insecure or broken recovery; security questions
   severity: S3
   phases: *id001
+  sources:
+  - nist-800-63b-4
 - id: TRUST-17
   name: Session and device visibility
   fail_signal: No session list or security alerts

@@ -67,11 +67,15 @@ criteria:
   severity: S2–S3
   severity_note: pre-launch
   phases: *id002
+  sources:
+  - nielsen-landauer-1993
 - id: MEAS-12
   name: Attitudinal benchmark
   fail_signal: No SUS/SEQ/CSAT baseline
   severity: S1
   phases: *id002
+  sources:
+  - sauro-sus
 - id: MEAS-13
   name: Experimentation readiness
   fail_signal: No flags; no way to roll out safely

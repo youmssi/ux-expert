@@ -50,11 +50,14 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
 
 ## 4. Evidence and sources
 
-- Every number (threshold, statistic, research result) cites its source: a
-  standard (WCAG 2.2 SC 1.4.3), a vendor guideline (Apple HIG), or a study
-  (author, year). An estimate or rule of thumb says so.
-- Prefer primary sources. Secondary summaries are acceptable only until the
-  citation-verification story (UXE-7) checks them.
+- Every number (threshold, statistic, research result) cites its source with
+  `[src:<id>]` in text and `sources:` on the criterion; the source is recorded in
+  `criteria/sources.yaml` with its status (primary, secondary, unconfirmed,
+  unchecked) and how it was verified. An estimate or rule of thumb says so.
+- Prefer primary sources: when a site is unreachable, read the official source
+  repository (e.g. w3c/wcag) and record the commit.
+- Never state the numbers of an **unconfirmed** source as fact; keep only the
+  direction of the finding, or drop it.
 - Examples from real products describe **publicly observable** behaviour, carry
   the date they were observed, and never quote ratings, revenue or adoption
   figures that cannot be verified.

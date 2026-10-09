@@ -58,7 +58,8 @@ file and add what is specific to that tool.
    Criteria are edited in `skills/ux-expert/criteria/*.yaml` only; the tables in
    the area files are generated (`python3 scripts/generate.py`).
 5. **Every number has a source.** A threshold, statistic or research result in
-   the content cites where it comes from. An estimate says it is an estimate.
+   the content cites a source recorded in `criteria/sources.yaml`, with how it was
+   verified. An estimate says it is an estimate.
 6. **One source of truth.** Shared references and criteria exist once; anything
    derived (tables, bundles, MCP resources) is generated, never hand-copied.
 7. **Spec compliance.** Every skill passes `skills-ref validate`; `SKILL.md`

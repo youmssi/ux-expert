@@ -85,6 +85,13 @@
           "description": "Narrows the product types this criterion applies to (default: every type the area applies to).",
           "$ref": "#/$defs/productTypes"
         },
+        "sources": {
+          "description": "IDs from criteria/sources.yaml backing this criterion's thresholds.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"}
+        },
         "status": {
           "description": "Retired criteria keep their ID reserved and are left out of the tables.",
           "enum": ["active", "retired"],
