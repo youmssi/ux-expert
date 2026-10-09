@@ -67,6 +67,8 @@ From CTX: current and planned locales and regions. If English-only with no plans
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (i18n-localization) -->
+<!-- Source: criteria/i18n-localization.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | I18N-01 | Strings externalized | Hard-coded UI strings (in multi-locale products) | S2–S3 |
@@ -77,7 +79,7 @@ From CTX: current and planned locales and regions. If English-only with no plans
 | I18N-06 | No text in images | Text baked into images | S2 |
 | I18N-07 | Expansion-resilient layout | Fixed-width labels clip under pseudo-localization | S2 |
 | I18N-08 | `lang` and `dir` set correctly | Missing or not updated per locale | S2 (→ A11Y-28) |
-| I18N-09 | Logical CSS properties (RTL) | Physical left/right properties throughout | S2–S3 if RTL targeted |
+| I18N-09 | Logical CSS properties (RTL) | Physical left/right properties throughout | S2–S3 (if RTL targeted) |
 | I18N-10 | Icon mirroring rules | Arrows not mirrored, or logos mirrored | S1–S2 |
 | I18N-11 | Bidi isolation for user content | Garbled mixed-direction text | S2 |
 | I18N-12 | Locale-aware dates and times | Hard-coded formats; ambiguous numeric dates | S2–S3 |
@@ -92,6 +94,7 @@ From CTX: current and planned locales and regions. If English-only with no plans
 | I18N-21 | Script/font coverage | Tofu boxes (□); poor rendering for target scripts | S2–S3 |
 | I18N-22 | Cultural appropriateness | Culturally confusing or offensive imagery, icons or examples | S1–S3 |
 | I18N-23 | Local payment and legal norms (commerce) | Only card payments where local methods dominate; missing local legal info | S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

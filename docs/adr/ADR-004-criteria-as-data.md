@@ -1,6 +1,6 @@
 # ADR-004: Criteria as structured data
 
-- **Status:** proposed
+- **Status:** accepted
 - **Date:** 2026-10-09
 - **Story:** UXE-3
 
@@ -28,14 +28,27 @@ needs to query the criteria:
 
 ## Decision
 
-Option 1, to be confirmed when UXE-3 starts. Fields per criterion: `id`,
-`name`, `check`, `fail_signal`, `severity` (default and range), `applies_to`
-(product types), `phases`, `sources` (each with a `verified_on` date),
-`status` (active | retired).
+Option 1. One YAML file per area in `skills/ux-expert/criteria/`, validated
+against `criteria/schema.json` (JSON Schema 2020-12) and by
+`scripts/generate.py`, which also renders the tables.
+
+Fields in v0.1: `id`, `name`, `check` (optional), `fail_signal`, `severity`
+(`S0`–`S4` or a range such as `S2–S3`), `severity_note` (optional condition or
+escalation), `related` (optional area prefixes or criterion IDs), `status`
+(`active` | `retired`, default `active`).
+
+Each later field arrives with the story that consumes it, so no field exists
+before something reads it:
+- `applies_to` (product types) and `phases` (design, build, audit): UXE-4.
+- `sources` (each with a `verified_on` date): UXE-7.
 
 ## Consequences
 
 - Area files keep their prose; only the criteria tables are generated.
 - A new criterion is added in YAML, never in the Markdown table.
 - The schema becomes part of the public interface from v0.3 (MCP), so it
-  follows semantic versioning.
+  follows semantic versioning: adding an optional field is a minor change,
+  removing or renaming one is a major change.
+- Script dependencies (PyYAML, jsonschema) are pinned in
+  `scripts/requirements.txt`. The skill itself needs no dependency: agents read
+  the YAML and Markdown directly.

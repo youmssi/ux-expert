@@ -49,7 +49,9 @@ Do this in **both light and dark themes**. A tiny script (Node or Python) is acc
 
 ## Criteria
 
-| ID | Criterion | Check | Threshold / fail signal | Default severity |
+<!-- BEGIN GENERATED criteria (color-theming) -->
+<!-- Source: criteria/color-theming.yaml. Edit the YAML, then run scripts/generate.py. -->
+| ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
 | COL-01 | Tokenized palette with semantic roles | Token structure | No semantic tokens; components use primitives or hex directly | S2 (→ DS) |
 | COL-02 | Body text contrast | Computed ratio | < 4.5:1 | S3 (WCAG AA) |
@@ -69,6 +71,7 @@ Do this in **both light and dark themes**. A tiny script (Node or Python) is acc
 | COL-16 | Brand applied consistently | Brand colors across product, emails, marketing | Several slightly different brand blues | S1 |
 | COL-17 | Disabled vs. enabled distinguishable | Disabled styling | Disabled looks enabled (or vice versa) | S2 |
 | COL-18 | Theming architecture scalable | Themes switch via tokens, not duplicated CSS | `dark:` overrides scattered per component with gaps | S1–S2 (→ DS) |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

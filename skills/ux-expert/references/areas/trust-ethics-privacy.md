@@ -76,6 +76,8 @@ Check each trust-critical screen for these patterns:
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (trust-ethics-privacy) -->
+<!-- Source: criteria/trust-ethics-privacy.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | TRUST-01 | No pre-selected consent or add-ons | Pre-ticked marketing, sharing or paid add-ons | S3–S4 |
@@ -100,6 +102,7 @@ Check each trust-critical screen for these patterns:
 | TRUST-20 | Credibility basics | Missing contact, legal entity, policies or status page | S2 (→ LAUNCH) |
 | TRUST-21 | Ethical notifications | No opt-out; manipulative re-engagement | S2 |
 | TRUST-22 | Minors and sensitive categories handled (if applicable) | No age-appropriate safeguards | S3 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

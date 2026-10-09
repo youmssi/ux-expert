@@ -1,0 +1,89 @@
+area: performance-perceived
+prefix: PERF
+criteria:
+- id: PERF-01
+  name: LCP on critical routes
+  fail_signal: '> 2.5 s (p75 mobile) needs improvement; > 4 s poor'
+  severity: S2–S3
+  severity_note: S2 when it needs improvement, S3 when poor
+- id: PERF-02
+  name: INP / interaction latency
+  fail_signal: '> 200 ms needs improvement; > 500 ms poor'
+  severity: S2–S3
+  severity_note: S2 when it needs improvement, S3 when poor
+- id: PERF-03
+  name: CLS
+  fail_signal: '> 0.1 / > 0.25'
+  severity: S2–S3
+  severity_note: S2 when it needs improvement, S3 when poor
+- id: PERF-04
+  name: TTFB / server response
+  fail_signal: Consistently > ~800 ms
+  severity: S2
+- id: PERF-05
+  name: Critical action feedback timing
+  fail_signal: No acknowledgement within 100 ms; no result or progress within 1 s
+  severity: S2–S3
+- id: PERF-06
+  name: JavaScript weight
+  fail_signal: Far over budget; no code splitting; heavy libraries for small features
+  severity: S2
+- id: PERF-07
+  name: Image optimization
+  fail_signal: Unoptimized formats or sizes; no lazy loading; LCP image lazy-loaded
+  severity: S2
+- id: PERF-08
+  name: Font loading
+  fail_signal: Render-blocking fonts; many weights; no subsetting
+  severity: S1–S2
+- id: PERF-09
+  name: Data waterfalls
+  fail_signal: Sequential independent requests; client-only fetch for initial content
+  severity: S2
+- id: PERF-10
+  name: Caching and revalidation
+  fail_signal: Every navigation refetches everything; no cache headers
+  severity: S2
+- id: PERF-11
+  name: Large lists virtualized/paginated
+  fail_signal: Rendering thousands of DOM nodes
+  severity: S2–S3
+- id: PERF-12
+  name: Third-party script cost
+  fail_signal: Synchronous third parties blocking render or interaction
+  severity: S2
+- id: PERF-13
+  name: Perceived-speed patterns present
+  fail_signal: No skeletons, no optimistic UI, spinner flashes
+  severity: S2
+- id: PERF-14
+  name: Long tasks off the critical path
+  fail_signal: Users blocked during long processing; no background option
+  severity: S2–S3
+- id: PERF-15
+  name: Prefetching likely next steps
+  fail_signal: Obvious next steps not prefetched (light)
+  severity: S1
+- id: PERF-16
+  name: Smooth animation and scrolling
+  fail_signal: Jank; animating layout properties (`top`, `width`) instead of `transform`/`opacity`
+  severity: S1–S2
+- id: PERF-17
+  name: Low-end device and slow-network behavior
+  fail_signal: Unusable on mid-range mobile or 3G
+  severity: S3
+  severity_note: if audience includes them
+- id: PERF-18
+  name: Mobile app start and frame rate
+  fail_signal: Cold start > ~2–3 s; frequent dropped frames
+  severity: S2–S3
+- id: PERF-19
+  name: Performance budgets enforced
+  fail_signal: No budgets or CI checks (Lighthouse CI, size-limit, bundlesize)
+  severity: S1–S2
+- id: PERF-20
+  name: Real-user monitoring
+  fail_signal: No field data on vitals
+  severity: S1–S2
+  related:
+  - MEAS

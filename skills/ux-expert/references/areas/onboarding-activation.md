@@ -68,6 +68,8 @@ Evaluate each that exists:
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (onboarding-activation) -->
+<!-- Source: criteria/onboarding-activation.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | ONB-01 | Aha moment and activation event defined | No definition; onboarding ends at "profile complete" | S2 |
@@ -89,6 +91,7 @@ Evaluate each that exists:
 | ONB-17 | Returning-user re-onboarding | Users lose orientation after inactivity or major changes | S1–S2 |
 | ONB-18 | New-feature discovery | New features invisible, or announced via disruptive modals | S1–S2 |
 | ONB-19 | Promise–experience consistency | Landing or App Store promises not met in the first run | S2–S3 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

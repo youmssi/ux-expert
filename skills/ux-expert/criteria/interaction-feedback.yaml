@@ -1,0 +1,116 @@
+area: interaction-feedback
+prefix: INT
+criteria:
+- id: INT-01
+  name: Clear affordances/signifiers
+  check: Interactive elements look interactive; non-interactive ones don't
+  fail_signal: Clickable text without styling; styled non-clickables ("dead clicks")
+  severity: S2
+- id: INT-02
+  name: Complete state matrix
+  check: Default/hover/focus/active/disabled/loading/selected
+  fail_signal: Missing focus or loading states on core components
+  severity: S2–S3
+- id: INT-03
+  name: Correct control semantics
+  check: Button vs. link; switch vs. checkbox; radio vs. select
+  fail_signal: Mismatched control behavior
+  severity: S2
+- id: INT-04
+  name: Immediate acknowledgement
+  check: Visual response ≤ 100 ms
+  fail_signal: No pressed state; clicks feel ignored, causing double clicks
+  severity: S2
+- id: INT-05
+  name: Progress for longer operations
+  check: Indicators at 1 s and 10 s
+  fail_signal: No feedback during multi-second actions
+  severity: S3
+- id: INT-06
+  name: Clear completion feedback
+  check: Success is confirmed proportionally
+  fail_signal: Silent success; or modal confirmations for trivial actions
+  severity: S2
+- id: INT-07
+  name: Optimistic UI with rollback
+  check: Low-risk actions are instant with error rollback
+  fail_signal: Waiting spinners for trivial actions; or optimistic updates with no rollback
+  severity: S2
+- id: INT-08
+  name: Motion purposeful and well-timed
+  check: Durations and easing
+  fail_signal: '> 500 ms on frequent actions; linear easing; gratuitous motion'
+  severity: S1–S2
+- id: INT-09
+  name: Reduced motion respected
+  check: '`prefers-reduced-motion` handling'
+  fail_signal: Large/parallax/auto motion with no reduction
+  severity: S2–S3
+- id: INT-10
+  name: No harmful flashing
+  check: Flash frequency
+  fail_signal: '> 3 flashes/second'
+  severity: S4
+  severity_note: WCAG 2.3.1
+- id: INT-11
+  name: Modal behavior correct
+  check: Focus trap, Esc, focus return, scroll lock, close button
+  fail_signal: Any missing
+  severity: S2–S3
+- id: INT-12
+  name: Modals used appropriately
+  check: Modals only for focused, blocking tasks
+  fail_signal: Modal for long forms, stacked modals, modal on page load
+  severity: S2
+- id: INT-13
+  name: Tooltips supplementary and accessible
+  check: Hover + focus, dismissible, not essential
+  fail_signal: Essential info only in a tooltip; hover-only
+  severity: S2
+- id: INT-14
+  name: Toasts well behaved
+  check: Duration, placement, error persistence, actions reachable
+  fail_signal: Errors auto-dismiss; toasts cover controls
+  severity: S2–S3
+- id: INT-15
+  name: Disabled states explained
+  check: Reason visible for disabled primary actions
+  fail_signal: Disabled submit with no reason
+  severity: S2
+- id: INT-16
+  name: Keyboard shortcuts discoverable and safe
+  check: Cheat sheet, tooltips, no conflicts, single-key can be disabled
+  fail_signal: Hidden or conflicting shortcuts
+  severity: S1–S2
+- id: INT-17
+  name: Drag and drop has alternatives
+  check: Non-drag path exists
+  fail_signal: Reorder/move only by drag
+  severity: S2–S3
+  severity_note: WCAG 2.5.7
+- id: INT-18
+  name: Hover-only actions reachable
+  check: Focus and touch alternatives
+  fail_signal: Actions invisible on touch or keyboard
+  severity: S2–S3
+- id: INT-19
+  name: Undo for reversible actions
+  check: Undo or soft-delete
+  fail_signal: Destructive action without undo or confirmation
+  severity: S3–S4
+- id: INT-20
+  name: Consistent interaction patterns
+  check: Same gesture or click → same result across the product
+  fail_signal: Double-click opens in one list but selects in another
+  severity: S2
+- id: INT-21
+  name: Prevention of accidental activation
+  check: Down-event vs. up-event activation, safe spacing
+  fail_signal: Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions
+  severity: S2
+  severity_note: WCAG 2.5.2
+- id: INT-22
+  name: Scroll behavior sane
+  check: No scroll-jacking, no nested-scroll traps, restore scroll position on back
+  fail_signal: Hijacked scroll; lost position after back
+  severity: S2

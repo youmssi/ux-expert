@@ -76,9 +76,11 @@ Test or reason through, with real component code:
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (states-resilience) -->
+<!-- Source: criteria/states-resilience.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
-| STATE-01 | State matrix complete for critical screens | Matrix | Any ❌ on a critical screen | S2–S4 by state |
+| STATE-01 | State matrix complete for critical screens | Matrix | Any ❌ on a critical screen | S2–S4 (by state) |
 | STATE-02 | First-use empty states guide action | Content of first-use empties | Blank area or "No data" only | S2–S3 |
 | STATE-03 | No-results states help recovery | Search/filter empties | No query echo, no clear-filters option | S2 |
 | STATE-04 | Loading is shown and shaped | Skeletons, spinners, button loading | Blank screens; layout jumps | S2 |
@@ -92,7 +94,7 @@ Test or reason through, with real component code:
 | STATE-12 | Session expiry is graceful | Re-auth in place, work preserved, warnings | Redirect to login and lose work | S3 |
 | STATE-13 | Concurrency conflicts handled | Versioning, conflict UI | Last write silently wins over another user's work | S3 |
 | STATE-14 | Extreme content safe | Long, zero, huge, null, special characters, missing media | Broken layout; "undefined"/"NaN"/"null" shown | S2 |
-| STATE-15 | Large data sets scale | Pagination, virtualization, limits | Freezes or crashes with large data | S3 (→ PERF/DATA) |
+| STATE-15 | Large data sets scale | Pagination, virtualization, limits | Freezes or crashes with large data | S3 (→ PERF, DATA) |
 | STATE-16 | Autosave / unsaved-changes guard | Autosave or a navigation guard | Work lost on navigation | S3 |
 | STATE-17 | Undo / soft delete | Undo for reversible actions; trash for important objects | Irreversible delete with no confirmation | S4 |
 | STATE-18 | Destructive scope clarity | Counts and names in confirmations; type-to-confirm for critical | "Are you sure?" with no specifics | S2–S3 |
@@ -101,6 +103,7 @@ Test or reason through, with real component code:
 | STATE-21 | Rate limit / quota states | Clear limit, reset time, upgrade or wait path | Raw 429 or generic error | S2 |
 | STATE-22 | Third-party failure fallbacks | Payment, auth, maps, AI provider failures handled | Whole page fails when a third party fails | S2–S3 |
 | STATE-23 | Error monitoring exists | Sentry/Datadog/etc. wired to front-end errors | Errors invisible to the team | S2 (→ MEAS) |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

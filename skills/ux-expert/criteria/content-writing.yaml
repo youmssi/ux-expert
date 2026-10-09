@@ -1,0 +1,93 @@
+area: content-writing
+prefix: CONT
+criteria:
+- id: CONT-01
+  name: One term per concept
+  fail_signal: Synonyms or overloaded terms across the UI
+  severity: S2
+- id: CONT-02
+  name: No internal jargon
+  fail_signal: Engineering or internal words visible to users
+  severity: S2
+- id: CONT-03
+  name: Buttons are verb + object, specific
+  fail_signal: '"Submit", "OK", "Yes/No", vague labels'
+  severity: S2
+- id: CONT-04
+  name: Same action, same label
+  fail_signal: Save/Update/Apply inconsistency
+  severity: S1–S2
+- id: CONT-05
+  name: Descriptive link text
+  fail_signal: '"Click here", ambiguous "Learn more"'
+  severity: S2
+  severity_note: WCAG 2.4.4
+- id: CONT-06
+  name: 'Errors: what + why + what to do'
+  fail_signal: '"Something went wrong", raw codes, stack traces'
+  severity: S2–S3
+- id: CONT-07
+  name: No blame, no humor in errors
+  fail_signal: '"You failed to…", "Oops! 🙈" on serious failures'
+  severity: S1–S2
+- id: CONT-08
+  name: Empty states explain value and action
+  fail_signal: '"No data"'
+  severity: S2
+- id: CONT-09
+  name: Success messages specific
+  fail_signal: Generic "Success!"
+  severity: S1
+- id: CONT-10
+  name: Destructive confirmations specific
+  fail_signal: No object name, consequence or reversibility
+  severity: S2–S3
+- id: CONT-11
+  name: Help text concise and purposeful
+  fail_signal: Long paragraphs; repeating labels; missing "why we ask"
+  severity: S1–S2
+- id: CONT-12
+  name: Consistent style mechanics
+  fail_signal: Mixed casing, punctuation, date formats in text
+  severity: S1
+- id: CONT-13
+  name: Tone fits context
+  fail_signal: Cheerful tone in failures or billing; robotic in onboarding
+  severity: S1–S2
+- id: CONT-14
+  name: Plain-language readability
+  fail_signal: Complex sentences in critical instructions
+  severity: S2
+- id: CONT-15
+  name: Inclusive language
+  fail_signal: Gendered defaults; ableist terms; name-format assumptions
+  severity: S2
+- id: CONT-16
+  name: Scannable copy
+  fail_signal: Front-loaded words; headings; bullets for lists
+  severity: S1–S2
+- id: CONT-17
+  name: Notification content useful and controllable
+  fail_signal: Vague notifications; no settings or unsubscribe
+  severity: S2
+  severity_note: for consent
+  related:
+  - TRUST
+- id: CONT-18
+  name: Transactional emails clear
+  fail_signal: Generic subjects; broken deep links; no plain text
+  severity: S2
+- id: CONT-19
+  name: Placeholder text not carrying critical info
+  fail_signal: Instructions only in the placeholder
+  severity: S2
+  related:
+  - FORM
+- id: CONT-20
+  name: Numbers, units and currency explicit
+  fail_signal: '"Price: 49" without currency; ambiguous units'
+  severity: S2–S3
+- id: CONT-21
+  name: Glossary/style guide exists
+  fail_signal: No source of truth for terms and voice
+  severity: S1

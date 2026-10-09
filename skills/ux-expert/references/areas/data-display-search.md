@@ -82,6 +82,8 @@ For each data surface: what is the **user question** (from CTX jobs)? e.g. "Whic
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (data-display-search) -->
+<!-- Source: criteria/data-display-search.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | DATA-01 | Each data surface answers a clear question | Dashboards or tables with no clear purpose | S2 |
@@ -109,6 +111,7 @@ For each data surface: what is the **user question** (from CTX jobs)? e.g. "Whic
 | DATA-23 | Import validation and recovery | All-or-nothing imports with vague errors | S2–S3 |
 | DATA-24 | Export clarity | Unclear export scope; huge exports block the UI | S2 |
 | DATA-25 | Real-time updates non-disruptive | Rows jump while the user is reading or selecting | S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

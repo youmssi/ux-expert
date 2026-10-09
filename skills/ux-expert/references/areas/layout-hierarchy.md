@@ -64,13 +64,15 @@ Audit **every critical-flow screen** (from FLOW) plus the main templates (list, 
 
 ## Criteria
 
-| ID | Criterion | How to check | Threshold / fail signal | Default severity |
+<!-- BEGIN GENERATED criteria (layout-hierarchy) -->
+<!-- Source: criteria/layout-hierarchy.yaml. Edit the YAML, then run scripts/generate.py. -->
+| ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
 | LAY-01 | Attention order matches task priority | Squint test vs. intended order | The most visually dominant element is not the most important | S2–S3 |
 | LAY-02 | Single clear primary action | Count primary-styled actions per view | 0 or ≥ 2 equally dominant primaries | S2–S3 |
 | LAY-03 | Action hierarchy (primary/secondary/tertiary) | Button variants used consistently | Cancel styled like Submit; all buttons the same | S2 |
 | LAY-04 | Destructive actions separated | Distance and style of delete/remove | Delete adjacent to Save in the same style | S3 |
-| LAY-05 | Spacing from a scale | Spacing histogram | Off-scale values; > ~10 distinct values | S1–S2 (systemic → DS) |
+| LAY-05 | Spacing from a scale | Spacing histogram | Off-scale values; > ~10 distinct values | S1–S2 (systemic; → DS) |
 | LAY-06 | Proximity grouping | Internal vs. external spacing | Equal or inverted spacing makes groups ambiguous | S2 |
 | LAY-07 | Consistent grid and alignment | Count distinct alignment edges; layout primitives | Ragged edges; no grid | S1–S2 |
 | LAY-08 | Readable content width | max-width on text and forms | Text lines > ~90 characters; full-width forms on desktop | S2 |
@@ -86,6 +88,7 @@ Audit **every critical-flow screen** (from FLOW) plus the main templates (list, 
 | LAY-18 | Consistent page templates | Same structure for same page types | Each list or detail page laid out differently | S2 (→ DS) |
 | LAY-19 | Visual balance and symmetry purpose | Weight distribution; intentional asymmetry | One side overloaded; random empty regions | S1 |
 | LAY-20 | Scannability | Headings, sections, chunking of long pages | Walls of content without structure | S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

@@ -82,6 +82,8 @@ Plus: a per-language README with the same structure, a changelog, a migration gu
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (developer-experience) -->
+<!-- Source: criteria/developer-experience.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | DX-01 | Fast time to first success | > ~5 minutes or > ~5 steps to the first working result; extra concepts required upfront | S2–S3 |
@@ -106,6 +108,7 @@ Plus: a per-language README with the same structure, a changelog, a migration gu
 | DX-20 | Performance and limits documented | Unknown limits; unclear performance characteristics | S1–S2 |
 | DX-21 | Playground / sandbox | No way to try without installing (when it's a natural fit) | S1–S2 |
 | DX-22 | Support and contribution paths | No issue templates, security policy or contribution guide | S1 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

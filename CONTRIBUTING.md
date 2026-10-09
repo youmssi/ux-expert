@@ -54,15 +54,18 @@ distribution channel, license, MCP interface) gets an ADR in `docs/adr/`
 Every check below passes locally; CI runs the same ones and blocks the merge.
 
 ```bash
+pip install -r scripts/requirements.txt
 python3 -m unittest discover -s scripts -p "test_*.py"
 python3 scripts/validate.py
+python3 scripts/generate.py --check
 skills-ref validate skills/ux-expert
 ```
 
 And:
 
-- Every criterion you add has a unique, never-used ID and a cited source for
-  any number it contains.
+- Criteria are added or changed in `skills/ux-expert/criteria/<area>.yaml`,
+  then `python3 scripts/generate.py` rewrites the tables. Every new criterion
+  has a unique, never-used ID and a cited source for any number it contains.
 - Generated files are regenerated with their script, never edited by hand.
 - Content that changes agent behaviour names how it was checked (eval run from
   UXE-10 onward; until then, a manual run on a sample product, summarized in

@@ -1,0 +1,108 @@
+area: layout-hierarchy
+prefix: LAY
+criteria:
+- id: LAY-01
+  name: Attention order matches task priority
+  check: Squint test vs. intended order
+  fail_signal: The most visually dominant element is not the most important
+  severity: S2–S3
+- id: LAY-02
+  name: Single clear primary action
+  check: Count primary-styled actions per view
+  fail_signal: 0 or ≥ 2 equally dominant primaries
+  severity: S2–S3
+- id: LAY-03
+  name: Action hierarchy (primary/secondary/tertiary)
+  check: Button variants used consistently
+  fail_signal: Cancel styled like Submit; all buttons the same
+  severity: S2
+- id: LAY-04
+  name: Destructive actions separated
+  check: Distance and style of delete/remove
+  fail_signal: Delete adjacent to Save in the same style
+  severity: S3
+- id: LAY-05
+  name: Spacing from a scale
+  check: Spacing histogram
+  fail_signal: Off-scale values; > ~10 distinct values
+  severity: S1–S2
+  severity_note: systemic
+  related:
+  - DS
+- id: LAY-06
+  name: Proximity grouping
+  check: Internal vs. external spacing
+  fail_signal: Equal or inverted spacing makes groups ambiguous
+  severity: S2
+- id: LAY-07
+  name: Consistent grid and alignment
+  check: Count distinct alignment edges; layout primitives
+  fail_signal: Ragged edges; no grid
+  severity: S1–S2
+- id: LAY-08
+  name: Readable content width
+  check: max-width on text and forms
+  fail_signal: Text lines > ~90 characters; full-width forms on desktop
+  severity: S2
+- id: LAY-09
+  name: Appropriate density
+  check: Elements competing above the fold; whitespace use
+  fail_signal: Clutter, or excessive sparseness for expert tools
+  severity: S2
+- id: LAY-10
+  name: Placement follows conventions
+  check: Logo, nav, account, search, primary-action positions
+  fail_signal: Unconventional placement without a benefit
+  severity: S2
+- id: LAY-11
+  name: Actions near their objects
+  check: Distance between an action and its target
+  fail_signal: Global toolbar actions for item-level operations without selection feedback
+  severity: S2
+- id: LAY-12
+  name: Adequate target sizes
+  check: Computed sizes of interactive elements
+  fail_signal: < 24×24 CSS px (WCAG AA fail); < 44 pt / 48 dp on touch
+  severity: S2–S3
+- id: LAY-13
+  name: Thumb-zone-aware mobile placement
+  check: Primary actions in the reachable zone
+  fail_signal: Key actions only at the top corners on mobile
+  severity: S2
+- id: LAY-14
+  name: Above-the-fold priority
+  check: What is visible without scrolling at common viewports
+  fail_signal: Primary task or value hidden below the fold
+  severity: S2–S3
+- id: LAY-15
+  name: Layout stability
+  check: Image dimensions, skeleton sizes, font loading
+  fail_signal: Visible content jumps; CLS > 0.1
+  severity: S2
+- id: LAY-16
+  name: Sticky elements sized and non-obscuring
+  check: Height of sticky bars; focus visibility
+  fail_signal: '> ~25% of mobile viewport; focused element hidden'
+  severity: S2
+- id: LAY-17
+  name: Predictable layering (z-index)
+  check: z-index values and overlay system
+  fail_signal: Arbitrary huge z-index; overlays covering each other
+  severity: S1–S2
+- id: LAY-18
+  name: Consistent page templates
+  check: Same structure for same page types
+  fail_signal: Each list or detail page laid out differently
+  severity: S2
+  related:
+  - DS
+- id: LAY-19
+  name: Visual balance and symmetry purpose
+  check: Weight distribution; intentional asymmetry
+  fail_signal: One side overloaded; random empty regions
+  severity: S1
+- id: LAY-20
+  name: Scannability
+  check: Headings, sections, chunking of long pages
+  fail_signal: Walls of content without structure
+  severity: S2

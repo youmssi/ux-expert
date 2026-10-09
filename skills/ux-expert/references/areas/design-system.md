@@ -55,6 +55,8 @@ Sample 3–5 instances of each repeated pattern (list page, detail page, create 
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (design-system) -->
+<!-- Source: criteria/design-system.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | DS-01 | Tokens exist for all core categories | Missing color/spacing/type/radius/shadow/motion/z-index tokens | S2 |
@@ -75,6 +77,7 @@ Sample 3–5 instances of each repeated pattern (list page, detail page, create 
 | DS-16 | Theming via tokens | Themes require per-component overrides | S1–S2 (→ COL) |
 | DS-17 | Governance and versioning | No owner, changelog or deprecation path | S1 |
 | DS-18 | Design–code parity (if design files available) | Figma components differ from code; naming mismatch | S1–S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes (counting drift)
 

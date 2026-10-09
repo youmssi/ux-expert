@@ -71,6 +71,8 @@ For each P0/P1 finding, write: **"We believe that <change> for <users> will resu
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (measurement-validation) -->
+<!-- Source: criteria/measurement-validation.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | MEAS-01 | UX goals and metrics defined | No defined success metrics for critical jobs | S2 |
@@ -90,6 +92,7 @@ For each P0/P1 finding, write: **"We believe that <change> for <users> will resu
 | MEAS-15 | Analytics consent compliance | Tracking without required consent | S3 (→ TRUST-03) |
 | MEAS-16 | UX health dashboard | No shared view of UX metrics | S1 |
 | MEAS-17 | Findings converted to testable hypotheses | Fixes shipped without success criteria | S1–S2 |
+<!-- END GENERATED criteria -->
 
 ## Output
 
