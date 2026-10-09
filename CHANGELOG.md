@@ -9,6 +9,10 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Proven patterns (`criteria/patterns.yaml`, generated `references/patterns.md`):
+  17 patterns from GOV.UK, GitHub Primer, Shopify Polaris and IBM Carbon, read
+  from their repositories at recorded commits and linked to criteria; the MCP
+  server's `find_patterns` tool returns them by criterion or words.
 - Trigger evals: 20 realistic queries (10 should trigger, 10 near-misses) and
   `evals/run_triggers.py` to measure the description's trigger rate.
 - Calibration tests that keep every criterion's severity consistent with the

@@ -18,7 +18,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SKILL = ROOT / "skills" / "ux-expert"
 FRONTMATTER = re.compile(r"\A---\n.*?\n---\n", re.DOTALL)
 
-SHARED = ["references/finding-format.md", "references/severity-and-scoring.md", "references/laws-and-numbers.md", "references/sources.md"]
+SHARED = ["references/finding-format.md", "references/severity-and-scoring.md", "references/laws-and-numbers.md", "references/sources.md",
+          "references/patterns.md"]
 AREAS = sorted(f"references/areas/{p.name}" for p in (SKILL / "references" / "areas").glob("*.md"))
 BUNDLES = {
     "design": {

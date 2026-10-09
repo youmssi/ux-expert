@@ -55,6 +55,23 @@ export interface Scoring {
     launch_gate: GateRule[];
 }
 
+export interface Pattern {
+    id: string;
+    name: string;
+    design_system: string;
+    source: string;
+    observed_on: string;
+    rule: string;
+    criteria: string[];
+}
+
+export interface DesignSystem {
+    id: string;
+    name: string;
+    repository: string;
+    commit: string;
+}
+
 export interface Catalogue {
     product_types: ProductType[];
     phases: Phase[];
@@ -63,6 +80,8 @@ export interface Catalogue {
     retired_ids: string[];
     sources: Source[];
     scoring: Scoring;
+    design_systems: DesignSystem[];
+    patterns: Pattern[];
 }
 
 const TEXT_TYPES: Record<string, string> = {

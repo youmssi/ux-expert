@@ -15,6 +15,7 @@ MCP server for [ux-expert](https://github.com/youmssi/ux-expert): principal-leve
 | Tool | `list_criteria` | Criteria for a product type, phase (design/build) and areas |
 | Tool | `get_criterion` | One criterion with its sources and area file |
 | Tool | `read_area` | An area's procedure, criteria, code probes and gotchas |
+| Tool | `find_patterns` | Proven patterns from GOV.UK, GitHub Primer, Shopify Polaris and IBM Carbon, by criterion or words |
 | Tool | `score_finding` | Severity × reach × confidence → priority, quick win |
 | Tool | `launch_gate` | Go / Conditional Go / No-Go from the audit counts |
 | Tool | `contrast_ratio` | WCAG 2.2 contrast of two colors, pass/fail for text and UI |

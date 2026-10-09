@@ -1,4 +1,4 @@
-import type { Catalogue, Criterion, GateFact, GateRule, Phase, ProductType, Scoring } from './skill.js';
+import type { Catalogue, Criterion, GateFact, GateRule, Pattern, Phase, ProductType, Scoring } from './skill.js';
 
 export function selectCriteria(catalogue: Catalogue, product: ProductType, phase?: Phase, areas: string[] = []): Criterion[] {
     const known = new Set(catalogue.areas.map(a => a.area));
@@ -9,6 +9,16 @@ export function selectCriteria(catalogue: Catalogue, product: ProductType, phase
     return catalogue.criteria.filter(
         c => c.applies_to.includes(product) && (!phase || c.phases.includes(phase)) && (areas.length === 0 || areas.includes(c.area))
     );
+}
+
+/** Patterns that satisfy a criterion and/or mention every word of the query. */
+export function findPatterns(catalogue: Catalogue, criterionId?: string, query?: string): Pattern[] {
+    const id = criterionId?.trim().toUpperCase();
+    const words = (query ?? '').toLowerCase().split(/\s+/).filter(Boolean);
+    return catalogue.patterns.filter(p => {
+        const text = `${p.name} ${p.rule}`.toLowerCase();
+        return (!id || p.criteria.includes(id)) && words.every(w => text.includes(w));
+    });
 }
 
 const PRIORITIES = ['P0', 'P1', 'P2', 'P3'];

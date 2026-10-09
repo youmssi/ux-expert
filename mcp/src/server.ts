@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { McpServer } from '@modelcontextprotocol/server';
 import * as z from 'zod/v4';
 
-import { contrastRatio, launchGate, scoreFinding, selectCriteria } from './logic.js';
+import { contrastRatio, findPatterns, launchGate, scoreFinding, selectCriteria } from './logic.js';
 import { listSkillFiles, loadCatalogue, mimeType, readSkillFile } from './skill.js';
 import type { Catalogue, Criterion, ProductType } from './skill.js';
 
@@ -15,6 +15,7 @@ const INSTRUCTIONS = `ux-expert gives you a principal UX engineer's method.
 - Audit or review: use the "ux-audit" prompt; read ${SKILL_URI}SKILL.md first.
 - Refactor plan from audit findings: use the "ux-refactor" prompt.
 Tools: list_criteria and get_criterion query the 465 criteria; read_area returns an area's procedure;
+find_patterns returns proven patterns from public design systems to cite in recommendations;
 score_finding and launch_gate apply the scoring rules; contrast_ratio computes WCAG contrast.
 Every finding cites evidence; never state numbers from an "unconfirmed" source as fact.`;
 
@@ -181,6 +182,27 @@ export function createServer(skillDir: string): McpServer {
             annotations: readOnly
         },
         async ({ area }) => ({ content: [text(read(`references/areas/${area}.md`))] })
+    );
+
+    server.registerTool(
+        'find_patterns',
+        {
+            title: 'Find proven UX patterns',
+            description: 'Find patterns from public design systems (GOV.UK, GitHub Primer, Shopify Polaris, IBM Carbon) that satisfy a criterion or match words, to cite in a recommendation.',
+            inputSchema: z.object({
+                criterion_id: z.string().optional().describe('Criterion ID such as FORM-09'),
+                query: z.string().optional().describe('Words that must all appear in the pattern, e.g. "empty state"')
+            }),
+            annotations: readOnly
+        },
+        async ({ criterion_id, query }) => {
+            const patterns = findPatterns(catalogue, criterion_id, query);
+            if (patterns.length === 0) {
+                return { content: [text('No matching pattern. Try fewer words, or list_criteria to find related criteria.')] };
+            }
+            const lines = patterns.map(p => `- **${p.id}** ${p.name}: ${p.rule} (${p.criteria.join(', ')}) ${p.source}`);
+            return { content: [text(lines.join('\n'))] };
+        }
     );
 
     server.registerTool(

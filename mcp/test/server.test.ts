@@ -59,7 +59,7 @@ describe('ux-expert MCP server (in-process, 2026-07-28)', () => {
 
     it('marks every tool read-only', async () => {
         const { tools } = await client.listTools();
-        assert.deepEqual(tools.map(t => t.name).sort(), ['contrast_ratio', 'get_criterion', 'launch_gate', 'list_criteria', 'read_area', 'score_finding']);
+        assert.deepEqual(tools.map(t => t.name).sort(), ['contrast_ratio', 'find_patterns', 'get_criterion', 'launch_gate', 'list_criteria', 'read_area', 'score_finding']);
         assert.ok(tools.every(t => t.annotations?.readOnlyHint === true && t.annotations?.destructiveHint === false));
     });
 
@@ -95,6 +95,15 @@ describe('ux-expert MCP server (in-process, 2026-07-28)', () => {
         assert.equal(invalid.isError, true);
     });
 
+    it('finds proven patterns by criterion and by words', async () => {
+        const byCriterion = await client.callTool({ name: 'find_patterns', arguments: { criterion_id: 'form-09' } });
+        assert.match(textOf(byCriterion), /\*\*govuk-validation\*\*/);
+        const byWords = await client.callTool({ name: 'find_patterns', arguments: { query: 'empty states' } });
+        assert.match(textOf(byWords), /primer-empty-states/);
+        const none = await client.callTool({ name: 'find_patterns', arguments: { query: 'nothing-matches-this' } });
+        assert.match(textOf(none), /^No matching pattern/);
+    });
+
     it('rejects invalid tool arguments before running the tool', async () => {
         const result = await client.callTool({ name: 'score_finding', arguments: { severity: 'S9', reach: 'R1', confidence: 'High' } });
         assert.equal(result.isError, true);
@@ -107,7 +116,7 @@ describe('ux-expert MCP server (stdio binary)', { skip: !existsSync('dist/index.
         await client.connect(new StdioClientTransport({ command: process.execPath, args: ['dist/index.js'] }));
         try {
             const { tools } = await client.listTools();
-            assert.equal(tools.length, 6);
+            assert.equal(tools.length, 7);
         } finally {
             await client.close();
         }

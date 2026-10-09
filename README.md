@@ -29,6 +29,7 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 - **Change review**: check a pull request's UI changes and the regressions they could cause
 - **22 areas, 465 criteria**: flows, information architecture, layout, typography, color, interaction, forms, states, accessibility (WCAG 2.2 AA), content, onboarding, performance, responsive and platform conventions, design system, trust and privacy, i18n, data display and search, developer experience, AI interfaces, measurement, launch readiness
 - **Evidence-first findings**: every finding has a location, evidence type, severity, reach, confidence, priority, fix and verification step
+- **Proven patterns**: 17 patterns from the public design systems of GOV.UK, GitHub (Primer), Shopify (Polaris) and IBM (Carbon), linked to the criteria they satisfy and cited in recommendations
 - **Consistent scoring**: one model for every agent: severity S0–S4 × reach R1–R3 → priority P0–P3, with an explicit launch gate
 - **Built for codebases**: search patterns for React, Vue, Svelte, Angular, React Native, Flutter, CLIs and SDKs locate evidence in real code
 - **Queryable catalogue**: criteria are validated YAML with a JSON Schema, ready for tools and the MCP server
