@@ -54,6 +54,7 @@ distribution channel, license, MCP interface) gets an ADR in `docs/adr/`
 Every check below passes locally; CI runs the same ones and blocks the merge.
 
 ```bash
+python3 -m unittest discover -s scripts -p "test_*.py"
 python3 scripts/validate.py
 skills-ref validate skills/ux-expert
 ```

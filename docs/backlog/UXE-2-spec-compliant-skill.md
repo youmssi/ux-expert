@@ -22,7 +22,7 @@ a repository script for rules the spec does not cover.
 |---|---|---|
 | `skills/ux-expert/SKILL.md` | — | Orchestrator: modes, routing to areas, procedure, gotchas; frontmatter with name, description (≤ 1,024 characters, names every area), license and metadata |
 | `skills/ux-expert/references/` | — | Shared references (finding format, severity and scoring, codebase recon, laws and numbers, report template) and `areas/<area>.md` for the 22 areas |
-| `scripts/validate.py` | — | Checks: unique criterion IDs, every relative link resolves inside the skill, `SKILL.md` ≤ 500 lines, no path escapes the skill root, no AI-authorship trace |
+| `scripts/validate.py` | — | Checks: unique criterion IDs, every relative link resolves inside the skill, `SKILL.md` ≤ 500 lines, no link leaves the skill root; code blocks and inline code are ignored. Covered by unit tests |
 | `.github/workflows/ci.yml` | — | Runs both checks on pull requests to `develop` and `main` |
 | `.claude-plugin/marketplace.json` | — | Lists the `ux-expert` plugin |
 

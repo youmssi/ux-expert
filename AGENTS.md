@@ -90,13 +90,16 @@ file and add what is specific to that tool.
 ## 5. Checks before every push
 
 ```bash
-python3 scripts/validate.py          # repo rules: IDs, links, budgets, layout
-skills-ref validate skills/ux-expert # Agent Skills spec compliance
+python3 -m unittest discover -s scripts -p "test_*.py"  # validator tests
+python3 scripts/validate.py                              # repo rules: IDs, links, budget
+skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
 ```
 
 `skills-ref` is installed from the pinned commit in
 `.github/workflows/ci.yml`. CI runs the same commands and blocks the merge
-when one fails. (Both checks arrive with UXE-2.)
+when one fails. To install `skills-ref` locally:
+`pip install "skills-ref @ git+https://github.com/agentskills/agentskills@<commit>#subdirectory=skills-ref"`
+with the commit from the workflow.
 
 ## 6. Pull requests
 
