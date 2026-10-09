@@ -1,0 +1,33 @@
+# Answer key for the signup-app fixture. Not shown to the agent under test.
+# A defect counts as found when one finding names its file and any of its criteria.
+# A decoy counts as a false positive when one finding names its file and any of its criteria.
+fixture: signup-app
+product_type: web-app
+defects:
+  - {id: D01, file: SignupForm.tsx, criteria: [FORM-02, A11Y-24], note: Placeholder-only labels on email, password and code}
+  - {id: D02, file: SignupForm.tsx, criteria: [FORM-09], note: "react-hook-form mode onChange shows errors while typing"}
+  - {id: D03, file: SignupForm.tsx, criteria: [FORM-12], note: reset() clears the form after a server error}
+  - {id: D04, file: SignupForm.tsx, criteria: [CONT-06, STATE-08], note: Generic "Something went wrong" with no reason or next step}
+  - {id: D05, file: SignupForm.tsx, criteria: [FORM-10], note: Field error says only "Invalid"}
+  - {id: D06, file: SignupForm.tsx, criteria: [FORM-16, A11Y-25], note: Paste blocked on the password field}
+  - {id: D07, file: SignupForm.tsx, criteria: [FORM-05], note: type="number" for an invite code}
+  - {id: D08, file: SignupForm.tsx, criteria: [TRUST-01, FORM-08], note: Marketing consent pre-checked}
+  - {id: D09, file: SignupForm.tsx, criteria: [A11Y-02, INT-03, A11Y-11], note: Submit is a div with onClick, unreachable by keyboard}
+  - {id: D10, file: SignupForm.tsx, criteria: [FORM-14, CONT-03], note: Submit button labelled "Submit"}
+  - {id: D11, file: SignupForm.tsx, criteria: [FORM-06], note: No autocomplete tokens on email and password}
+  - {id: D12, file: styles.css, criteria: [COL-03, COL-04, COL-02, A11Y-15], note: "Muted #9ca3af (2.54:1) on the heading and error #ef4444 (3.76:1) on white fail contrast"}
+  - {id: D13, file: styles.css, criteria: [A11Y-04, INT-02], note: ".btn:focus removes the outline with no replacement"}
+  - {id: D14, file: styles.css, criteria: [TYP-03], note: 13 px body text for a general audience}
+  - {id: D15, file: index.html, criteria: [A11Y-31, A11Y-17], note: "user-scalable=no and maximum-scale=1 disable zoom"}
+  - {id: D16, file: Dashboard.tsx, criteria: [STATE-07], note: Empty catch swallows the projects error}
+  - {id: D17, file: Dashboard.tsx, criteria: [STATE-05, STATE-04], note: Spinner forever when loading fails}
+  - {id: D18, file: Dashboard.tsx, criteria: [STATE-02], note: No first-use empty state when there are no projects}
+  - {id: D19, file: Dashboard.tsx, criteria: [A11Y-14], note: Logo image without alt}
+  - {id: D20, file: ProjectMenu.tsx, criteria: [STATE-17, INT-19, FLOW-19], note: Delete with no confirmation and no undo}
+  - {id: D21, file: routes.tsx, criteria: [FLOW-02, ONB-03, ONB-07, ONB-08], note: Nine required steps before first value; questions personalize nothing}
+  - {id: D22, file: routes.tsx, criteria: [ONB-06], note: Email verification blocks the flow}
+  - {id: D23, file: routes.tsx, criteria: [ONB-12, ONB-11], note: Mandatory 12-slide product tour}
+decoys:
+  - {id: N01, file: LoginForm.tsx, criteria: [FORM-09], note: Default react-hook-form mode is the recommended validation timing}
+  - {id: N02, file: LoginForm.tsx, criteria: [FORM-02, FORM-06, A11Y-10], note: Labels, autocomplete and error association are correct}
+  - {id: N03, file: login.css, criteria: [A11Y-04], note: "outline: none is replaced by a :focus-visible ring"}

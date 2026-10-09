@@ -78,8 +78,8 @@ file and add what is specific to that tool.
 - **Small, verified steps.** Change, run the checks, look at the result, then
   continue. One validated push beats three speculative ones.
 - **Prove it works, then say so.** Run the checks in section 5. For content
-  changes that alter agent behaviour, say which eval or manual run you used to
-  confirm it (from UXE-10 onward, run the evals).
+  changes that alter agent behaviour, run the evals (`evals/run.sh`) against the
+  previous version, or say why you could not and how you checked instead.
 - **Report honestly.** If a check fails, say which and why. If something was not
   verified, say it was not verified.
 - **Not overkill.** Add what an agent would get wrong without it; cut what it
@@ -95,6 +95,7 @@ file and add what is specific to that tool.
 ```bash
 pip install -r scripts/requirements.txt                  # once: PyYAML, jsonschema
 python3 -m unittest discover -s scripts -p "test_*.py"  # script tests
+python3 -m unittest discover -s evals -p "test_*.py"    # eval grader and answer keys
 python3 scripts/validate.py                              # repo rules: links, line budget
 python3 scripts/generate.py --check                      # criteria schema, IDs, tables in sync
 skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
@@ -129,6 +130,7 @@ skills/ux-expert/            the Agent Skill (SKILL.md, references/, criteria/, 
 mcp/                         the MCP server package (TypeScript, built from the skill)
 .claude-plugin/              Claude Code plugin marketplace manifest
 scripts/                     validation and generation scripts
+evals/                       eval cases, seeded-defect fixtures, grader, runner
 docs/adr/                    architecture decision records
 docs/backlog/                roadmap and stories
 docs/engineering/            principles (code) and content rules

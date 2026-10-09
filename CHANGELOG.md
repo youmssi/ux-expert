@@ -9,6 +9,10 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Evals (`evals/`): audit evals on two seeded-defect apps (34 defects, 4
+  decoys) and a design-mode eval, answer keys, a grader producing Agent Skills
+  `grading.json` and `benchmark.json`, and a runner comparing runs with and
+  without the skill in clean workspaces.
 - Release assets built by `scripts/bundle.py`: single-file bundles per mode
   (design, audit, refactor, full) for chat assistants, and the skill as a zip;
   the release workflow attaches them to the GitHub release.
