@@ -101,6 +101,13 @@ For each action on critical flows:
 - Shortcuts: `useHotkeys`, `keydown`, `Mousetrap`, `cmdk`, `kbar`.
 - Drag: `react-dnd`, `dnd-kit`, `draggable`, `onDragStart`, `Sortable`.
 
+## Gotchas
+
+- Radix, React Aria and Headless UI dialogs already trap focus and close on Esc. Flag INT-11 only when the app overrides or bypasses them.
+- `:focus-visible` shows for keyboard focus only, by design. Clicking with a mouse will not show it; test with Tab.
+- A global `prefers-reduced-motion` rule in a CSS reset counts. Search stylesheets, not only components.
+- Toast libraries default to short durations (often 2–4 s). Check the duration override for errors and toasts with actions.
+
 ## Output
 
 - A state matrix per core component.

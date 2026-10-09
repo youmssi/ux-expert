@@ -99,6 +99,13 @@ When the IA is uncertain, recommend **tree testing** (e.g. Treejack-style: users
 - **Duplicate entry points with different names** for the same destination.
 - **Modal-on-modal** stacking that destroys location awareness.
 
+## Gotchas
+
+- A route can look orphaned because a feature flag hides its nav item. Check flags before reporting IA-09.
+- Framework folders that are not URL segments, such as Next.js route groups `(group)` and private folders `_name`, do not add depth.
+- A command palette helps experts but does not replace a visible path to a critical job (IA-02).
+- Breadcrumbs only earn their space from about three levels deep; do not flag their absence in shallow products.
+
 ## Output
 
 - The reconstructed sitemap tree, with depth per critical job.

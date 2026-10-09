@@ -9,6 +9,10 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- A Gotchas section in every area (77 concrete corrections, e.g. react-hook-form
+  validation defaults, `rem` with a 62.5 % root, iOS Safari viewport limits,
+  consent tools that block scripts with `type="text/plain"`).
+- An estimated token budget per skill file, enforced by `validate.py`.
 - **Refactor mode**: turns audit findings into a sequenced plan of shippable,
   guarded stories (safety → guards → foundations → migrations → flows →
   polish), with a dependency graph and measures

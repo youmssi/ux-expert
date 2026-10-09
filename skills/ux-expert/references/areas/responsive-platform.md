@@ -90,6 +90,12 @@ From CTX and analytics: which devices, OSes, browsers and window sizes matter? D
 - Browser support: `browserslist`, `.browserslistrc`, `targets` in Babel/SWC config.
 - Print: `@media print`.
 
+## Gotchas
+
+- Chrome device emulation does not reproduce iOS Safari's viewport and virtual-keyboard behaviour. Without iOS Safari, RESP-09 and RESP-10 are Not verified.
+- Tailwind breakpoints are mobile-first `min-width`: `md:` applies from 768 px up.
+- Judge native apps against the current Apple HIG and Material guidance, and name the version you used.
+
 ## Output
 
 - The device/platform matrix with tested/not-tested status.

@@ -108,6 +108,13 @@ Audit **every critical-flow screen** (from FLOW) plus the main templates (list, 
 - Full-width text on large monitors.
 - Floating action button and sticky footer and sticky header and chat bubble together on mobile.
 
+## Gotchas
+
+- Tailwind spacing maps through the config and the root font size; `p-4` is 16 px only with the defaults.
+- Component libraries (MUI, Chakra, Mantine) space through theme multipliers. Read the theme before counting off-scale values.
+- Density is right for expert data tools. Do not flag it without the persona from context discovery.
+- Attention order cannot be judged reliably from code. Without screenshots, attention-order findings stay at Medium confidence.
+
 ## Output
 
 - Per screen: the intended vs. actual attention order, primary-action analysis, and a spacing/alignment summary.

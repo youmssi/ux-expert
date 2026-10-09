@@ -120,6 +120,12 @@ Plus: a per-language README with the same structure, a changelog, a migration gu
 - Docs: `README*`, `docs/`, `examples/` (and whether CI runs them: check workflow files for `examples`).
 - Release: `CHANGELOG`, `release-please`, `changesets`, `SECURITY.md`, `CONTRIBUTING.md`.
 
+## Gotchas
+
+- Run the quick start in a clean environment (a fresh container or an empty directory). Global installs on your machine hide missing steps.
+- Judge error messages in each binding. A clear core error can be wrapped into a generic one by a binding.
+- Documentation sites can lag the repository. Check that the docs version matches the latest release before reporting drift.
+
 ## Output
 
 - A TTFS walkthrough table per primary language.

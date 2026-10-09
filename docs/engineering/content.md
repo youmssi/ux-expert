@@ -17,7 +17,8 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
 ## 2. Structure for progressive disclosure
 
 - `SKILL.md` holds only what is needed on every run: when to use which mode,
-  the procedure, the gotchas. Under 500 lines and roughly 5,000 tokens.
+  the procedure, the gotchas. Under 500 lines; every Markdown file stays under
+  about 5,000 tokens (`validate.py` estimates 4 characters per token).
 - Detail lives in `references/`, one focused file per concern. `SKILL.md` says
   **when** to read each file ("Read `references/areas/forms-input.md` when the
   scope includes a form"), never a bare "see references/".
@@ -69,6 +70,10 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
 
 ## 6. Gotchas
 
+- Every area file has a `## Gotchas` section before `## Output`: 3–5 concrete
+  corrections about framework, standard or tool behaviour that defies a
+  reasonable assumption. Generic advice ("be careful with…") does not belong
+  there.
 - When an agent makes a mistake in a run (false positive, missed issue, wasted
   step), add a one-line correction to the relevant gotchas list. That is the
   fastest way to improve the skill.

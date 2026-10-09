@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from validate import MAX_SKILL_LINES, validate
+from validate import CHARS_PER_TOKEN, MAX_FILE_TOKENS, MAX_SKILL_LINES, validate
 
 SKILL_MD = "---\nname: demo\ndescription: Demo skill.\n---\n\nSee [format](references/format.md).\n"
 
@@ -29,6 +29,10 @@ class ValidateTest(unittest.TestCase):
     def test_a_skill_md_over_the_line_budget_is_reported(self):
         (self.skill / "SKILL.md").write_text(SKILL_MD + "line\n" * MAX_SKILL_LINES)
         self.assertIn("budget is 500", validate(self.root)[0])
+
+    def test_a_reference_over_the_token_budget_is_reported(self):
+        (self.skill / "references" / "format.md").write_text("x" * CHARS_PER_TOKEN * (MAX_FILE_TOKENS + 1))
+        self.assertIn("tokens, budget is 5000", validate(self.root)[0])
 
     def test_a_broken_link_is_reported(self):
         (self.skill / "references" / "format.md").unlink()

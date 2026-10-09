@@ -108,6 +108,12 @@ Terms of service, privacy policy, cookie policy (with the consent tool working �
 - Status: `status.` links, `statuspage`, `instatus`, `betteruptime`.
 - Flags: see MEAS.
 
+## Gotchas
+
+- Staging often sets `noindex` on purpose. Check the production configuration, not staging.
+- Legal page requirements vary by country. Name the obligation and recommend legal review rather than asserting compliance.
+- App store review rules change every year. Cite the guideline version and date you checked.
+
 ## Output
 
 - An external-surface audit table (touchpoint · status · issues).

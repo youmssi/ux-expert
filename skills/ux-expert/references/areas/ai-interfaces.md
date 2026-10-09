@@ -115,6 +115,12 @@ Code probes: SDK imports (`openai`, `@anthropic-ai/sdk`, `anthropic`, `ai`/`@ai-
 | AI-27 | Evaluation and monitoring hooks | No logging of failures, feedback or quality signals | S2 (→ MEAS) |
 <!-- END GENERATED criteria -->
 
+## Gotchas
+
+- Streams can fail after partial output. Check what the UI shows when the stream breaks halfway, not only when the request fails.
+- A disclaimer alone does not meet AI-10 or AI-11. Grounding and verification aids are separate requirements.
+- Model and provider names in code are not UX. Judge what users see, control and can recover from.
+
 ## Output
 
 - An AI feature inventory (feature · acts or suggests · data used · latency · stakes).

@@ -89,6 +89,13 @@ For each performance issue, write the user consequence on a critical flow: "On m
 - Budgets: `size-limit`, `bundlesize`, `lighthouserc`, `@lhci`.
 - RUM: `web-vitals`, `reportWebVitals`, `@vercel/speed-insights`, `datadogRum`.
 
+## Gotchas
+
+- Lighthouse is lab data. Never call a Core Web Vitals result "p75" or "field" without real-user data (CrUX or RUM).
+- Measure production builds only. Development servers are unminified and much slower.
+- Bundle analyzers show parsed and compressed sizes; budgets refer to compressed transfer size.
+- A large bundle on an internal desktop tool used daily on fast machines may be fine. Weigh findings against the context brief.
+
 ## Output
 
 - A metrics table per critical route (lab and field where available, with device/network profile).

@@ -111,6 +111,13 @@ For each flow, write the **proposed step table** next to the current one, and qu
 - Double-submit protection: `disabled={isSubmitting}`, `idempotency`, `Idempotency-Key`, debounce on submit.
 - Token and link expiry handling: `expired`, `invalid token`, `TokenExpiredError`.
 
+## Gotchas
+
+- Count the steps the user experiences, not the routes: one route holding a 4-step wizard is 4 steps; a redirect the user never sees is 0.
+- Email-verification and OAuth seams are invisible in front-end code. Follow the server callback and the link target in the email template.
+- A step that looks removable may be legally required (identity checks, age gates, consent). Check before recommending removal, and say so.
+- Merge steps only when they ask for related inputs. Steps that separate different decisions should stay separate.
+
 ## Output
 
 - For each critical flow: the current step table, metrics, ranked break points, the proposed step table, and the delta metrics.

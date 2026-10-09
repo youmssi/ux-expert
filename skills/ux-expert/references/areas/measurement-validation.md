@@ -94,6 +94,12 @@ For each P0/P1 finding, write: **"We believe that <change> for <users> will resu
 | MEAS-17 | Findings converted to testable hypotheses | Fixes shipped without success criteria | S1–S2 |
 <!-- END GENERATED criteria -->
 
+## Gotchas
+
+- Autocapture (PostHog, Heap) records clicks, not business events. Activation still needs explicit events.
+- Server-side events often live in another repository or service. Search or ask before reporting instrumentation as missing.
+- Personal data put into event properties "for debugging" is a MEAS-05 failure, whatever the reason.
+
 ## Output
 
 - The HEART (or chosen framework) table.

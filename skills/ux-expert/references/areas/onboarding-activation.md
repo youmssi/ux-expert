@@ -103,6 +103,12 @@ Evaluate each that exists:
 - Permissions: `requestPermission`, `Notification.requestPermission`, `PermissionsAndroid.request`, `requestWhenInUseAuthorization`.
 - Sign-up methods: `signIn\(['"](google|github|apple|azure)`, `passkey`, `webauthn`, `magic link`, `OTP`.
 
+## Gotchas
+
+- A seeded demo workspace counts as samples (ONB-10), even without a template picker.
+- Onboarding is often behind feature flags or experiments. Audit the default variant and name the others.
+- Activation events are often sent server-side (webhooks, jobs). Search the backend before reporting ONB-02 as missing.
+
 ## Output
 
 - The aha moment and activation definition (proposed or confirmed).

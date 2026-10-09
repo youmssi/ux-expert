@@ -96,6 +96,13 @@ List every assumption with a **risk level** (if wrong, how much does the audit c
 | CTX-12 | Evidence base exists | Some research, feedback loop or analytics informs decisions | No feedback channel at all | S1–S2 (→ MEAS) |
 <!-- END GENERATED criteria -->
 
+## Gotchas
+
+- Marketing copy describes who the team *wants* as users. When analytics, support tickets or research exist, they win over copy.
+- Role names in permission code (`admin`, `member`) are access levels, not personas: two personas can share a role, and one persona can hold several.
+- Missing research is a finding (CTX-12), not a reason to stall. State assumptions with their risk and continue.
+- Ask at most 5 questions, and only questions whose answer would change the audit.
+
 ## Output
 
 1. **Context brief** (this is what the orchestrator passes to every other area):
