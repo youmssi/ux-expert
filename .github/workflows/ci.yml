@@ -38,6 +38,23 @@ jobs:
           pip install "$SKILLS_REF"
           for skill in skills/*/; do skills-ref validate "$skill"; done
 
+  runtime:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/runtime-check
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tools/runtime-check/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Runtime checks on a fixture with known problems
+        run: npm test
+
   mcp:
     runs-on: ubuntu-latest
     defaults:

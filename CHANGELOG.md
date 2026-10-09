@@ -9,6 +9,10 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Runtime checks: `scripts/ux_check.mjs` (Playwright + axe) saves screenshots
+  per width and color scheme and reports axe violations, small targets, missing
+  focus indicators, reflow overflow and blocked zoom, mapped to criterion IDs;
+  `scripts/contrast.py` computes WCAG contrast with the standard library.
 - Proven patterns (`criteria/patterns.yaml`, generated `references/patterns.md`):
   17 patterns from GOV.UK, GitHub Primer, Shopify Polaris and IBM Carbon, read
   from their repositories at recorded commits and linked to criteria; the MCP
