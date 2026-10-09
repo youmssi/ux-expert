@@ -104,9 +104,10 @@ get green; never push an empty commit to re-trigger CI.
 2. Bump the version (skill metadata, plugin manifest, MCP package when it
    exists) and move `CHANGELOG.md` entries from `Unreleased` to the version.
 3. When CI is green, merge with a **merge commit** and tag `vX.Y.Z` on `main`.
-4. Publish channels in order: Git tag (Agent Skills + Claude plugin
-   marketplace), then npm (MCP server), then bundles attached to the GitHub
-   release. Confirm each install path works before announcing.
+4. Pushing the tag runs `.github/workflows/release.yml`: it creates the GitHub
+   release with the bundles and the skill zip (notes from `CHANGELOG.md`) and
+   publishes the MCP server to npm (needs the `NPM_TOKEN` secret). Confirm each
+   install path in `docs/install.md` works before announcing.
 
 ## 8. Definition of done
 

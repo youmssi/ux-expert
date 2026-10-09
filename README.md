@@ -55,7 +55,9 @@ Agents load only what a task needs: the skill's description at startup, `SKILL.m
 | Claude Code | `/plugin marketplace add youmssi/ux-expert`, then `/plugin install ux-expert@ux-expert` | v0.1 |
 | Any Agent Skills client (Codex, Gemini CLI, Cursor…) | Copy `skills/ux-expert/` into the client's skills directory | now |
 | MCP clients (Claude Code, Cursor, VS Code, Codex, Gemini CLI…) | `npx -y ux-expert-mcp` — see [`mcp/README.md`](mcp/README.md) for each client | after the first npm release |
-| Chat apps without skills or MCP | Upload the single-file bundle from the GitHub release | v0.3 |
+| Chat apps without skills or MCP (ChatGPT web, DeepSeek, Grok…) | Upload a single-file bundle from the GitHub release | from the first release |
+
+Step-by-step instructions for each tool: [`docs/install.md`](docs/install.md). To wire ux-expert into your team's workflow (stories, PRs, releases): [`docs/use-in-your-project.md`](docs/use-in-your-project.md).
 
 ## Usage
 

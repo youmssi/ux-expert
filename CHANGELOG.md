@@ -9,6 +9,11 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Release assets built by `scripts/bundle.py`: single-file bundles per mode
+  (design, audit, refactor, full) for chat assistants, and the skill as a zip;
+  the release workflow attaches them to the GitHub release.
+- `docs/install.md` (every tool) and `docs/use-in-your-project.md` (wiring
+  ux-expert into stories, pull requests and releases).
 - **MCP server** `ux-expert-mcp` (`mcp/`): MCP 2026-07-28 over stdio on the
   official TypeScript SDK v2; prompts `ux-design`, `ux-audit`, `ux-refactor`;
   read-only tools `list_criteria`, `get_criterion`, `read_area`,

@@ -29,8 +29,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| [UXE-8](UXE-8-mcp-server.md) | MCP server (TypeScript, read-only, MCP 2026-07-28): prompts per mode, resources, criteria and scoring tools | L | in progress |
-| UXE-9 | Single-file bundles per mode for chat apps; install guide per agent | S | to refine |
+| [UXE-8](UXE-8-mcp-server.md) | MCP server (TypeScript, read-only, MCP 2026-07-28): prompts per mode, resources, criteria and scoring tools | L | done |
+| [UXE-9](UXE-9-bundles-and-install-guide.md) | Single-file bundles per mode for chat apps; install guide per agent; using it in a project | S | in progress |
 
 ## v0.4: proven quality
 
