@@ -123,6 +123,12 @@ For each data surface: what is the **user question** (from CTX jobs)? e.g. "Whic
 - Charts: `recharts`, `chart.js`, `echarts`, `victory`, `nivo`, `d3`, `visx`, `highcharts`, `plotly`.
 - Export/import: `csv`, `xlsx`, `papaparse`, `exceljs`, `download`.
 
+## Gotchas
+
+- Headless table libraries (TanStack Table) leave alignment, sticky headers and density to the app's CSS.
+- APIs often cap page sizes silently. Check the server limit against what "Select all" claims to select.
+- Only bar and area charts must start at zero. Line charts may use a tighter axis if it is labelled.
+
 ## Output
 
 - A data surfaces table (surface · user question · verdict).

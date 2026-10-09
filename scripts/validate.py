@@ -1,7 +1,8 @@
 """Repository rules the Agent Skills spec validator does not cover.
 
 Checks every skill under ``skills/``:
-- ``SKILL.md`` stays within the line budget;
+- ``SKILL.md`` stays within the line budget, and every Markdown file within its
+  estimated token budget (about 4 characters per token);
 - every relative Markdown link resolves to a file inside the skill directory.
 
 Criterion IDs are validated with the catalogue by scripts/generate.py.
@@ -15,6 +16,10 @@ import sys
 from pathlib import Path
 
 MAX_SKILL_LINES = 500
+# The spec recommends < 5,000 tokens for SKILL.md; references follow the same
+# budget so each loads cheaply on demand. Estimated as characters / 4.
+MAX_FILE_TOKENS = 5000
+CHARS_PER_TOKEN = 4
 LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 EXTERNAL = ("http://", "https://", "mailto:", "#")
 FENCED_CODE = re.compile(r"^(```|~~~).*?^\1", re.MULTILINE | re.DOTALL)
@@ -33,6 +38,15 @@ def check_line_budget(skill_dir: Path) -> list[str]:
     if lines > MAX_SKILL_LINES:
         return [f"{skill_md}: {lines} lines, budget is {MAX_SKILL_LINES}; move detail to references/"]
     return []
+
+
+def check_token_budget(skill_dir: Path) -> list[str]:
+    problems = []
+    for md in sorted(skill_dir.rglob("*.md")):
+        tokens = len(md.read_text(encoding="utf-8")) // CHARS_PER_TOKEN
+        if tokens > MAX_FILE_TOKENS:
+            problems.append(f"{md}: about {tokens} tokens, budget is {MAX_FILE_TOKENS}; split it or cut what agents already know")
+    return problems
 
 
 def check_links(skill_dir: Path) -> list[str]:
@@ -58,6 +72,7 @@ def validate(repo_root: Path) -> list[str]:
     problems = []
     for skill_dir in skill_dirs:
         problems += check_line_budget(skill_dir)
+        problems += check_token_budget(skill_dir)
         problems += check_links(skill_dir)
     return problems
 

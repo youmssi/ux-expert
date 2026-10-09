@@ -91,6 +91,13 @@ console.log(ratio('#6B7280', '#FFFFFF')); // ≈ 4.83
 ```
 (Expand 3-digit hex first; for alpha colors, composite over the actual background before computing.)
 
+## Gotchas
+
+- Compute contrast against the real background, including dark-mode surfaces and cards, not against white by default.
+- Disabled controls are exempt from WCAG 1.4.3; placeholder text that carries instructions is not.
+- "Large text" is 24 CSS px regular or 18.66 CSS px bold. A 16 px bold label is normal text (4.5:1).
+- Brand colors are often fixed by marketing. Recommend an accessible darker variant for text and fills rather than changing the brand.
+
 ## Output
 
 - A contrast table: pair · usage · light ratio · dark ratio · pass/fail (AA).

@@ -107,6 +107,12 @@ From CTX: current and planned locales and regions. If English-only with no plans
 - Phone/name: `firstName.*lastName` required; `libphonenumber`.
 - Time zones: `new Date\(` string parsing; `getTimezoneOffset`; `Intl.DateTimeFormat\(\)\.resolvedOptions\(\)\.timeZone`; `date-fns-tz`, `luxon`.
 
+## Gotchas
+
+- `toLocaleDateString()` without a locale uses the runtime's locale. On a server that is often `en-US`, which causes wrong formats and hydration mismatches.
+- Pass the locale and time zone explicitly to `Intl` APIs in server-rendered code.
+- English-only products still need correct currencies, time zones and date formats for international users (I18N-12 to I18N-14).
+
 ## Output
 
 - An i18n readiness summary: externalization percentage, message-format quality, RTL readiness, formatting correctness.

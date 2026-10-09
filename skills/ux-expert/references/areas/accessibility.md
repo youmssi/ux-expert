@@ -36,7 +36,7 @@ For each critical flow, without a mouse:
 - **Focus not obscured** by sticky headers or footers (WCAG 2.4.11).
 
 ### Step 4: Screen-reader walkthrough (manual or reasoned from code)
-Test with VoiceOver (macOS/iOS), NVDA (Windows) or TalkBack (Android) when possible; otherwise reason from the accessibility tree (Playwright `page.accessibility.snapshot()`, or the Chrome DevTools Accessibility pane).
+Default pairing: NVDA with Chrome or Firefox on Windows, VoiceOver with Safari on macOS and iOS, TalkBack with Chrome on Android. Test the pairing your users have; without a screen reader, reason from the accessibility tree (Playwright `page.accessibility.snapshot()`, or the Chrome DevTools Accessibility pane) and mark the result Medium confidence.
 - **Page title** unique and descriptive per page.
 - **Landmarks:** `header`, `nav`, `main` (exactly one), `footer`, and labeled regions where there are several of the same kind.
 - **Headings:** a logical outline (one H1, no skipped levels used for styling).
@@ -132,6 +132,13 @@ Map the findings to WCAG success criteria. For pre-launch or enterprise mode, re
 - `aria-live|role="(status|alert)"` (presence near toasts and async errors)
 - `autoFocus` (check that it's justified)
 - Linters: `eslint-plugin-jsx-a11y` in `package.json` / ESLint config; `jest-axe`, `@axe-core/*` in tests
+
+## Gotchas
+
+- A clean axe run is not a pass for keyboard and focus criteria (A11Y-02 to A11Y-06). Those need the keyboard walkthrough.
+- `aria-label` on a `div` or `span` without a role is ignored by most screen readers.
+- `sr-only` (visually hidden) text is fine; `display: none` and `visibility: hidden` remove content from the accessibility tree.
+- WCAG 2.5.8 has exceptions: inline links in text, and targets with enough spacing. Measure spacing before flagging a small target.
 
 ## Output
 

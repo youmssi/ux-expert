@@ -107,6 +107,13 @@ Plus: no blame ("You entered an invalid…" → "Enter a date after today"), no 
 - Emails: `emails/`, `templates/`, `subject:`.
 - Jargon scan: `\b(entity|payload|null|undefined|NaN|tenant|instance|config|param|invalid state|exception)\b` inside user-facing strings.
 
+## Gotchas
+
+- Message catalogs often contain unused keys. Check that a string is used before reviewing its wording.
+- Error text shown in the UI often comes straight from the API response. Trace where a message comes from before rewriting it.
+- Sentence case versus title case is a style choice. Flag inconsistency (CONT-12), not the choice.
+- Product names and legal wording are usually fixed. Flag clarity problems, and mark them as needing a product or legal decision.
+
 ## Output
 
 - A terminology glossary table (concept · canonical term · variants found · locations).

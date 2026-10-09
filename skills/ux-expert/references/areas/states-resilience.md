@@ -116,6 +116,13 @@ Test or reason through, with real component code:
 - User-visible nulls: template interpolation of possibly-undefined values, e.g. `{user.name}` with no fallback, `toFixed` on undefined.
 - Monitoring: `Sentry.init`, `@sentry/`, `datadog`, `bugsnag`, `rollbar`, `logrocket`.
 
+## Gotchas
+
+- TanStack Query v5 keeps previous data only with `placeholderData: keepPreviousData`. Check the options before flagging STATE-06.
+- Next.js `error.tsx` catches render errors in its segment, not errors thrown in event handlers or async callbacks.
+- A `catch` that only reports to Sentry is visible to the team but silent for the user. Report it against STATE-07.
+- Suspense fallbacks may never render when data is prefetched. Confirm loading states at runtime when you can.
+
 ## Output
 
 - A state matrix per critical screen.

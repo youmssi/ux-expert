@@ -154,7 +154,7 @@ product, with a reason, using this matrix:
 
 ```
 You are running the <AREA> area of a UX audit.
-1. Read references/areas/<AREA>.md (inside the ux-expert skill) and follow its procedure.
+1. Read references/areas/<AREA>.md (inside the ux-expert skill), including its Gotchas, and follow its procedure.
 2. Read references/finding-format.md and references/severity-and-scoring.md.
 Context brief: <users, top jobs, critical flows, success metrics>
 Inventory relevant to you: <routes, components, files>
@@ -167,7 +167,8 @@ Do not edit files.
 **Without subagents**, run the areas one at a time in this order: CTX, FLOW,
 IA, STATE, A11Y, FORM, CONT, INT, LAY, TYP, COL, RESP, PERF, DS, ONB, TRUST,
 I18N, DATA, DX, AI, MEAS, LAUNCH. Flows come early because they show which
-screens matter. Save each area's findings to a scratch file before moving on.
+screens matter. Read each area's Gotchas before writing its findings, and save
+each area's findings to a scratch file before moving on.
 
 ### Phase 5: Merge and de-duplicate
 Merge findings with the same root cause and location (keep the most specific

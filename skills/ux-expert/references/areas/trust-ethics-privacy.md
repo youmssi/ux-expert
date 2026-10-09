@@ -114,6 +114,12 @@ Check each trust-critical screen for these patterns:
 - Deletion/export: `deleteAccount`, `export`, `download my data`, `gdpr`.
 - Auth: `passkey|webauthn`, `totp|mfa|2fa`, `recovery codes`, `sessions`, `revoke`.
 
+## Gotchas
+
+- This is not legal advice. Flag legal risk and recommend review; never state that a product is compliant.
+- Consent tools often block scripts with `type="text/plain"` until consent. That is correct blocking, not tracking before consent.
+- Payment providers' hosted portals (for example Stripe's customer portal) can handle cancellation. Check that one is linked and enabled before flagging TRUST-09.
+
 ## Output
 
 - A dark-pattern sweep table (screen · pattern · evidence · severity).

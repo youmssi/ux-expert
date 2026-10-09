@@ -98,6 +98,12 @@ rg -n '(margin|padding|gap)[^:]*:\s*\d+px' src | wc -l
 ```
 Adjust the paths and globs to the project. Report the counts as **measured** evidence.
 
+## Gotchas
+
+- shadcn/ui components are copied into the repository. Editing them is not forking; a fork is a second implementation elsewhere.
+- Tailwind palette classes (`bg-blue-500`) are primitive tokens, not semantic ones, even though they are not hex literals (DS-02).
+- Count drift in application code only. Exclude token and theme files, generated CSS, SVG files and third-party themes.
+
 ## Output
 
 - A token adoption table per category with counts.

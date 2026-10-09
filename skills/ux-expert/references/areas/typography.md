@@ -85,6 +85,13 @@ They check typography in three layers:
 - Fonts: `@font-face`, `font-display`, `next/font`, `<link[^>]*fonts.googleapis`.
 - Numerals: `tabular-nums`, `font-variant-numeric`.
 
+## Gotchas
+
+- `rem` depends on the root font size. Check for `html { font-size: 62.5% }` or similar before converting to px.
+- Tailwind `text-sm` is 14 px with a 20 px line height by default, but the config or `@theme` can redefine it.
+- Line length depends on the rendered font, not the fallback. Estimate with the actual web font when it loads.
+- Code editors, terminals and dense data cells legitimately use 12–13 px monospace. Apply TYP-03 to prose and labels.
+
 ## Output
 
 - A type system table (style · size · line height · weight · usage count · on-scale?).

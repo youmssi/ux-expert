@@ -110,6 +110,13 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 - Error props: `aria-invalid`, `aria-describedby`, `errors\.`.
 - Submit handling: `isSubmitting`, `disabled={`, `Idempotency-Key`.
 
+## Gotchas
+
+- react-hook-form defaults to `mode: 'onSubmit'` with `reValidateMode: 'onChange'`: errors appear only on submit. FORM-09 needs `mode: 'onBlur'` or `'onTouched'`.
+- `type="number"` drops leading zeros and accepts `e`. For codes, card numbers and postal codes use `type="text"` with `inputmode="numeric"`.
+- Password managers need a username or email field in the same form, even a hidden one, to save the credentials.
+- Native validation bubbles are inconsistent across browsers. A form with `noValidate` and custom inline errors is the intended pattern, not a bug.
+
 ## Output
 
 - A field inventory table per form, with proposed removals, inferences and deferrals.
