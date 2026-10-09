@@ -66,7 +66,17 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
   the date they were observed, and never quote ratings, revenue or adoption
   figures that cannot be verified.
 
-## 5. Writing style
+## 5. Proven patterns
+
+- `criteria/patterns.yaml` records patterns from public design systems, read from
+  their repositories at a recorded commit; `references/patterns.md` is generated.
+- Summarize each rule in our own words (no copied text), link the source file at
+  that commit, date it, and list the criteria it satisfies. The generator rejects
+  unknown criteria.
+- Prefer design systems that publish their guidance openly over claims about how
+  an app looks: they are verifiable and versioned.
+
+## 6. Writing style
 
 - Plain words, short sentences, active voice, imperative mood for procedures.
 - Name things the way practitioners do, and explain a law or acronym in half a
@@ -75,7 +85,7 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
   blocks for search patterns and templates.
 - Neutral, precise tone. No marketing language and no filler.
 
-## 6. Gotchas
+## 7. Gotchas
 
 - Every area file has a `## Gotchas` section before `## Output`: 3–5 concrete
   corrections about framework, standard or tool behaviour that defies a

@@ -32,10 +32,11 @@ class GenerateTest(unittest.TestCase):
         (self.skill / "references" / "areas").mkdir(parents=True)
         shutil.copy(SCHEMA, self.skill / "criteria" / "schema.json")
         shutil.copy(SOURCES_SCHEMA, self.skill / "criteria" / "sources.schema.json")
-        for name in ("scoring.yaml", "scoring.schema.json"):
+        for name in ("scoring.yaml", "scoring.schema.json", "patterns.schema.json"):
             shutil.copy(CRITERIA / name, self.skill / "criteria" / name)
         (self.skill / "references" / "severity-and-scoring.md").write_text(SCORING_MD)
         self.write_sources([SOURCE])
+        self.write_patterns(["DEMO-01"])
         self.area_md = self.skill / "references" / "areas" / "demo.md"
         self.area_md.write_text(AREA_MD)
         (self.skill / "SKILL.md").write_text(SKILL_MD)
@@ -43,6 +44,13 @@ class GenerateTest(unittest.TestCase):
 
     def tearDown(self):
         self._tmp.cleanup()
+
+    def write_patterns(self, criteria):
+        sha = "a" * 40
+        patterns = {"design_systems": [{"id": "ds", "name": "A System", "repository": "https://github.com/o/r", "commit": sha}],
+                    "patterns": [{"id": "clear-labels", "name": "Clear labels", "design_system": "ds", "observed_on": "2026-10-09",
+                                  "source": f"https://github.com/o/r/blob/{sha}/labels.md", "rule": "Label every field.", "criteria": criteria}]}
+        (self.skill / "criteria" / "patterns.yaml").write_text(yaml.safe_dump(patterns))
 
     def write_sources(self, sources):
         (self.skill / "criteria" / "sources.yaml").write_text(yaml.safe_dump({"sources": sources}, allow_unicode=True))
@@ -190,6 +198,18 @@ class GenerateTest(unittest.TestCase):
         scoring["launch_gate"] = scoring["launch_gate"][:-1]
         path.write_text(yaml.safe_dump(scoring))
         self.assertIn("launch_gate needs exactly one default rule", run(self.skill, check=True)[0])
+
+    def test_patterns_are_rendered_and_in_the_catalogue(self):
+        self.assertEqual(run(self.skill, check=False), [])
+        text = (self.skill / "references" / "patterns.md").read_text()
+        self.assertIn("| `clear-labels` | [Clear labels](https://github.com/o/r/blob/", text)
+        self.assertIn("| A System | Label every field. | DEMO-01 |", text)
+        catalogue = json.loads((self.skill / "criteria" / "catalogue.json").read_text())
+        self.assertEqual(catalogue["patterns"][0]["criteria"], ["DEMO-01"])
+
+    def test_a_pattern_citing_an_unknown_criterion_is_rejected(self):
+        self.write_patterns(["DEMO-77"])
+        self.assertIn("clear-labels cites DEMO-77, which is not an active criterion", run(self.skill, check=True)[0])
 
     def test_an_area_file_without_criteria_is_reported(self):
         run(self.skill, check=False)

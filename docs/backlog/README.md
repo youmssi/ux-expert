@@ -37,13 +37,13 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 | Story | Title | Size | Status |
 |---|---|---|---|
 | [UXE-10](UXE-10-evals.md) | Evals: test prompts and seeded-defect sample apps (web SaaS, AI chat), with and without the skill | L | done |
-| [UXE-11](UXE-11-calibration-and-description.md) | Severity calibration against the escalation rules; description rewritten and a trigger eval set | M | in progress |
+| [UXE-11](UXE-11-calibration-and-description.md) | Severity calibration against the escalation rules; description rewritten and a trigger eval set | M | done |
 
 ## v0.5: depth
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| UXE-12 | Best-in-class pattern library: dated, sourced patterns from widely praised products | M | to refine |
+| [UXE-12](UXE-12-pattern-library.md) | Best-in-class pattern library: dated, sourced patterns from the public design systems of widely used products | M | in progress |
 | UXE-13 | Runtime scripts: contrast calculator, axe scan, screenshot matrix, visual review | L | to refine |
 | UXE-14 | Native platform probes: SwiftUI, Jetpack Compose, Flutter, React Native | M | to refine |
 

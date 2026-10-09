@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import { contrastRatio, launchGate, scoreFinding, selectCriteria } from '../src/logic.js';
+import { contrastRatio, findPatterns, launchGate, scoreFinding, selectCriteria } from '../src/logic.js';
 import { findSkillDir, loadCatalogue } from '../src/skill.js';
 
 const catalogue = loadCatalogue(findSkillDir());
@@ -24,6 +24,14 @@ describe('selectCriteria', () => {
 
     it('rejects an unknown area and lists the known ones', () => {
         assert.throws(() => selectCriteria(catalogue, 'web-app', undefined, ['forms']), /unknown area\(s\): forms; known: accessibility/);
+    });
+});
+
+describe('findPatterns', () => {
+    it('combines the criterion filter and every query word', () => {
+        assert.deepEqual(findPatterns(catalogue, 'FORM-09').map(p => p.id), ['govuk-validation']);
+        assert.ok(findPatterns(catalogue, undefined, 'saving forms').every(p => p.id === 'primer-saving'));
+        assert.equal(findPatterns(catalogue, 'FORM-09', 'empty').length, 0);
     });
 });
 

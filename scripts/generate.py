@@ -11,7 +11,8 @@ them this script writes:
   product types and sources, for tools that should not parse YAML;
 - ``references/sources.md``: the bibliography, from ``criteria/sources.yaml``;
 - the priority matrix and launch-gate tables in ``references/severity-and-scoring.md``,
-  from ``criteria/scoring.yaml``.
+  from ``criteria/scoring.yaml``;
+- ``references/patterns.md``: proven patterns, from ``criteria/patterns.yaml``.
 
 Usage:
     python3 scripts/generate.py           # validate the catalogue, rewrite the outputs
@@ -47,7 +48,8 @@ SOURCE_CITATION = re.compile(r"\[src:([a-z0-9]+(?:-[a-z0-9]+)*)\]")
 
 SOURCES_FILE = "sources.yaml"
 SCORING_FILE = "scoring.yaml"
-NOT_AREAS = {SOURCES_FILE, SCORING_FILE}
+PATTERNS_FILE = "patterns.yaml"
+NOT_AREAS = {SOURCES_FILE, SCORING_FILE, PATTERNS_FILE}
 SOURCE_STATUS = {
     "primary": "checked against the source's own text",
     "secondary": "confirmed through reputable secondary sources",
@@ -82,6 +84,25 @@ def load_scoring(criteria_dir: Path) -> tuple[dict, list[str]]:
         if defaults != [len(scoring["launch_gate"]) - 1]:
             problems.append(f"{path}: launch_gate needs exactly one default rule (empty when_any), in last position")
     return scoring, problems
+
+
+def load_patterns(criteria_dir: Path, documents: dict[str, dict]) -> tuple[dict, list[str]]:
+    path = criteria_dir / PATTERNS_FILE
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    problems = schema_errors(criteria_dir / "patterns.schema.json", data, path)
+    if problems:
+        return data, problems
+    systems = {s["id"] for s in data["design_systems"]}
+    ids = {c["id"] for doc in documents.values() for c in active(doc)}
+    seen: set[str] = set()
+    for pattern in data["patterns"]:
+        if pattern["id"] in seen:
+            problems.append(f"{path}: duplicate pattern ID {pattern['id']}")
+        seen.add(pattern["id"])
+        if pattern["design_system"] not in systems:
+            problems.append(f"{path}: {pattern['id']} names unknown design system '{pattern['design_system']}'")
+        problems += [f"{path}: {pattern['id']} cites {c}, which is not an active criterion" for c in pattern["criteria"] if c not in ids]
+    return data, problems
 
 
 def load_catalogue(skill_dir: Path) -> tuple[dict[str, dict], list[dict], list[str]]:
@@ -245,7 +266,27 @@ def render_launch_gate(scoring: dict) -> str:
     return "\n".join(lines + ["<!-- END GENERATED launch-gate -->"])
 
 
-def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict) -> str:
+def render_patterns(patterns: dict) -> str:
+    systems = {s["id"]: s for s in patterns["design_systems"]}
+    lines = [
+        "# Proven patterns",
+        "",
+        "<!-- Generated from criteria/patterns.yaml by scripts/generate.py. Edit the YAML, then run the script. -->",
+        "",
+        "Patterns from public design systems of widely used products, read from their repositories at the commits",
+        "below. Cite a pattern by its ID in a recommendation when it fits the finding; follow the source for detail.",
+        "",
+        "| Design system | Repository | Commit |",
+        "|---|---|---|",
+    ]
+    lines += [f"| {s['name']} | {s['repository']} | `{s['commit'][:7]}` |" for s in patterns["design_systems"]]
+    lines += ["", "| ID | Pattern | From | Rule | Criteria |", "|---|---|---|---|---|"]
+    for p in patterns["patterns"]:
+        lines.append(f"| `{p['id']}` | [{p['name']}]({p['source']}) | {systems[p['design_system']]['name']} | {p['rule']} | {', '.join(p['criteria'])} |")
+    return "\n".join(lines) + "\n"
+
+
+def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict) -> str:
     areas, criteria, retired = [], [], []
     for area, document in documents.items():
         entry = {"area": area, "prefix": document["prefix"], "file": f"references/areas/{area}.md",
@@ -271,6 +312,8 @@ def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: d
         "retired_ids": retired,
         "sources": sources,
         "scoring": scoring,
+        "design_systems": patterns["design_systems"],
+        "patterns": patterns["patterns"],
     }
     return json.dumps(catalogue, ensure_ascii=False, indent=1) + "\n"
 
@@ -283,7 +326,7 @@ def replace_blocks(text: str, pattern: re.Pattern, block: str) -> str | None:
     return text[: matches[0].start()] + block + text[matches[0].end():]
 
 
-def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict], scoring: dict) -> tuple[dict[Path, str], list[str]]:
+def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict) -> tuple[dict[Path, str], list[str]]:
     """Return {path: expected content} for every generated output, and the problems found."""
     outputs: dict[Path, str] = {}
     problems: list[str] = []
@@ -317,7 +360,8 @@ def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[d
         problems.append(f"{scoring_md}: expected exactly one generated priority-matrix block and one launch-gate block")
     else:
         outputs[scoring_md] = text
-    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources, scoring)
+    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources, scoring, patterns)
+    outputs[skill_dir / "references" / "patterns.md"] = render_patterns(patterns)
     outputs[skill_dir / "references" / "sources.md"] = render_sources(sources)
     return outputs, problems
 
@@ -328,7 +372,10 @@ def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]
     problems += scoring_problems
     if problems:
         return problems
-    outputs, problems = planned_outputs(skill_dir, documents, sources, scoring)
+    patterns, problems = load_patterns(skill_dir / "criteria", documents)
+    if problems:
+        return problems
+    outputs, problems = planned_outputs(skill_dir, documents, sources, scoring, patterns)
     problems += check_citations(skill_dir, documents, sources, list(extra_files))
     for path, content in outputs.items():
         current = path.read_text(encoding="utf-8") if path.exists() else None

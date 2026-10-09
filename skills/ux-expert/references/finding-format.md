@@ -16,7 +16,7 @@ Every issue reported by any area uses exactly this structure. Consistent finding
 - **User impact:** <which persona, in which job, experiences what consequence>
 - **Severity:** S<0-4> · **Reach:** R<1-3> · **Confidence:** <High | Medium | Low> · **Effort:** <XS | S | M | L | XL>
 - **Priority:** P<0-3>  (computed from severity-and-scoring.md)
-- **Recommendation:** <concrete change: what, where, to what value. Code-level when possible>
+- **Recommendation:** <concrete change: what, where, to what value. Code-level when possible. Cite a proven pattern from `references/patterns.md` by ID when one fits>
 - **Verification:** <how to prove it is fixed: test, measurement, check, or user test task>
 - **Related:** <other finding IDs or criterion IDs>
 ```

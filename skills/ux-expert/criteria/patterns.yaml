@@ -1,0 +1,212 @@
+# Proven patterns from public design systems, read from their repositories at the
+# recorded commits. Rules are summarized in our own words; follow the source link.
+design_systems:
+- id: govuk
+  name: GOV.UK Design System
+  repository: https://github.com/alphagov/govuk-design-system
+  commit: 737898813f1832fbda610edd85afe228f594390b
+- id: primer
+  name: GitHub Primer
+  repository: https://github.com/primer/design
+  commit: 87f799f202ec95df15c99f473c9c0c803da8e6b3
+- id: polaris
+  name: Shopify Polaris
+  repository: https://github.com/Shopify/polaris
+  commit: 3f7954ae42fabf26d63cee68c23ceebfd7ef0972
+- id: carbon
+  name: IBM Carbon
+  repository: https://github.com/carbon-design-system/carbon-website
+  commit: 5e9cd1da43c32d3d3b991dc947b427f674da61a8
+patterns:
+- id: govuk-question-pages
+  name: Ask only what you need, and mark optional fields
+  design_system: govuk
+  source: https://github.com/alphagov/govuk-design-system/blob/737898813f1832fbda610edd85afe228f594390b/src/patterns/question-pages/index.md
+  observed_on: '2026-10-09'
+  rule: Know why you ask every question and ask only for information you really need. Add '(optional)'
+    to optional fields; never mark mandatory fields with asterisks. Make clear why each question is asked.
+  criteria:
+  - FORM-01
+  - FORM-13
+  - TRUST-11
+- id: govuk-check-answers
+  name: Check answers before submitting
+  design_system: govuk
+  source: https://github.com/alphagov/govuk-design-system/blob/737898813f1832fbda610edd85afe228f594390b/src/patterns/check-answers/index.md
+  observed_on: '2026-10-09'
+  rule: Show a check-answers page just before the confirmation for small to medium transactions (one per
+    section for long ones), so users see everything they entered and can correct it before submitting.
+  criteria:
+  - TRUST-14
+  - FLOW-09
+  - FLOW-15
+- id: govuk-confirmation-pages
+  name: Confirm completion and say what happens next
+  design_system: govuk
+  source: https://github.com/alphagov/govuk-design-system/blob/737898813f1832fbda610edd85afe228f594390b/src/patterns/confirmation-pages/index.md
+  observed_on: '2026-10-09'
+  rule: End a transaction with a confirmation page that gives the reference number, what happens next
+    and when, contact details, and links to what users are likely to need next.
+  criteria:
+  - FLOW-20
+  - CONT-09
+- id: govuk-validation
+  name: Validate on submit, then guide the fix
+  design_system: govuk
+  source: https://github.com/alphagov/govuk-design-system/blob/737898813f1832fbda610edd85afe228f594390b/src/patterns/validation/index.md
+  observed_on: '2026-10-09'
+  rule: Validate when the form is submitted, not when the user leaves a field. Show the page again with
+    the answers kept, add 'Error:' to the page title, move focus to an error summary at the top, and show
+    each message next to its field. Use novalidate instead of browser validation.
+  criteria:
+  - FORM-09
+  - FORM-10
+  - FORM-11
+  - FORM-12
+  - A11Y-24
+- id: govuk-passwords
+  name: Help users create strong passwords they can manage
+  design_system: govuk
+  source: https://github.com/alphagov/govuk-design-system/blob/737898813f1832fbda610edd85afe228f594390b/src/patterns/passwords/index.md
+  observed_on: '2026-10-09'
+  rule: Let users paste passwords, avoid overly strict or confusing constraints, and keep resets secure;
+    strict rules push people to weak, reused passwords or to give up.
+  criteria:
+  - FORM-16
+  - TRUST-15
+  - TRUST-16
+- id: govuk-problem-pages
+  name: One honest page for unexpected problems
+  design_system: govuk
+  source: https://github.com/alphagov/govuk-design-system/blob/737898813f1832fbda610edd85afe228f594390b/src/patterns/problem-with-the-service-pages/index.md
+  observed_on: '2026-10-09'
+  rule: Use the same page for all unexpected problems, log every error and fix it quickly, show the page
+    only briefly, and switch to a 'service unavailable' page when a fix will take time.
+  criteria:
+  - STATE-08
+  - STATE-22
+  - STATE-23
+- id: primer-empty-states
+  name: Empty states that say why they are empty
+  design_system: primer
+  source: https://github.com/primer/design/blob/87f799f202ec95df15c99f473c9c0c803da8e6b3/content/ui-patterns/empty-states.mdx
+  observed_on: '2026-10-09'
+  rule: Distinguish first use (welcome, explain the feature, one primary action that starts it), temporarily
+    empty (say why, given the feature) and error (summarize the problem, give a recovery path, no playful
+    graphic). Use one primary action; a secondary 'Learn more' link is optional.
+  criteria:
+  - STATE-02
+  - STATE-03
+  - STATE-08
+  - CONT-08
+- id: primer-error-copy
+  name: Specific, non-technical error copy
+  design_system: primer
+  source: https://github.com/primer/design/blob/87f799f202ec95df15c99f473c9c0c803da8e6b3/content/ui-patterns/empty-states.mdx
+  observed_on: '2026-10-09'
+  rule: Describe the problem as specifically as possible in the user's terms ('Form could not be submitted.
+    Some required fields were empty.'). Avoid vague 'There was a problem', obscure error codes, and internal
+    infrastructure detail.
+  criteria:
+  - CONT-06
+  - CONT-02
+- id: primer-saving
+  name: One saving model per form
+  design_system: primer
+  source: https://github.com/primer/design/blob/87f799f202ec95df15c99f473c9c0c803da8e6b3/content/ui-patterns/saving.mdx
+  observed_on: '2026-10-09'
+  rule: Start with explicit saving; never mix automatic and explicit saving in one form. Keep the user's
+    data in the form when saving fails, warn before leaving with unsaved changes, and do not auto-save
+    text inputs, checkbox or radio groups, or native selects.
+  criteria:
+  - FORM-12
+  - STATE-16
+  - INT-03
+- id: primer-loading
+  name: Show that work is happening
+  design_system: primer
+  source: https://github.com/primer/design/blob/87f799f202ec95df15c99f473c9c0c803da8e6b3/content/ui-patterns/loading.mdx
+  observed_on: '2026-10-09'
+  rule: Always indicate loading so users do not assume a silent failure. Prefer components' built-in loading
+    states; use determinate indicators for waits of about 3 seconds or more; keep animation subtle.
+  criteria:
+  - INT-05
+  - STATE-04
+  - PERF-13
+- id: primer-degraded-experiences
+  name: Degrade gracefully and say so
+  design_system: primer
+  source: https://github.com/primer/design/blob/87f799f202ec95df15c99f473c9c0c803da8e6b3/content/ui-patterns/degraded-experiences.mdx
+  observed_on: '2026-10-09'
+  rule: Never conceal that something is wrong. When only secondary parts of a page fail, render the page
+    with those parts degraded; when a primary experience fails, show an error page instead.
+  criteria:
+  - STATE-22
+  - STATE-08
+- id: primer-progressive-disclosure
+  name: Disclose progressively, without losing context
+  design_system: primer
+  source: https://github.com/primer/design/blob/87f799f202ec95df15c99f473c9c0c803da8e6b3/content/ui-patterns/progressive-disclosure.mdx
+  observed_on: '2026-10-09'
+  rule: Use progressive disclosure sparingly, keep the user's point of focus, pair disclosure icons with
+    text, and do not confuse it with navigation.
+  criteria:
+  - INT-01
+  - LAY-09
+  - IA-05
+- id: primer-messaging
+  name: Pick the message component by message type
+  design_system: primer
+  source: https://github.com/primer/design/blob/87f799f202ec95df15c99f473c9c0c803da8e6b3/content/ui-patterns/notification-messaging.mdx
+  observed_on: '2026-10-09'
+  rule: Classify messages as system updates, feedback on a user action, or awareness, and choose the component
+    by prominence (banner for system and page-level messages, inline messages for form feedback).
+  criteria:
+  - INT-14
+  - CONT-17
+- id: polaris-error-messages
+  name: Error messages that fix the problem
+  design_system: polaris
+  source: https://github.com/Shopify/polaris/blob/3f7954ae42fabf26d63cee68c23ceebfd7ef0972/polaris.shopify.com/content/content/error-messages.mdx
+  observed_on: '2026-10-09'
+  rule: Explain what is wrong and what to do, be specific (exact numbers, dates, the user's own data),
+    avoid jargon such as 'invalid', do not over-apologize, place the error next to what needs fixing,
+    and offer a one-step solution when there is one.
+  criteria:
+  - CONT-06
+  - CONT-07
+  - FORM-10
+- id: carbon-disabled-states
+  name: 'Disabled, read-only or hidden: choose deliberately'
+  design_system: carbon
+  source: https://github.com/carbon-design-system/carbon-website/blob/5e9cd1da43c32d3d3b991dc947b427f674da61a8/src/pages/patterns/disabled-states/index.mdx
+  observed_on: '2026-10-09'
+  rule: Disabled removes interaction and is skipped by screen readers; read-only keeps the content readable
+    and announced; hidden removes the option entirely. Pick by whether users need to see and understand
+    the value.
+  criteria:
+  - INT-15
+  - A11Y-11
+  - COL-17
+- id: carbon-notifications
+  name: Notification persistence matches importance
+  design_system: carbon
+  source: https://github.com/carbon-design-system/carbon-website/blob/5e9cd1da43c32d3d3b991dc947b427f674da61a8/src/pages/patterns/notification-pattern/index.mdx
+  observed_on: '2026-10-09'
+  rule: Inline notifications persist until resolved or dismissed; toasts without actions may disappear
+    on their own; actionable notifications persist until the action is taken; modals are for critical
+    information that must block the task.
+  criteria:
+  - INT-14
+  - INT-12
+  - STATE-08
+- id: carbon-dialogs
+  name: Dialogs for short, focused tasks
+  design_system: carbon
+  source: https://github.com/carbon-design-system/carbon-website/blob/5e9cd1da43c32d3d3b991dc947b427f674da61a8/src/pages/patterns/dialog-pattern/index.mdx
+  observed_on: '2026-10-09'
+  rule: Use dialogs for short tasks or urgent, task-relevant information; choose modal only when the user
+    must respond before continuing, and non-modal otherwise.
+  criteria:
+  - INT-12
+  - INT-11
