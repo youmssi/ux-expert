@@ -36,8 +36,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| [UXE-10](UXE-10-evals.md) | Evals: test prompts and seeded-defect sample apps (web SaaS, AI chat), with and without the skill | L | in progress |
-| UXE-11 | Severity calibration and description tuning from eval results | M | to refine |
+| [UXE-10](UXE-10-evals.md) | Evals: test prompts and seeded-defect sample apps (web SaaS, AI chat), with and without the skill | L | done |
+| [UXE-11](UXE-11-calibration-and-description.md) | Severity calibration against the escalation rules; description rewritten and a trigger eval set | M | in progress |
 
 ## v0.5: depth
 
@@ -68,4 +68,5 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 - Code search patterns favour web and React (UXE-14).
 - Pixel-level visual review needs runtime screenshots and design files, not
   code alone (UXE-13).
-- Severity defaults are uncalibrated (UXE-11).
+- Severity defaults are calibrated against the escalation rules (UXE-11), not
+  yet against reviewed eval runs.

@@ -79,7 +79,7 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 | FORM-03 | Label/help association | `for`/`id`, `aria-describedby` | Unassociated labels or help | S2–S3 |
 | FORM-04 | Single-column logical layout | Layout of critical forms | Multi-column forms causing skipped fields (exception: short related pairs such as city/postal) | S2 |
 | FORM-05 | Correct input types and keyboards | `type`, `inputmode` | Wrong keyboards on mobile; `type=number` for codes | S2 |
-| FORM-06 | Autocomplete tokens | `autocomplete` attributes | Missing on personal, address, payment or credential fields | S2 (WCAG 1.3.5) |
+| FORM-06 | Autocomplete tokens | `autocomplete` attributes | Missing on personal, address, payment or credential fields | S2–S3 (WCAG 1.3.5; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | FORM-07 | Format tolerance | Accept spaces, dashes, parentheses; trim whitespace; case-insensitive emails | Rejects valid input over formatting | S2–S3 |
 | FORM-08 | Smart, safe defaults | Defaults present and in the user's interest | No defaults; or defaults against the user (pre-checked consent) | S2 (S3+ if it is a dark pattern; → TRUST) |
 | FORM-09 | Validation timing | Errors shown on submit; live re-validation while correcting; positive feedback may be live | Errors appear while typing or as soon as a field is left; errors only after a server round trip; fixed errors stay visible | S2 |
@@ -94,8 +94,8 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 | FORM-18 | Accessible authentication | No cognitive tests without alternatives; CAPTCHA alternatives | Inaccessible CAPTCHA blocks sign-up | S3–S4 (WCAG 3.3.8) |
 | FORM-19 | File upload clarity | Limits upfront, progress, per-file errors, alternatives to drag | Silent failures on large or invalid files | S2–S3 |
 | FORM-20 | Date/time input usability | Typed + picker; locale; time zone | Picker-only with tedious year navigation; ambiguous formats (03/04) | S2 |
-| FORM-21 | Long-form resilience | Autosave and resume | Long form lost on timeout or navigation | S3 |
-| FORM-22 | No redundant entry | Previously given info isn't asked again; billing = shipping option | Re-asking known data | S2 (WCAG 3.3.7) |
+| FORM-21 | Long-form resilience | Autosave and resume | Long form lost on timeout or navigation | S3–S4 (S4 when user-created content is lost) |
+| FORM-22 | No redundant entry | Previously given info isn't asked again; billing = shipping option | Re-asking known data | S2–S3 (WCAG 3.3.7; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | FORM-23 | Client/server rule parity | Shared schema or matching rules | Client passes, server rejects with a different message | S2 |
 | FORM-24 | Enter-key behavior | Submits single-line forms; documented in chat or multi-line inputs | Enter does nothing, or unexpectedly submits a multi-line field | S1–S2 |
 <!-- END GENERATED criteria -->

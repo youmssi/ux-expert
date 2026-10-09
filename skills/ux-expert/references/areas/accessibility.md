@@ -90,9 +90,9 @@ Map the findings to WCAG success criteria. For pre-launch or enterprise mode, re
 | A11Y-04 | Visible focus (2.4.7; 2.4.11; 2.4.13 AAA) | `outline: none` without replacement; focus hidden by sticky UI | S3 |
 | A11Y-05 | Logical focus order (2.4.3) | Positive tabindex; DOM order differs from visual order | S2–S3 |
 | A11Y-06 | Focus management on dynamic UI | Modals don't move or return focus; SPA route change loses focus | S3 |
-| A11Y-07 | Skip link / bypass blocks (2.4.1) | No way to bypass repeated navigation | S2 |
-| A11Y-08 | Page titles (2.4.2) | Missing, duplicate or generic titles | S2 |
-| A11Y-09 | Landmarks and headings (1.3.1, 2.4.6) | No `main`; heading levels used for styling | S2 |
+| A11Y-07 | Skip link / bypass blocks (2.4.1) | No way to bypass repeated navigation | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
+| A11Y-08 | Page titles (2.4.2) | Missing, duplicate or generic titles | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
+| A11Y-09 | Landmarks and headings (1.3.1, 2.4.6) | No `main`; heading levels used for styling | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | A11Y-10 | Accessible names (4.1.2, 2.5.3 label-in-name) | Unlabeled icon buttons; visible label not contained in the accessible name | S3 |
 | A11Y-11 | Roles and states exposed (4.1.2) | Custom widgets with no role or state | S3 |
 | A11Y-12 | Valid ARIA usage | Invalid roles; `aria-hidden` on focusable elements; redundant or contradictory ARIA | S2–S3 |
@@ -101,19 +101,19 @@ Map the findings to WCAG success criteria. For pre-launch or enterprise mode, re
 | A11Y-15 | Contrast (1.4.3, 1.4.11), from COL | Below thresholds | S3 |
 | A11Y-16 | Use of color (1.4.1) | Color-only meaning | S3 |
 | A11Y-17 | Resize and reflow (1.4.4, 1.4.10) | Content lost or 2-D scrolling at 320 px or 200% | S3 |
-| A11Y-18 | Text spacing (1.4.12) | Clipping | S2 |
-| A11Y-19 | Content on hover/focus (1.4.13) | Tooltips not dismissible or hoverable | S2 |
-| A11Y-20 | Target size (2.5.8) | < 24×24 CSS px without spacing | S2 |
+| A11Y-18 | Text spacing (1.4.12) | Clipping | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
+| A11Y-19 | Content on hover/focus (1.4.13) | Tooltips not dismissible or hoverable | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
+| A11Y-20 | Target size (2.5.8) | < 24×24 CSS px without spacing | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | A11Y-21 | Dragging alternatives (2.5.7), pointer gestures (2.5.1), pointer cancellation (2.5.2) | Drag-only or path-gesture-only operations | S3 |
 | A11Y-22 | Motion and flashing (2.2.2, 2.3.1, 2.3.3) | Unstoppable motion; flashing; ignores reduced motion | S2–S4 |
 | A11Y-23 | Timing adjustable (2.2.1) | Hard time limits with no extension | S3 |
 | A11Y-24 | Forms: labels, errors, suggestions, prevention (1.3.1, 3.3.1–3.3.4, 1.3.5) | See FORM | S2–S4 |
 | A11Y-25 | Redundant entry and accessible auth (3.3.7, 3.3.8) | Re-entry; cognitive test without alternative | S3 |
-| A11Y-26 | Consistent navigation, identification and help (3.2.3, 3.2.4, 3.2.6) | Inconsistent | S2 |
+| A11Y-26 | Consistent navigation, identification and help (3.2.3, 3.2.4, 3.2.6) | Inconsistent | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | A11Y-27 | No unexpected context change (3.2.1, 3.2.2) | Auto-navigation on select or focus | S2–S3 |
-| A11Y-28 | Language of page and parts (3.1.1, 3.1.2) | Missing `lang`; wrong `lang` on translated pages | S2 |
+| A11Y-28 | Language of page and parts (3.1.1, 3.1.2) | Missing `lang`; wrong `lang` on translated pages | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | A11Y-29 | Media alternatives (1.2.x) | Video without captions; audio without transcript | S3 |
-| A11Y-30 | Orientation (1.3.4) | Locked orientation | S2 |
+| A11Y-30 | Orientation (1.3.4) | Locked orientation | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | A11Y-31 | Zoom not disabled | `user-scalable=no`, `maximum-scale=1` | S3 |
 | A11Y-32 | Native mobile accessibility APIs | Missing labels, roles, Dynamic Type | S3 |
 | A11Y-33 | Accessibility process | No a11y lint, test or statement; no VPAT where required | S1–S3 (by obligation) |

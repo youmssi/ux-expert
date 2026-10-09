@@ -46,7 +46,11 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
 - A criterion is **observable**: someone else checking the same product would
   reach the same result. "Feels modern" is not a criterion.
 - Default severity follows `references/severity-and-scoring.md`. Escalation
-  rules (legal, data loss, trust) override it.
+  rules (legal, data loss, trust) override it, and every criterion must be able
+  to reach the level they require, through its range or its `severity_note`
+  (`scripts/test_calibration.py`): WCAG-sourced criteria reach S3, lost user
+  work reaches S4, legal and consent failures reach S3. S4 stays rare as a
+  default.
 
 ## 4. Evidence and sources
 

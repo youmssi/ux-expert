@@ -90,7 +90,7 @@ For each flow, write the **proposed step table** next to the current one, and qu
 | FLOW-07 | Clear progress and orientation | Multi-step flows show step X of Y or a progress indicator | Unknown length; surprise extra steps | S2 |
 | FLOW-08 | Feedback after every action | Each action produces a visible result within 1 s | Silent success; silent failure | S3 (S4 if silent failure) |
 | FLOW-09 | Back and edit without data loss | Back or edit within the flow preserves inputs | Inputs cleared; must restart | S3 |
-| FLOW-10 | Interruption-safe | Drafts are saved; resumable after leaving or a session timeout | Progress lost on tab close or timeout | S3 |
+| FLOW-10 | Interruption-safe | Drafts are saved; resumable after leaving or a session timeout | Progress lost on tab close or timeout | S3–S4 (S4 when user-created content is lost) |
 | FLOW-11 | Seams preserve intent | After email, OAuth or payment redirects, the user lands at their goal with context | Lands on a generic dashboard; intent lost | S3 |
 | FLOW-12 | Edge seams handled | Expired or used links, declined cards, denied OAuth, double submit | Raw errors, or the user is stuck | S3–S4 |
 | FLOW-13 | Idempotent critical actions | Double click or retry doesn't double-charge or double-create | Duplicates | S3–S4 (S4 for payments) |

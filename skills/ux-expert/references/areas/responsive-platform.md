@@ -65,7 +65,7 @@ From CTX and analytics: which devices, OSes, browsers and window sizes matter? D
 | RESP-08 | No hover dependence | Hover-only menus, actions or info on touch devices | S3 |
 | RESP-09 | Virtual keyboard handled | Inputs hidden under the keyboard; wrong keyboard; no `enterkeyhint` | S2–S3 |
 | RESP-10 | Viewport units and safe areas correct | `100vh` cut-offs; content under the notch or home indicator | S2 |
-| RESP-11 | Orientation support | Locked or broken in landscape | S2 |
+| RESP-11 | Orientation support | Locked or broken in landscape | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | RESP-12 | Platform conventions followed (iOS) | Blocked back swipe; non-standard nav; no Dynamic Type | S2 |
 | RESP-13 | Platform conventions followed (Android) | System back exits or misbehaves; no edge-to-edge insets | S2–S3 |
 | RESP-14 | Desktop conventions followed | Wrong modifier keys; no context menus where expected; unusable at small window sizes | S2 |

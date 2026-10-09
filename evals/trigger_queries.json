@@ -1,0 +1,22 @@
+[
+  {"query": "can you go through our signup flow in src/app/(auth) and tell me why people drop off? conversion from landing to first project is 12%", "should_trigger": true},
+  {"query": "We're writing the backlog for the new invoicing module next week. Here are the 6 draft stories — what should 'done' look like for each from the user's point of view?", "should_trigger": true},
+  {"query": "Is this PR's new settings page ok? diff attached. reviewers keep saying it 'feels off' but can't say why", "should_trigger": true},
+  {"query": "we launch on Nov 1. what could embarrass us? repo is ./web", "should_trigger": true},
+  {"query": "Our designer left. Check whether the dashboard screens are accessible enough for the EU accessibility act.", "should_trigger": true},
+  {"query": "the AI assistant in our CRM sends emails for users — anything we should change before customers get it?", "should_trigger": true},
+  {"query": "Our SDK README gets lots of 'how do I start' issues. Can you look at the getting started experience across the Node and Python bindings?", "should_trigger": true},
+  {"query": "there are like 40 slightly different buttons and colors in this codebase, how do we clean this up without breaking everything", "should_trigger": true},
+  {"query": "Look at our checkout and tell me if any of it could count as a dark pattern or be a GDPR problem.", "should_trigger": true},
+  {"query": "app feels slow on cheap android phones, users complain. what should we fix first from a user perspective?", "should_trigger": true},
+  {"query": "Fix the TypeScript error in src/components/Button.tsx: Property 'variant' does not exist on type 'Props'.", "should_trigger": false},
+  {"query": "Write unit tests for the signup API handler in api/signup.ts.", "should_trigger": false},
+  {"query": "set up tailwind v4 in my next.js 16 project", "should_trigger": false},
+  {"query": "What's the difference between UX and UI design? Explain briefly for a blog post.", "should_trigger": false},
+  {"query": "Translate the strings in locales/en.json to Spanish and save them as locales/es.json.", "should_trigger": false},
+  {"query": "optimize this postgres query, the projects list endpoint takes 2s", "should_trigger": false},
+  {"query": "Generate a color palette with 10 shades of our brand blue #2563EB as CSS variables.", "should_trigger": false},
+  {"query": "Write the marketing copy for our launch tweet thread, 5 tweets, playful tone.", "should_trigger": false},
+  {"query": "Create a React modal component with framer-motion that slides in from the right.", "should_trigger": false},
+  {"query": "Our Lighthouse CI job fails with 'Chrome not found' on GitHub Actions. Fix the workflow.", "should_trigger": false}
+]

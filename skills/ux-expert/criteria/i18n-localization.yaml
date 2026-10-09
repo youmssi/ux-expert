@@ -48,7 +48,8 @@ criteria:
 - id: I18N-08
   name: '`lang` and `dir` set correctly'
   fail_signal: Missing or not updated per locale
-  severity: S2
+  severity: S2–S3
+  severity_note: S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   related:
   - A11Y-28
   sources:
@@ -120,5 +121,6 @@ criteria:
 - id: I18N-23
   name: Local payment and legal norms (commerce)
   fail_signal: Only card payments where local methods dominate; missing local legal info
-  severity: S2
+  severity: S2–S3
+  severity_note: S3 where local legal information is required
   phases: *id001

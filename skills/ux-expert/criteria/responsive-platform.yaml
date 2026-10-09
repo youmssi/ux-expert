@@ -64,7 +64,8 @@ criteria:
 - id: RESP-11
   name: Orientation support
   fail_signal: Locked or broken in landscape
-  severity: S2
+  severity: S2–S3
+  severity_note: S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   sources:
   - wcag22
 - id: RESP-12

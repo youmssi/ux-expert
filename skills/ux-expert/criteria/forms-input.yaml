@@ -52,8 +52,8 @@ criteria:
   name: Autocomplete tokens
   check: '`autocomplete` attributes'
   fail_signal: Missing on personal, address, payment or credential fields
-  severity: S2
-  severity_note: WCAG 1.3.5
+  severity: S2–S3
+  severity_note: WCAG 1.3.5; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   phases: *id001
   sources:
   - wcag22
@@ -152,13 +152,14 @@ criteria:
   name: Long-form resilience
   check: Autosave and resume
   fail_signal: Long form lost on timeout or navigation
-  severity: S3
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost
 - id: FORM-22
   name: No redundant entry
   check: Previously given info isn't asked again; billing = shipping option
   fail_signal: Re-asking known data
-  severity: S2
-  severity_note: WCAG 3.3.7
+  severity: S2–S3
+  severity_note: WCAG 3.3.7; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   phases: *id002
   sources:
   - wcag22

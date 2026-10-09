@@ -65,7 +65,8 @@ criteria:
   name: Interruption-safe
   check: Drafts are saved; resumable after leaving or a session timeout
   fail_signal: Progress lost on tab close or timeout
-  severity: S3
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost
   phases: *id001
 - id: FLOW-11
   name: Seams preserve intent
