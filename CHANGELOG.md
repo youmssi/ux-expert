@@ -9,6 +9,10 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- **Refactor mode**: turns audit findings into a sequenced plan of shippable,
+  guarded stories (safety → guards → foundations → migrations → flows →
+  polish), with a dependency graph and measures
+  (`references/refactor-mode.md`, worked example in `docs/examples/`).
 - **Design mode**: turns a brief or user stories into UX requirements and
   testable acceptance criteria tagged with criterion IDs, open product decisions
   and a UX Definition of Done (`references/design-mode.md`,

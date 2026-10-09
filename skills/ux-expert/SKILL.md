@@ -33,6 +33,7 @@ Pick the mode from the request. If nothing is built yet, use **Design**; otherwi
 | Mode | When | Areas | Depth |
 |---|---|---|---|
 | **Design** | A brief, epics or stories before building: "write the UX acceptance criteria" | Selected per story | Design-phase criteria; follow `references/design-mode.md` instead of the audit procedure below |
+| **Refactor** | "Plan a UX overhaul", "how do we fix all this safely?" | Those of the audit it builds on | Audit findings → sequenced, guarded stories; follow `references/refactor-mode.md` after the audit |
 | **Full audit** | "Audit the app", "review the UX" | All applicable | Every criterion |
 | **Pre-launch gate** | "Ready to ship?", "before go-to-market" | All applicable + launch-readiness | Every criterion + Go/No-Go verdict |
 | **Scoped audit** | One feature, flow or screen | context-discovery (light) + relevant areas | Every criterion in scope |
@@ -50,6 +51,7 @@ Read when needed:
 - `references/laws-and-numbers.md`: when a finding needs a threshold or a research citation.
 - `references/report-template.md`: when writing the final report (Phase 8).
 - `references/design-mode.md`: in Design mode, instead of the audit procedure.
+- `references/refactor-mode.md`: in Refactor mode, after the audit (Phase 8).
 - `assets/story-ux.md`: the per-story template for Design mode.
 - `criteria/catalogue.json`: every criterion with its phases (`design`, `build`) and product types.
   To list what applies, run `python3 scripts/select_criteria.py --product <type> [--phase design|build] [--area <area>]`.
