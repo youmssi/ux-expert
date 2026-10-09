@@ -1,0 +1,19 @@
+{
+  "name": "ux-expert",
+  "owner": {
+    "name": "youmssi"
+  },
+  "metadata": {
+    "description": "Senior UX expertise for AI agents: audits across 22 UX areas with evidence, consistent severity and a launch verdict.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ux-expert",
+      "description": "Principal-level UX audits: flows, accessibility, forms, states, content, performance, trust, AI interfaces, developer experience and launch readiness.",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/ux-expert"]
+    }
+  ]
+}
