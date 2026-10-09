@@ -27,6 +27,8 @@ jobs:
         run: pip install -r scripts/requirements.txt
       - name: Test the scripts
         run: python -m unittest discover -s scripts -p "test_*.py"
+      - name: Test the eval grader and answer keys
+        run: python -m unittest discover -s evals -p "test_*.py"
       - name: Repository rules
         run: python scripts/validate.py
       - name: Criteria catalogue and generated tables

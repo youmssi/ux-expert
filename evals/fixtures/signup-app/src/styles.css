@@ -1,0 +1,23 @@
+:root {
+  --text: #111827;
+  --text-muted: #9ca3af;
+  --surface: #ffffff;
+}
+
+body {
+  color: var(--text);
+  background: var(--surface);
+  font-size: 13px;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.error {
+  color: #ef4444;
+}

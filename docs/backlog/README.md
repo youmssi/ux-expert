@@ -30,13 +30,13 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 | Story | Title | Size | Status |
 |---|---|---|---|
 | [UXE-8](UXE-8-mcp-server.md) | MCP server (TypeScript, read-only, MCP 2026-07-28): prompts per mode, resources, criteria and scoring tools | L | done |
-| [UXE-9](UXE-9-bundles-and-install-guide.md) | Single-file bundles per mode for chat apps; install guide per agent; using it in a project | S | in progress |
+| [UXE-9](UXE-9-bundles-and-install-guide.md) | Single-file bundles per mode for chat apps; install guide per agent; using it in a project | S | done |
 
 ## v0.4: proven quality
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| UXE-10 | Evals: test prompts and seeded-defect sample apps (web SaaS, AI chat), with and without the skill | L | to refine |
+| [UXE-10](UXE-10-evals.md) | Evals: test prompts and seeded-defect sample apps (web SaaS, AI chat), with and without the skill | L | in progress |
 | UXE-11 | Severity calibration and description tuning from eval results | M | to refine |
 
 ## v0.5: depth
@@ -61,7 +61,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 
 ## Known limitations (tracked by the stories above)
 
-- Never evaluated on real products yet: precision and recall unknown (UXE-10).
+- The eval harness exists (UXE-10), but no clean-context benchmark has been
+  recorded yet: recall and false-positive rates are still unmeasured.
 - Research figures are traced to sources (UXE-7); 3 remain unconfirmed and are
   not stated as fact. Sources need re-checking when standards change.
 - Code search patterns favour web and React (UXE-14).

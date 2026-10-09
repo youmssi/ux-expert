@@ -56,6 +56,7 @@ Every check below passes locally; CI runs the same ones and blocks the merge.
 ```bash
 pip install -r scripts/requirements.txt
 python3 -m unittest discover -s scripts -p "test_*.py"
+python3 -m unittest discover -s evals -p "test_*.py"
 python3 scripts/validate.py
 python3 scripts/generate.py --check
 skills-ref validate skills/ux-expert
@@ -68,9 +69,9 @@ And:
   then `python3 scripts/generate.py` rewrites the tables. Every new criterion
   has a unique, never-used ID and a cited source for any number it contains.
 - Generated files are regenerated with their script, never edited by hand.
-- Content that changes agent behaviour names how it was checked (eval run from
-  UXE-10 onward; until then, a manual run on a sample product, summarized in
-  the PR).
+- Content that changes agent behaviour is checked with the evals
+  (`evals/run.sh`, compared with the previous version); the PR quotes the
+  benchmark delta, or says why it could not be run.
 - `CHANGELOG.md` has an entry under `Unreleased` when users of the package will
   notice the change.
 - Dead content left behind by the change is removed or retired.
