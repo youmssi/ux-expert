@@ -1,5 +1,15 @@
 area: context-discovery
 prefix: CTX
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- design
 criteria:
 - id: CTX-01
   name: Clear value proposition

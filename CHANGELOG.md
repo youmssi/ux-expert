@@ -9,6 +9,17 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- **Design mode**: turns a brief or user stories into UX requirements and
+  testable acceptance criteria tagged with criterion IDs, open product decisions
+  and a UX Definition of Done (`references/design-mode.md`,
+  `assets/story-ux.md`, worked example in `docs/examples/`).
+- Every criterion now has `phases` (design, build) and product types; each area
+  has an applicability per product type. The `SKILL.md` matrix and
+  `criteria/catalogue.json` are generated from them.
+- `scripts/select_criteria.py` inside the skill lists the criteria for a
+  product type and phase (standard library only).
+- The generator fails when a skill file or example cites an unknown or retired
+  criterion ID.
 - Project README with status badges, features, how it works, install per
   agent, usage, roadmap and contributing.
 

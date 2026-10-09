@@ -22,6 +22,7 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 
 ## Features
 
+- **Design mode**: turn a brief or user stories into UX acceptance criteria, open product decisions and a UX Definition of Done before anything is built ([example](docs/examples/design-mode-team-tasks.md))
 - **Full audits**: review a whole product, or one flow, screen or area, and get a prioritized report
 - **Launch gate**: an explicit Go / Conditional Go / No-Go decision, listing blockers and conditions
 - **Change review**: check a pull request's UI changes and the regressions they could cause
@@ -38,7 +39,9 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 | Orchestrator | [`skills/ux-expert/SKILL.md`](skills/ux-expert/SKILL.md) | Picks the mode, selects the areas, runs the 8-phase procedure |
 | Areas | [`skills/ux-expert/references/areas/`](skills/ux-expert/references/areas/) | One file per area: the expert mindset, procedure, criteria and code probes |
 | Shared references | [`skills/ux-expert/references/`](skills/ux-expert/references/) | Finding format, severity and scoring, codebase recon, laws and thresholds, report template |
-| Criteria catalogue | [`skills/ux-expert/criteria/`](skills/ux-expert/criteria/) | 465 criteria as YAML; the tables in the area files are generated from it |
+| Criteria catalogue | [`skills/ux-expert/criteria/`](skills/ux-expert/criteria/) | 465 criteria as YAML, with phases and product types; the area tables, the `SKILL.md` matrix and `catalogue.json` are generated from it |
+| Design mode | [`references/design-mode.md`](skills/ux-expert/references/design-mode.md), [`assets/story-ux.md`](skills/ux-expert/assets/story-ux.md) | From brief to UX acceptance criteria per story |
+| Selector | [`scripts/select_criteria.py`](skills/ux-expert/scripts/select_criteria.py) | Lists the criteria for a product type and phase |
 
 Agents load only what a task needs: the skill's description at startup, `SKILL.md` when the skill activates, and an area file only when the scope includes that area.
 
@@ -56,6 +59,7 @@ Agents load only what a task needs: the skill's description at startup, `SKILL.m
 Ask in plain words. The skill picks the mode:
 
 ```text
+Write the UX acceptance criteria for these stories: <paste stories>.
 Run a full UX audit of this app.
 Are we ready to launch on November 1?
 Audit the checkout flow.

@@ -1,3 +1,4 @@
+import json
 import shutil
 import tempfile
 import unittest
@@ -9,6 +10,8 @@ from generate import ROOT, run
 
 SCHEMA = ROOT / "skills" / "ux-expert" / "criteria" / "schema.json"
 AREA_MD = "# Demo\n\n## Criteria\n\n<!-- BEGIN GENERATED criteria (demo) -->\n<!-- END GENERATED criteria -->\n\n## Output\n"
+SKILL_MD = "# Skill\n\n<!-- BEGIN GENERATED applicability -->\n<!-- END GENERATED applicability -->\n"
+TYPES = ["web-app", "marketing-site", "mobile", "desktop", "cli", "sdk-api", "ai-feature"]
 
 
 def criterion(**overrides):
@@ -26,13 +29,15 @@ class GenerateTest(unittest.TestCase):
         shutil.copy(SCHEMA, self.skill / "criteria" / "schema.json")
         self.area_md = self.skill / "references" / "areas" / "demo.md"
         self.area_md.write_text(AREA_MD)
+        (self.skill / "SKILL.md").write_text(SKILL_MD)
         self.write([criterion()])
 
     def tearDown(self):
         self._tmp.cleanup()
 
-    def write(self, criteria, area="demo", prefix="DEMO"):
-        document = {"area": area, "prefix": prefix, "criteria": criteria}
+    def write(self, criteria, area="demo", prefix="DEMO", **fields):
+        document = {"area": area, "prefix": prefix, "applicability": {t: "run" for t in TYPES} | {"sdk-api": "n/a"},
+                    "phases": ["design"], "criteria": criteria} | fields
         (self.skill / "criteria" / f"{area}.yaml").write_text(yaml.safe_dump(document, allow_unicode=True))
 
     def test_tables_are_rendered_between_the_markers_and_then_up_to_date(self):
@@ -66,7 +71,7 @@ class GenerateTest(unittest.TestCase):
         self.area_md.write_text(self.area_md.read_text().replace("Clear labels", "Edited by hand"))
         problems = run(self.skill, check=True)
         self.assertEqual(len(problems), 1)
-        self.assertIn("demo.md: criteria table is out of date", problems[0])
+        self.assertIn("demo.md: out of date with criteria/*.yaml", problems[0])
 
     def test_a_missing_field_is_rejected(self):
         item = criterion()
@@ -98,6 +103,42 @@ class GenerateTest(unittest.TestCase):
     def test_a_related_target_that_does_not_exist_is_rejected(self):
         self.write([criterion(related=["NOPE"])])
         self.assertIn("relates to unknown 'NOPE'", run(self.skill, check=True)[0])
+
+    def test_the_skill_matrix_is_rendered_from_applicability(self):
+        self.write([criterion()], applicability={t: "run" for t in TYPES} | {"cli": "conditional"}, applicability_note="only for data tools")
+        self.assertEqual(run(self.skill, check=False), [])
+        text = (self.skill / "SKILL.md").read_text()
+        self.assertIn("| `demo.md` (DEMO) | Run | Run | Run | Run | Conditional | Run | Run |", text)
+        self.assertIn("- **DEMO**: only for data tools.", text)
+
+    def test_a_conditional_area_without_a_note_is_rejected(self):
+        self.write([criterion()], applicability={t: "run" for t in TYPES} | {"cli": "conditional"})
+        self.assertIn("needs an applicability_note", run(self.skill, check=True)[0])
+
+    def test_the_catalogue_has_effective_phases_and_product_types(self):
+        self.write([criterion(), criterion(id="DEMO-02", phases=["build"], applies_to=["mobile"])])
+        run(self.skill, check=False)
+        catalogue = json.loads((self.skill / "criteria" / "catalogue.json").read_text())
+        first, second = catalogue["criteria"]
+        self.assertEqual(first["phases"], ["design"])
+        self.assertNotIn("sdk-api", first["applies_to"])
+        self.assertEqual((second["phases"], second["applies_to"]), (["build"], ["mobile"]))
+
+    def test_applies_to_a_product_where_the_area_is_not_applicable_is_rejected(self):
+        self.write([criterion(applies_to=["sdk-api"])])
+        self.assertIn("applies_to ['sdk-api'], where the area is n/a", run(self.skill, check=True)[0])
+
+    def test_a_missing_catalogue_fails_the_check(self):
+        run(self.skill, check=False)
+        (self.skill / "criteria" / "catalogue.json").unlink()
+        self.assertIn("catalogue.json: out of date", run(self.skill, check=True)[0])
+
+    def test_citing_an_unknown_or_retired_criterion_is_reported(self):
+        self.write([criterion(), criterion(id="DEMO-02", status="retired")])
+        (self.skill / "references" / "guide.md").write_text("Check DEMO-01, DEMO-02 and DEMO-09. UXE-10 is not a criterion.\n")
+        problems = run(self.skill, check=False)
+        self.assertEqual([p.split(": ", 1)[1] for p in problems],
+                         ["cites DEMO-02, which is not an active criterion", "cites DEMO-09, which is not an active criterion"])
 
     def test_an_area_file_without_criteria_is_reported(self):
         run(self.skill, check=False)

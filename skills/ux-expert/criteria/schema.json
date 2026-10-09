@@ -4,7 +4,7 @@
   "title": "ux-expert criteria catalogue for one area",
   "type": "object",
   "additionalProperties": false,
-  "required": ["area", "prefix", "criteria"],
+  "required": ["area", "prefix", "applicability", "phases", "criteria"],
   "properties": {
     "area": {
       "description": "File stem of the area reference, e.g. forms-input for references/areas/forms-input.md.",
@@ -16,11 +16,27 @@
       "type": "string",
       "pattern": "^[A-Z][A-Z0-9]*$"
     },
-    "criteria": {
-      "type": "array",
-      "minItems": 1,
-      "items": { "$ref": "#/$defs/criterion" }
-    }
+    "applicability": {
+      "description": "How deeply the area applies to each product type: run (every criterion), light (key criteria), conditional (see applicability_note), n/a.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["web-app", "marketing-site", "mobile", "desktop", "cli", "sdk-api", "ai-feature"],
+      "properties": {
+        "web-app": {"$ref": "#/$defs/depth"},
+        "marketing-site": {"$ref": "#/$defs/depth"},
+        "mobile": {"$ref": "#/$defs/depth"},
+        "desktop": {"$ref": "#/$defs/depth"},
+        "cli": {"$ref": "#/$defs/depth"},
+        "sdk-api": {"$ref": "#/$defs/depth"},
+        "ai-feature": {"$ref": "#/$defs/depth"}
+      }
+    },
+    "applicability_note": {"description": "When a conditional area applies.", "type": "string", "minLength": 1},
+    "phases": {
+      "description": "Default phases for the area's criteria: design (specify in stories and designs) and/or build (implement and test in code). Every criterion is also auditable.",
+      "$ref": "#/$defs/phases"
+    },
+    "criteria": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/criterion"}}
   },
   "$defs": {
     "criterion": {
@@ -33,26 +49,62 @@
           "type": "string",
           "pattern": "^[A-Z][A-Z0-9]*-[0-9]{2,}$"
         },
-        "name": { "description": "What good looks like, in a few words.", "type": "string", "minLength": 1 },
-        "check": { "description": "How to check it (code, runtime or measurement).", "type": "string", "minLength": 1 },
-        "fail_signal": { "description": "What a failure looks like, with thresholds where they exist.", "type": "string", "minLength": 1 },
+        "name": {
+          "description": "What good looks like, in a few words.",
+          "type": "string",
+          "minLength": 1
+        },
+        "check": {
+          "description": "How to check it (code, runtime or measurement).",
+          "type": "string",
+          "minLength": 1
+        },
+        "fail_signal": {
+          "description": "What a failure looks like, with thresholds where they exist.",
+          "type": "string",
+          "minLength": 1
+        },
         "severity": {
           "description": "Default severity or range, per references/severity-and-scoring.md.",
           "type": "string",
           "pattern": "^S[0-4](–S[0-4])?$"
         },
-        "severity_note": { "description": "Condition or escalation that changes the default.", "type": "string", "minLength": 1 },
+        "severity_note": {
+          "description": "Condition or escalation that changes the default.",
+          "type": "string",
+          "minLength": 1
+        },
         "related": {
           "description": "Area prefixes or criterion IDs that share this concern.",
           "type": "array",
           "uniqueItems": true,
-          "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*(-[0-9]{2,})?$" }
+          "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9]*(-[0-9]{2,})?$"}
+        },
+        "phases": {"description": "Overrides the area's default phases.", "$ref": "#/$defs/phases"},
+        "applies_to": {
+          "description": "Narrows the product types this criterion applies to (default: every type the area applies to).",
+          "$ref": "#/$defs/productTypes"
         },
         "status": {
           "description": "Retired criteria keep their ID reserved and are left out of the tables.",
           "enum": ["active", "retired"],
           "default": "active"
         }
+      }
+    },
+    "depth": {"enum": ["run", "light", "conditional", "n/a"]},
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["design", "build"]}
+    },
+    "productTypes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["web-app", "marketing-site", "mobile", "desktop", "cli", "sdk-api", "ai-feature"]
       }
     }
   }

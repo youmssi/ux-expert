@@ -1,5 +1,16 @@
 area: states-resilience
 prefix: STATE
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- design
+- build
 criteria:
 - id: STATE-01
   name: State matrix complete for critical screens
@@ -27,11 +38,14 @@ criteria:
   check: Timeouts lead to an error
   fail_signal: Spinner forever on failure
   severity: S3
+  phases: &id001
+  - build
 - id: STATE-06
   name: Refresh keeps content
   check: Stale-while-revalidate
   fail_signal: Content blanks on refetch
   severity: S2
+  phases: *id001
 - id: STATE-07
   name: All errors caught and shown
   check: Fetch/mutation error branches
@@ -52,6 +66,7 @@ criteria:
   check: Component and route-level boundaries
   fail_signal: White screen on a component crash
   severity: S3–S4
+  phases: *id001
 - id: STATE-11
   name: Offline handling
   check: Detection, banner, queued or flagged writes
@@ -81,6 +96,7 @@ criteria:
   related:
   - PERF
   - DATA
+  phases: *id001
 - id: STATE-16
   name: Autosave / unsaved-changes guard
   check: Autosave or a navigation guard
@@ -123,3 +139,4 @@ criteria:
   severity: S2
   related:
   - MEAS
+  phases: *id001

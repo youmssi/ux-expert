@@ -1,11 +1,24 @@
 area: forms-input
 prefix: FORM
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: light
+phases:
+- design
+- build
 criteria:
 - id: FORM-01
   name: Only necessary fields, asked when needed
   check: Necessity table
   fail_signal: Removable or deferrable fields on critical forms
   severity: S2–S3
+  phases: &id002
+  - design
 - id: FORM-02
   name: Visible persistent labels
   check: Every input has a label
@@ -18,6 +31,8 @@ criteria:
   check: '`for`/`id`, `aria-describedby`'
   fail_signal: Unassociated labels or help
   severity: S2–S3
+  phases: &id001
+  - build
 - id: FORM-04
   name: Single-column logical layout
   check: Layout of critical forms
@@ -28,12 +43,14 @@ criteria:
   check: '`type`, `inputmode`'
   fail_signal: Wrong keyboards on mobile; `type=number` for codes
   severity: S2
+  phases: *id001
 - id: FORM-06
   name: Autocomplete tokens
   check: '`autocomplete` attributes'
   fail_signal: Missing on personal, address, payment or credential fields
   severity: S2
   severity_note: WCAG 1.3.5
+  phases: *id001
 - id: FORM-07
   name: Format tolerance
   check: Accept spaces, dashes, parentheses; trim whitespace; case-insensitive emails
@@ -47,6 +64,7 @@ criteria:
   severity_note: S3+ if it is a dark pattern
   related:
   - TRUST
+  phases: *id002
 - id: FORM-09
   name: Validation timing
   check: On blur/submit; live re-validation after an error
@@ -62,6 +80,7 @@ criteria:
   check: Focus to first error or summary on submit
   fail_signal: Errors appear off-screen with no focus change
   severity: S2–S3
+  phases: *id001
 - id: FORM-12
   name: Input preserved on error
   check: Data retained after server or validation errors
@@ -72,16 +91,19 @@ criteria:
   check: Consistent marking with a legend
   fail_signal: Ambiguous or color-only asterisk
   severity: S2
+  phases: *id002
 - id: FORM-14
   name: Submit labeled by outcome
   check: Button copy
   fail_signal: '"Submit", "OK", "Continue" where the outcome matters (payments)'
   severity: S1–S2
+  phases: *id002
 - id: FORM-15
   name: Double-submit prevention
   check: Loading/disabled during submit; idempotency
   fail_signal: Multiple records or charges
   severity: S3–S4
+  phases: *id001
 - id: FORM-16
   name: Password field usability
   check: Show/hide, rules upfront, paste, manager support, sane max length
@@ -119,11 +141,13 @@ criteria:
   fail_signal: Re-asking known data
   severity: S2
   severity_note: WCAG 3.3.7
+  phases: *id002
 - id: FORM-23
   name: Client/server rule parity
   check: Shared schema or matching rules
   fail_signal: Client passes, server rejects with a different message
   severity: S2
+  phases: *id001
 - id: FORM-24
   name: Enter-key behavior
   check: Submits single-line forms; documented in chat or multi-line inputs

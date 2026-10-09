@@ -1,14 +1,28 @@
 area: design-system
 prefix: DS
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: light
+phases:
+- build
 criteria:
 - id: DS-01
   name: Tokens exist for all core categories
   fail_signal: Missing color/spacing/type/radius/shadow/motion/z-index tokens
   severity: S2
+  phases: &id001
+  - design
+  - build
 - id: DS-02
   name: Semantic token layer
   fail_signal: Components use primitives (`blue-500`) instead of roles (`--color-action-primary`)
   severity: S2
+  phases: *id001
 - id: DS-03
   name: Token adoption
   fail_signal: < ~90% adoption in a category; many hard-coded values
@@ -22,6 +36,7 @@ criteria:
   name: Canonical components for core primitives
   fail_signal: Missing core components; each team builds its own
   severity: S2
+  phases: *id001
 - id: DS-06
   name: No forks/duplicates
   fail_signal: ≥ 2 implementations of the same primitive
@@ -50,10 +65,12 @@ criteria:
   name: Consistent patterns across screens
   fail_signal: Same pattern implemented differently
   severity: S2
+  phases: *id001
 - id: DS-12
   name: Iconography consistent
   fail_signal: Mixed sets, styles, sizes; inconsistent meanings
   severity: S1–S2
+  phases: *id001
 - id: DS-13
   name: Documentation
   fail_signal: No Storybook or usage docs
@@ -80,3 +97,4 @@ criteria:
   name: Design–code parity (if design files available)
   fail_signal: Figma components differ from code; naming mismatch
   severity: S1–S2
+  phases: *id001

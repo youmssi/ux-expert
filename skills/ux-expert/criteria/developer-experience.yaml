@@ -1,5 +1,17 @@
 area: developer-experience
 prefix: DX
+applicability:
+  web-app: light
+  marketing-site: n/a
+  mobile: n/a
+  desktop: n/a
+  cli: run
+  sdk-api: run
+  ai-feature: light
+applicability_note: light on web apps and AI features only when they expose a public API
+phases:
+- design
+- build
 criteria:
 - id: DX-01
   name: Fast time to first success
@@ -49,6 +61,8 @@ criteria:
   name: No crashes on bad input
   fail_signal: Panics, segfaults or process exit on invalid input
   severity: S4
+  phases: &id001
+  - build
 - id: DX-13
   name: Debuggability / tracing
   fail_signal: No way to see why a result was produced
@@ -57,6 +71,8 @@ criteria:
   name: CLI conventions
   fail_signal: No help, wrong exit codes, no machine output, colors in pipes
   severity: S2
+  applies_to:
+  - cli
 - id: DX-15
   name: Docs cover all four types
   fail_signal: Missing how-tos, reference or concepts
@@ -65,6 +81,7 @@ criteria:
   name: Examples tested in CI
   fail_signal: Examples broken or diverging from the API
   severity: S2
+  phases: *id001
 - id: DX-17
   name: Versioning and migrations
   fail_signal: Breaking changes without semver, deprecation or a guide
@@ -73,10 +90,12 @@ criteria:
   name: Changelog and release notes
   fail_signal: Missing or uninformative
   severity: S1–S2
+  phases: *id001
 - id: DX-19
   name: Package metadata and registry pages
   fail_signal: Missing description, links or README on registries
   severity: S1
+  phases: *id001
 - id: DX-20
   name: Performance and limits documented
   fail_signal: Unknown limits; unclear performance characteristics

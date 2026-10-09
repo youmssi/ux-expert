@@ -1,5 +1,15 @@
 area: information-architecture
 prefix: IA
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: light
+  ai-feature: light
+phases:
+- design
 criteria:
 - id: IA-01
   name: Top-level navigation is small and meaningful
@@ -31,6 +41,9 @@ criteria:
   check: Active nav state, page titles, breadcrumbs on deep pages
   fail_signal: No active state; page `<title>` generic or identical across pages
   severity: S2
+  phases: &id001
+  - design
+  - build
 - id: IA-07
   name: Escape routes everywhere
   check: Every screen and modal has back, close or cancel
@@ -47,16 +60,20 @@ criteria:
   fail_signal: Orphans (unreachable features) or 404 links
   severity: S2
   severity_note: S3 if critical
+  phases:
+  - build
 - id: IA-10
   name: Shareable, stable URLs
   check: Filters, tabs and selection in URL; readable slugs
   fail_signal: State lost on refresh or share; opaque IDs only where names are expected
   severity: S2
+  phases: *id001
 - id: IA-11
   name: Back button and history correct
   check: 'Runtime: Back after modal, wizard and filters'
   fail_signal: Back exits the app, or loses the form
   severity: S2–S3
+  phases: *id001
 - id: IA-12
   name: Context (tenant/project) always visible
   check: Workspace switcher and current context indicator
@@ -78,6 +95,7 @@ criteria:
   check: Not-found page offers search, home and likely destinations
   fail_signal: Blank or developer error page
   severity: S2
+  phases: *id001
 - id: IA-16
   name: Settings well structured
   check: Clear groups, danger zone separated, searchable if large
@@ -98,6 +116,10 @@ criteria:
   check: Bottom tab bar (3–5 items) for primary destinations on mobile; no hamburger-only for core jobs
   fail_signal: Core destinations hidden behind a hamburger
   severity: S2
+  applies_to:
+  - web-app
+  - marketing-site
+  - mobile
 - id: IA-20
   name: Footer / secondary IA for marketing sites
   check: Legal, pricing, docs, contact and status reachable
@@ -106,3 +128,5 @@ criteria:
   related:
   - TRUST
   - LAUNCH
+  applies_to:
+  - marketing-site

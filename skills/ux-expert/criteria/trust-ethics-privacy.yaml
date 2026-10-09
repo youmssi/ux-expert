@@ -1,5 +1,15 @@
 area: trust-ethics-privacy
 prefix: TRUST
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: light
+  ai-feature: run
+phases:
+- design
 criteria:
 - id: TRUST-01
   name: No pre-selected consent or add-ons
@@ -14,10 +24,15 @@ criteria:
   name: No tracking before consent (where required)
   fail_signal: Analytics/ads scripts load before consent
   severity: S3–S4
+  phases:
+  - build
 - id: TRUST-04
   name: Withdrawable consent
   fail_signal: No persistent way to change consent
   severity: S2–S3
+  phases: &id001
+  - design
+  - build
 - id: TRUST-05
   name: No confirmshaming, trick wording, nagging
   fail_signal: Present
@@ -42,6 +57,7 @@ criteria:
   name: Self-serve data export and deletion
   fail_signal: No in-app deletion or export
   severity: S3
+  phases: *id001
 - id: TRUST-11
   name: Privacy notices at collection
   fail_signal: Sensitive data collected without explanation
@@ -62,18 +78,22 @@ criteria:
   name: Strong, usable authentication
   fail_signal: No password-manager support; no MFA for admin; no passkeys (light)
   severity: S2–S3
+  phases: *id001
 - id: TRUST-16
   name: Safe account recovery
   fail_signal: Insecure or broken recovery; security questions
   severity: S3
+  phases: *id001
 - id: TRUST-17
   name: Session and device visibility
   fail_signal: No session list or security alerts
   severity: S2
+  phases: *id001
 - id: TRUST-18
   name: Sensitive data handled visibly
   fail_signal: Secrets shown unmasked; no re-auth for critical changes
   severity: S2–S3
+  phases: *id001
 - id: TRUST-19
   name: System transparency
   fail_signal: Unexplained denials, failures or automated decisions

@@ -1,5 +1,15 @@
 area: onboarding-activation
 prefix: ONB
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- design
 criteria:
 - id: ONB-01
   name: Aha moment and activation event defined
@@ -11,6 +21,8 @@ criteria:
   severity: S2
   related:
   - MEAS
+  phases:
+  - build
 - id: ONB-03
   name: Short time-to-value
   fail_signal: Many steps or minutes before first value; exceeds the marketing promise
@@ -27,6 +39,9 @@ criteria:
   name: Non-blocking verification
   fail_signal: Email verification blocks first use without a security reason
   severity: S2
+  phases: &id001
+  - design
+  - build
 - id: ONB-07
   name: Setup questions change the experience
   fail_signal: Questions that personalize nothing
@@ -67,6 +82,11 @@ criteria:
   name: Permission priming at moment of need
   fail_signal: OS permission prompts on first launch without context
   severity: S2–S3
+  phases: *id001
+  applies_to:
+  - mobile
+  - web-app
+  - desktop
 - id: ONB-17
   name: Returning-user re-onboarding
   fail_signal: Users lose orientation after inactivity or major changes

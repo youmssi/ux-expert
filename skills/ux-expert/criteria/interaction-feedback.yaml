@@ -1,5 +1,16 @@
 area: interaction-feedback
 prefix: INT
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
+- build
 criteria:
 - id: INT-01
   name: Clear affordances/signifiers
@@ -52,6 +63,8 @@ criteria:
   fail_signal: '> 3 flashes/second'
   severity: S4
   severity_note: WCAG 2.3.1
+  phases: &id001
+  - build
 - id: INT-11
   name: Modal behavior correct
   check: Focus trap, Esc, focus return, scroll lock, close button
@@ -109,8 +122,10 @@ criteria:
   fail_signal: Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions
   severity: S2
   severity_note: WCAG 2.5.2
+  phases: *id001
 - id: INT-22
   name: Scroll behavior sane
   check: No scroll-jacking, no nested-scroll traps, restore scroll position on back
   fail_signal: Hijacked scroll; lost position after back
   severity: S2
+  phases: *id001
