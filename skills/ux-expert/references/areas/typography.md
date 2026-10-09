@@ -51,9 +51,11 @@ They check typography in three layers:
 
 ## Criteria
 
-| ID | Criterion | Check | Threshold / fail signal | Default severity |
+<!-- BEGIN GENERATED criteria (typography) -->
+<!-- Source: criteria/typography.yaml. Edit the YAML, then run scripts/generate.py. -->
+| ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
-| TYP-01 | Defined type scale | Tokens/variants exist and are used | No scale; > 8 distinct sizes in use | S2 (systemic → DS) |
+| TYP-01 | Defined type scale | Tokens/variants exist and are used | No scale; > 8 distinct sizes in use | S2 (systemic; → DS) |
 | TYP-02 | Off-scale sizes | Count sizes not in the scale | Any frequent off-scale size | S1–S2 |
 | TYP-03 | Body text size | Computed body size | < 16 px for a general audience; < 12 px anywhere meaningful | S2–S3 |
 | TYP-04 | Line height | Body and heading line heights | Body < 1.4 or > 1.8 | S2 |
@@ -71,6 +73,7 @@ They check typography in three layers:
 | TYP-16 | Font family count | Families loaded | > 2 families (excluding monospace) without reason; heavy font payload | S1–S2 (→ PERF) |
 | TYP-17 | Monospace for code and IDs | Code, keys, IDs in monospace | Code in a proportional font; ambiguous characters (0/O, 1/l/I) in IDs | S1–S2 |
 | TYP-18 | Readable on all backgrounds | Text over images or gradients has a scrim or overlay | Text over busy imagery | S2 (→ COL) |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

@@ -73,6 +73,8 @@ Terms of service, privacy policy, cookie policy (with the consent tool working â
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (launch-readiness) -->
+<!-- Source: criteria/launch-readiness.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | LAUNCH-01 | Value proposition clear in 5 seconds | Visitor can't tell what, who or next step | S3 |
@@ -96,6 +98,7 @@ Terms of service, privacy policy, cookie policy (with the consent tool working â
 | LAUNCH-19 | Rollback and feature-flag plan | No rollback path | S2â€“S3 |
 | LAUNCH-20 | Launch-day runbook and owners | No owners or monitoring plan | S2 |
 | LAUNCH-21 | Gate verdict produced with conditions | No explicit Go/No-Go with reasons | S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

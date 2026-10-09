@@ -1,0 +1,108 @@
+area: information-architecture
+prefix: IA
+criteria:
+- id: IA-01
+  name: Top-level navigation is small and meaningful
+  check: Count global nav items
+  fail_signal: '> 7 ungrouped items; items of very different importance at the same level'
+  severity: S2
+- id: IA-02
+  name: Critical jobs are shallow
+  check: Levels or clicks from home to each critical job
+  fail_signal: '> 3 levels, or the job is only reachable via search'
+  severity: S2–S3
+- id: IA-03
+  name: Labels in the user's language
+  check: Compare labels with the CTX vocabulary
+  fail_signal: Internal jargon, acronyms, "Misc/Other/General" buckets
+  severity: S2
+- id: IA-04
+  name: Labels are mutually exclusive
+  check: Sibling labels with overlapping meaning
+  fail_signal: Users can't predict which one holds an item
+  severity: S2
+- id: IA-05
+  name: Grouping follows mental model
+  check: Groups reflect user tasks or objects
+  fail_signal: Grouping mirrors teams, tech layers or DB tables
+  severity: S2–S3
+- id: IA-06
+  name: You-are-here cues
+  check: Active nav state, page titles, breadcrumbs on deep pages
+  fail_signal: No active state; page `<title>` generic or identical across pages
+  severity: S2
+- id: IA-07
+  name: Escape routes everywhere
+  check: Every screen and modal has back, close or cancel
+  fail_signal: Dead-end screens; modals with no close; flows without exit
+  severity: S3
+- id: IA-08
+  name: Label–destination match
+  check: Nav label text vs. destination H1/title
+  fail_signal: Label "Billing" leads to "Subscription management"
+  severity: S1–S2
+- id: IA-09
+  name: No orphan or dead routes
+  check: Router vs. links
+  fail_signal: Orphans (unreachable features) or 404 links
+  severity: S2
+  severity_note: S3 if critical
+- id: IA-10
+  name: Shareable, stable URLs
+  check: Filters, tabs and selection in URL; readable slugs
+  fail_signal: State lost on refresh or share; opaque IDs only where names are expected
+  severity: S2
+- id: IA-11
+  name: Back button and history correct
+  check: 'Runtime: Back after modal, wizard and filters'
+  fail_signal: Back exits the app, or loses the form
+  severity: S2–S3
+- id: IA-12
+  name: Context (tenant/project) always visible
+  check: Workspace switcher and current context indicator
+  fail_signal: User can act in the wrong workspace without noticing
+  severity: S3
+  severity_note: S4 if destructive
+- id: IA-13
+  name: Consistent nav across the product
+  check: The same nav component and placement on all screens
+  fail_signal: Nav moves, changes order or disappears between sections
+  severity: S2
+- id: IA-14
+  name: Search or command palette for large IA
+  check: Products with many objects or pages have a global search / ⌘K
+  fail_signal: Large product with nav-only findability
+  severity: S2
+- id: IA-15
+  name: Useful 404 / not-found
+  check: Not-found page offers search, home and likely destinations
+  fail_signal: Blank or developer error page
+  severity: S2
+- id: IA-16
+  name: Settings well structured
+  check: Clear groups, danger zone separated, searchable if large
+  fail_signal: Single long page mixing personal and org settings and destructive actions
+  severity: S2
+- id: IA-17
+  name: Cross-linking between related objects
+  check: Detail pages link to related objects (invoice → customer)
+  fail_signal: Users must go back to the list and search again
+  severity: S2
+- id: IA-18
+  name: Utility nav where expected
+  check: Account/profile top-right (web), help, notifications in conventional places
+  fail_signal: Unconventional placement (Jakob's law)
+  severity: S1–S2
+- id: IA-19
+  name: Mobile navigation pattern fits
+  check: Bottom tab bar (3–5 items) for primary destinations on mobile; no hamburger-only for core jobs
+  fail_signal: Core destinations hidden behind a hamburger
+  severity: S2
+- id: IA-20
+  name: Footer / secondary IA for marketing sites
+  check: Legal, pricing, docs, contact and status reachable
+  fail_signal: Missing legal or contact links
+  severity: S2
+  related:
+  - TRUST
+  - LAUNCH

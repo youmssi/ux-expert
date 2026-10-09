@@ -29,8 +29,12 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
 
 ## 3. Criteria
 
-- Each criterion has a permanent ID (`<PREFIX>-<NN>`), a name, a check, a fail
-  signal and a default severity. IDs are never renumbered or reused; a criterion
+- Criteria live in `skills/ux-expert/criteria/<area>.yaml` (schema:
+  `criteria/schema.json`); the tables in the area files are generated, never
+  edited by hand.
+- Each criterion has a permanent ID (`<PREFIX>-<NN>`), a name, a fail signal
+  and a default severity, plus an optional check, severity note and related
+  areas or criteria. IDs are never renumbered or reused; a criterion
   that no longer applies is retired, not deleted.
 - A criterion is **observable**: someone else checking the same product would
   reach the same result. "Feels modern" is not a criterion.

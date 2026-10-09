@@ -55,6 +55,8 @@ file and add what is specific to that tool.
    never stack a story on an unmerged one; never commit to `main` or `develop`.
 4. **Criterion IDs are permanent.** A published ID (e.g. `FORM-09`) never
    changes meaning and is never reused. Retire it (`status: retired`) instead.
+   Criteria are edited in `skills/ux-expert/criteria/*.yaml` only; the tables in
+   the area files are generated (`python3 scripts/generate.py`).
 5. **Every number has a source.** A threshold, statistic or research result in
    the content cites where it comes from. An estimate says it is an estimate.
 6. **One source of truth.** Shared references and criteria exist once; anything
@@ -90,8 +92,10 @@ file and add what is specific to that tool.
 ## 5. Checks before every push
 
 ```bash
-python3 -m unittest discover -s scripts -p "test_*.py"  # validator tests
-python3 scripts/validate.py                              # repo rules: IDs, links, budget
+pip install -r scripts/requirements.txt                  # once: PyYAML, jsonschema
+python3 -m unittest discover -s scripts -p "test_*.py"  # script tests
+python3 scripts/validate.py                              # repo rules: links, line budget
+python3 scripts/generate.py --check                      # criteria schema, IDs, tables in sync
 skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
 ```
 
@@ -119,7 +123,7 @@ with the commit from the workflow.
 ## 8. Repository map
 
 ```
-skills/ux-expert/            the Agent Skill (SKILL.md + references/)
+skills/ux-expert/            the Agent Skill (SKILL.md, references/, criteria/)
 .claude-plugin/              Claude Code plugin marketplace manifest
 scripts/                     validation and generation scripts
 docs/adr/                    architecture decision records

@@ -64,6 +64,8 @@ For each action on critical flows:
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (interaction-feedback) -->
+<!-- Source: criteria/interaction-feedback.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
 | INT-01 | Clear affordances/signifiers | Interactive elements look interactive; non-interactive ones don't | Clickable text without styling; styled non-clickables ("dead clicks") | S2 |
@@ -88,6 +90,7 @@ For each action on critical flows:
 | INT-20 | Consistent interaction patterns | Same gesture or click → same result across the product | Double-click opens in one list but selects in another | S2 |
 | INT-21 | Prevention of accidental activation | Down-event vs. up-event activation, safe spacing | Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions | S2 (WCAG 2.5.2) |
 | INT-22 | Scroll behavior sane | No scroll-jacking, no nested-scroll traps, restore scroll position on back | Hijacked scroll; lost position after back | S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

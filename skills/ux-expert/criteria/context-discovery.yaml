@@ -1,0 +1,69 @@
+area: context-discovery
+prefix: CTX
+criteria:
+- id: CTX-01
+  name: Clear value proposition
+  check: Can the one-liner be written from the product's own landing/README/onboarding copy?
+  fail_signal: Copy describes features, not outcomes; the audience is unclear
+  severity: S2
+  severity_note: S3 if this is the main acquisition page
+- id: CTX-02
+  name: Defined primary users
+  check: Roles/segments are identifiable and the product addresses them explicitly
+  fail_signal: One generic flow for very different users (admin vs. end user)
+  severity: S2
+- id: CTX-03
+  name: Critical jobs supported end to end
+  check: Each critical job maps to an existing, complete flow
+  fail_signal: A job has no path, or requires leaving the product or a workaround
+  severity: S3–S4
+- id: CTX-04
+  name: Vocabulary consistency
+  check: One name per concept across UI, docs, code-facing API and emails
+  fail_signal: ≥ 2 names for the same concept in user-facing text
+  severity: S2
+- id: CTX-05
+  name: Matches user mental model
+  check: Structure follows how users think about the domain (not the database or org chart)
+  fail_signal: Navigation mirrors internal teams or tables
+  severity: S2–S3
+- id: CTX-06
+  name: Context of use addressed
+  check: Product works in the dominant context (mobile on the go, low bandwidth, shared devices, gloves,
+    sunlight)
+  fail_signal: Desktop-only design for a mostly-mobile segment
+  severity: S3
+- id: CTX-07
+  name: Expertise range served
+  check: Novices can succeed and experts are not slowed down (shortcuts, bulk actions, defaults)
+  fail_signal: Only one of the two is served
+  severity: S2
+- id: CTX-08
+  name: Success is defined and measurable
+  check: Activation and core-job success events exist
+  fail_signal: No analytics, or vanity metrics only
+  severity: S2
+  related:
+  - MEAS
+- id: CTX-09
+  name: Constraints identified
+  check: Legal, compliance and accessibility obligations are known
+  fail_signal: Product targets a regulated domain with no visible handling
+  severity: S3
+- id: CTX-10
+  name: Convention baseline known
+  check: Category conventions identified and deviations deliberate
+  fail_signal: Reinvents standard patterns without a benefit
+  severity: S2
+- id: CTX-11
+  name: Buyer vs. user needs
+  check: If the buyer differs from the user, both have flows (admin, billing, reporting vs. daily use)
+  fail_signal: Missing admin, audit or reporting for B2B
+  severity: S2–S3
+- id: CTX-12
+  name: Evidence base exists
+  check: Some research, feedback loop or analytics informs decisions
+  fail_signal: No feedback channel at all
+  severity: S1–S2
+  related:
+  - MEAS

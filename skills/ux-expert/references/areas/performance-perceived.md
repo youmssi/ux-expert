@@ -51,11 +51,13 @@ For each performance issue, write the user consequence on a critical flow: "On m
 
 ## Criteria
 
-| ID | Criterion | Threshold / fail signal | Default severity |
+<!-- BEGIN GENERATED criteria (performance-perceived) -->
+<!-- Source: criteria/performance-perceived.yaml. Edit the YAML, then run scripts/generate.py. -->
+| ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
-| PERF-01 | LCP on critical routes | > 2.5 s (p75 mobile) needs improvement; > 4 s poor | S2 (needs improvement) / S3 (poor) |
-| PERF-02 | INP / interaction latency | > 200 ms needs improvement; > 500 ms poor | S2 / S3 |
-| PERF-03 | CLS | > 0.1 / > 0.25 | S2 / S3 |
+| PERF-01 | LCP on critical routes | > 2.5 s (p75 mobile) needs improvement; > 4 s poor | S2–S3 (S2 when it needs improvement, S3 when poor) |
+| PERF-02 | INP / interaction latency | > 200 ms needs improvement; > 500 ms poor | S2–S3 (S2 when it needs improvement, S3 when poor) |
+| PERF-03 | CLS | > 0.1 / > 0.25 | S2–S3 (S2 when it needs improvement, S3 when poor) |
 | PERF-04 | TTFB / server response | Consistently > ~800 ms | S2 |
 | PERF-05 | Critical action feedback timing | No acknowledgement within 100 ms; no result or progress within 1 s | S2–S3 |
 | PERF-06 | JavaScript weight | Far over budget; no code splitting; heavy libraries for small features | S2 |
@@ -73,6 +75,7 @@ For each performance issue, write the user consequence on a critical flow: "On m
 | PERF-18 | Mobile app start and frame rate | Cold start > ~2–3 s; frequent dropped frames | S2–S3 |
 | PERF-19 | Performance budgets enforced | No budgets or CI checks (Lighthouse CI, size-limit, bundlesize) | S1–S2 |
 | PERF-20 | Real-user monitoring | No field data on vitals | S1–S2 (→ MEAS) |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

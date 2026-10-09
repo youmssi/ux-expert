@@ -72,6 +72,8 @@ Plus: no blame ("You entered an invalid…" → "Enter a date after today"), no 
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (content-writing) -->
+<!-- Source: criteria/content-writing.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | CONT-01 | One term per concept | Synonyms or overloaded terms across the UI | S2 |
@@ -90,11 +92,12 @@ Plus: no blame ("You entered an invalid…" → "Enter a date after today"), no 
 | CONT-14 | Plain-language readability | Complex sentences in critical instructions | S2 |
 | CONT-15 | Inclusive language | Gendered defaults; ableist terms; name-format assumptions | S2 |
 | CONT-16 | Scannable copy | Front-loaded words; headings; bullets for lists | S1–S2 |
-| CONT-17 | Notification content useful and controllable | Vague notifications; no settings or unsubscribe | S2 (→ TRUST for consent) |
+| CONT-17 | Notification content useful and controllable | Vague notifications; no settings or unsubscribe | S2 (for consent; → TRUST) |
 | CONT-18 | Transactional emails clear | Generic subjects; broken deep links; no plain text | S2 |
 | CONT-19 | Placeholder text not carrying critical info | Instructions only in the placeholder | S2 (→ FORM) |
 | CONT-20 | Numbers, units and currency explicit | "Price: 49" without currency; ambiguous units | S2–S3 |
 | CONT-21 | Glossary/style guide exists | No source of truth for terms and voice | S1 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

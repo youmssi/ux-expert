@@ -78,7 +78,9 @@ List every assumption with a **risk level** (if wrong, how much does the audit c
 
 ## Criteria
 
-| ID | Criterion | How to check | Fail signal | Default severity |
+<!-- BEGIN GENERATED criteria (context-discovery) -->
+<!-- Source: criteria/context-discovery.yaml. Edit the YAML, then run scripts/generate.py. -->
+| ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
 | CTX-01 | Clear value proposition | Can the one-liner be written from the product's own landing/README/onboarding copy? | Copy describes features, not outcomes; the audience is unclear | S2 (S3 if this is the main acquisition page) |
 | CTX-02 | Defined primary users | Roles/segments are identifiable and the product addresses them explicitly | One generic flow for very different users (admin vs. end user) | S2 |
@@ -87,11 +89,12 @@ List every assumption with a **risk level** (if wrong, how much does the audit c
 | CTX-05 | Matches user mental model | Structure follows how users think about the domain (not the database or org chart) | Navigation mirrors internal teams or tables | S2–S3 |
 | CTX-06 | Context of use addressed | Product works in the dominant context (mobile on the go, low bandwidth, shared devices, gloves, sunlight) | Desktop-only design for a mostly-mobile segment | S3 |
 | CTX-07 | Expertise range served | Novices can succeed and experts are not slowed down (shortcuts, bulk actions, defaults) | Only one of the two is served | S2 |
-| CTX-08 | Success is defined and measurable | Activation and core-job success events exist | No analytics, or vanity metrics only | S2 (routes to MEAS) |
+| CTX-08 | Success is defined and measurable | Activation and core-job success events exist | No analytics, or vanity metrics only | S2 (→ MEAS) |
 | CTX-09 | Constraints identified | Legal, compliance and accessibility obligations are known | Product targets a regulated domain with no visible handling | S3 |
 | CTX-10 | Convention baseline known | Category conventions identified and deviations deliberate | Reinvents standard patterns without a benefit | S2 |
 | CTX-11 | Buyer vs. user needs | If the buyer differs from the user, both have flows (admin, billing, reporting vs. daily use) | Missing admin, audit or reporting for B2B | S2–S3 |
-| CTX-12 | Evidence base exists | Some research, feedback loop or analytics informs decisions | No feedback channel at all | S1–S2 (routes to MEAS) |
+| CTX-12 | Evidence base exists | Some research, feedback loop or analytics informs decisions | No feedback channel at all | S1–S2 (→ MEAS) |
+<!-- END GENERATED criteria -->
 
 ## Output
 

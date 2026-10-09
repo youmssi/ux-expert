@@ -82,6 +82,8 @@ Code probes: SDK imports (`openai`, `@anthropic-ai/sdk`, `anthropic`, `ai`/`@ai-
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (ai-interfaces) -->
+<!-- Source: criteria/ai-interfaces.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | AI-01 | Capabilities discoverable | Blank prompt box with no guidance; AI hidden from the moment of need | S2 |
@@ -111,6 +113,7 @@ Code probes: SDK imports (`openai`, `@anthropic-ai/sdk`, `anthropic`, `ai`/`@ai-
 | AI-25 | High-stakes domain safeguards | Health/legal/finance outputs auto-applied, without sources or verification | S3–S4 |
 | AI-26 | Accessible AI output | Streaming spams screen readers; no keyboard access to actions | S2–S3 |
 | AI-27 | Evaluation and monitoring hooks | No logging of failures, feedback or quality signals | S2 (→ MEAS) |
+<!-- END GENERATED criteria -->
 
 ## Output
 

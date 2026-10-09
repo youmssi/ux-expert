@@ -70,16 +70,18 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (forms-input) -->
+<!-- Source: criteria/forms-input.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
 | FORM-01 | Only necessary fields, asked when needed | Necessity table | Removable or deferrable fields on critical forms | S2–S3 |
-| FORM-02 | Visible persistent labels | Every input has a label | Placeholder-only labels | S3 (A11Y) |
+| FORM-02 | Visible persistent labels | Every input has a label | Placeholder-only labels | S3 (→ A11Y) |
 | FORM-03 | Label/help association | `for`/`id`, `aria-describedby` | Unassociated labels or help | S2–S3 |
 | FORM-04 | Single-column logical layout | Layout of critical forms | Multi-column forms causing skipped fields (exception: short related pairs such as city/postal) | S2 |
 | FORM-05 | Correct input types and keyboards | `type`, `inputmode` | Wrong keyboards on mobile; `type=number` for codes | S2 |
 | FORM-06 | Autocomplete tokens | `autocomplete` attributes | Missing on personal, address, payment or credential fields | S2 (WCAG 1.3.5) |
 | FORM-07 | Format tolerance | Accept spaces, dashes, parentheses; trim whitespace; case-insensitive emails | Rejects valid input over formatting | S2–S3 |
-| FORM-08 | Smart, safe defaults | Defaults present and in the user's interest | No defaults; or defaults against the user (pre-checked consent) | S2 (S3+ if dark pattern → TRUST) |
+| FORM-08 | Smart, safe defaults | Defaults present and in the user's interest | No defaults; or defaults against the user (pre-checked consent) | S2 (S3+ if it is a dark pattern; → TRUST) |
 | FORM-09 | Validation timing | On blur/submit; live re-validation after an error | Errors on first keystroke; validation only server-side after a round trip | S2 |
 | FORM-10 | Error placement and clarity | Inline, specific, with fix guidance | Generic "Invalid" or "Error"; errors only at the top | S2–S3 |
 | FORM-11 | Error focus management | Focus to first error or summary on submit | Errors appear off-screen with no focus change | S2–S3 |
@@ -96,6 +98,7 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 | FORM-22 | No redundant entry | Previously given info isn't asked again; billing = shipping option | Re-asking known data | S2 (WCAG 3.3.7) |
 | FORM-23 | Client/server rule parity | Shared schema or matching rules | Client passes, server rejects with a different message | S2 |
 | FORM-24 | Enter-key behavior | Submits single-line forms; documented in chat or multi-line inputs | Enter does nothing, or unexpectedly submits a multi-line field | S1–S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

@@ -51,6 +51,8 @@ From CTX and analytics: which devices, OSes, browsers and window sizes matter? D
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (responsive-platform) -->
+<!-- Source: criteria/responsive-platform.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
 | RESP-01 | Device/platform matrix defined and tested | No defined matrix; untested on iOS Safari | S2 |
@@ -73,6 +75,7 @@ From CTX and analytics: which devices, OSes, browsers and window sizes matter? D
 | RESP-18 | Cross-browser support | Broken features in a supported browser; no graceful degradation | S2–S3 |
 | RESP-19 | High-DPI and asset quality | Blurry images and icons on retina/high-DPI screens | S1 |
 | RESP-20 | Print styles (if users print: invoices, reports, tickets) | Printing produces broken or unusable output | S1–S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

@@ -1,0 +1,91 @@
+area: developer-experience
+prefix: DX
+criteria:
+- id: DX-01
+  name: Fast time to first success
+  fail_signal: '> ~5 minutes or > ~5 steps to the first working result; extra concepts required upfront'
+  severity: S2–S3
+- id: DX-02
+  name: Quick start runnable as written
+  fail_signal: Missing imports or data; outdated API; failing commands
+  severity: S3
+- id: DX-03
+  name: Expected output shown
+  fail_signal: Developer can't tell whether it worked
+  severity: S1–S2
+- id: DX-04
+  name: Install clarity and platform support
+  fail_signal: Unclear prerequisites; missing binaries; vague unsupported-platform errors
+  severity: S2–S3
+- id: DX-05
+  name: Consistent, idiomatic naming
+  fail_signal: Mixed verbs; non-idiomatic casing; cryptic abbreviations
+  severity: S2
+- id: DX-06
+  name: Cross-language parity
+  fail_signal: Different option names, defaults, features or error shapes per binding without reason
+  severity: S2–S3
+- id: DX-07
+  name: Progressive complexity and good defaults
+  fail_signal: The simple case requires advanced configuration
+  severity: S2
+- id: DX-08
+  name: Pit of success
+  fail_signal: The easy way is slow, unsafe or incorrect (e.g. re-parsing per call)
+  severity: S2
+- id: DX-09
+  name: Complete types and IDE docs
+  fail_signal: '`any` in public types; no docstrings'
+  severity: S2
+- id: DX-10
+  name: Actionable error messages
+  fail_signal: Errors lack what/where/why/fix
+  severity: S3
+- id: DX-11
+  name: Stable error codes/types
+  fail_signal: Only string messages; inconsistent structures
+  severity: S2
+- id: DX-12
+  name: No crashes on bad input
+  fail_signal: Panics, segfaults or process exit on invalid input
+  severity: S4
+- id: DX-13
+  name: Debuggability / tracing
+  fail_signal: No way to see why a result was produced
+  severity: S2–S3
+- id: DX-14
+  name: CLI conventions
+  fail_signal: No help, wrong exit codes, no machine output, colors in pipes
+  severity: S2
+- id: DX-15
+  name: Docs cover all four types
+  fail_signal: Missing how-tos, reference or concepts
+  severity: S2
+- id: DX-16
+  name: Examples tested in CI
+  fail_signal: Examples broken or diverging from the API
+  severity: S2
+- id: DX-17
+  name: Versioning and migrations
+  fail_signal: Breaking changes without semver, deprecation or a guide
+  severity: S3
+- id: DX-18
+  name: Changelog and release notes
+  fail_signal: Missing or uninformative
+  severity: S1–S2
+- id: DX-19
+  name: Package metadata and registry pages
+  fail_signal: Missing description, links or README on registries
+  severity: S1
+- id: DX-20
+  name: Performance and limits documented
+  fail_signal: Unknown limits; unclear performance characteristics
+  severity: S1–S2
+- id: DX-21
+  name: Playground / sandbox
+  fail_signal: No way to try without installing (when it's a natural fit)
+  severity: S1–S2
+- id: DX-22
+  name: Support and contribution paths
+  fail_signal: No issue templates, security policy or contribution guide
+  severity: S1

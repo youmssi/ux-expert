@@ -1,0 +1,94 @@
+area: trust-ethics-privacy
+prefix: TRUST
+criteria:
+- id: TRUST-01
+  name: No pre-selected consent or add-ons
+  fail_signal: Pre-ticked marketing, sharing or paid add-ons
+  severity: S3–S4
+- id: TRUST-02
+  name: Symmetric consent choices
+  fail_signal: Reject harder than accept; hidden second layer
+  severity: S3
+  severity_note: EU legal risk
+- id: TRUST-03
+  name: No tracking before consent (where required)
+  fail_signal: Analytics/ads scripts load before consent
+  severity: S3–S4
+- id: TRUST-04
+  name: Withdrawable consent
+  fail_signal: No persistent way to change consent
+  severity: S2–S3
+- id: TRUST-05
+  name: No confirmshaming, trick wording, nagging
+  fail_signal: Present
+  severity: S2–S3
+- id: TRUST-06
+  name: No false urgency, scarcity or social proof
+  fail_signal: Fabricated timers, stock or activity
+  severity: S3
+- id: TRUST-07
+  name: Transparent total price
+  fail_signal: Fees revealed late; tax or period unclear
+  severity: S3
+- id: TRUST-08
+  name: Clear trial and renewal terms
+  fail_signal: No reminder; unclear charge timing
+  severity: S3
+- id: TRUST-09
+  name: Cancellation as easy as sign-up
+  fail_signal: Phone-only, multi-step or hidden cancellation
+  severity: S3–S4
+- id: TRUST-10
+  name: Self-serve data export and deletion
+  fail_signal: No in-app deletion or export
+  severity: S3
+- id: TRUST-11
+  name: Privacy notices at collection
+  fail_signal: Sensitive data collected without explanation
+  severity: S2
+- id: TRUST-12
+  name: AI and data-use disclosure
+  fail_signal: User data used for training or analysis without disclosure or opt-out
+  severity: S3
+- id: TRUST-13
+  name: Visibility and sharing clarity
+  fail_signal: Users can't tell who sees their content
+  severity: S3
+- id: TRUST-14
+  name: High-stakes review step
+  fail_signal: Money or legal actions without a summary review
+  severity: S3
+- id: TRUST-15
+  name: Strong, usable authentication
+  fail_signal: No password-manager support; no MFA for admin; no passkeys (light)
+  severity: S2–S3
+- id: TRUST-16
+  name: Safe account recovery
+  fail_signal: Insecure or broken recovery; security questions
+  severity: S3
+- id: TRUST-17
+  name: Session and device visibility
+  fail_signal: No session list or security alerts
+  severity: S2
+- id: TRUST-18
+  name: Sensitive data handled visibly
+  fail_signal: Secrets shown unmasked; no re-auth for critical changes
+  severity: S2–S3
+- id: TRUST-19
+  name: System transparency
+  fail_signal: Unexplained denials, failures or automated decisions
+  severity: S2
+- id: TRUST-20
+  name: Credibility basics
+  fail_signal: Missing contact, legal entity, policies or status page
+  severity: S2
+  related:
+  - LAUNCH
+- id: TRUST-21
+  name: Ethical notifications
+  fail_signal: No opt-out; manipulative re-engagement
+  severity: S2
+- id: TRUST-22
+  name: Minors and sensitive categories handled (if applicable)
+  fail_signal: No age-appropriate safeguards
+  severity: S3

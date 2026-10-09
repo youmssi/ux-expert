@@ -77,6 +77,8 @@ For each flow, write the **proposed step table** next to the current one, and qu
 
 ## Criteria
 
+<!-- BEGIN GENERATED criteria (flows-friction) -->
+<!-- Source: criteria/flows-friction.yaml. Edit the YAML, then run scripts/generate.py. -->
 | ID | Criterion | Check | Fail signal | Default severity |
 |---|---|---|---|---|
 | FLOW-01 | Every critical flow is completable | Trace end to end | Any break, dead end or missing step | S4 |
@@ -91,7 +93,7 @@ For each flow, write the **proposed step table** next to the current one, and qu
 | FLOW-10 | Interruption-safe | Drafts are saved; resumable after leaving or a session timeout | Progress lost on tab close or timeout | S3 |
 | FLOW-11 | Seams preserve intent | After email, OAuth or payment redirects, the user lands at their goal with context | Lands on a generic dashboard; intent lost | S3 |
 | FLOW-12 | Edge seams handled | Expired or used links, declined cards, denied OAuth, double submit | Raw errors, or the user is stuck | S3–S4 |
-| FLOW-13 | Idempotent critical actions | Double click or retry doesn't double-charge or double-create | Duplicates | S4 for payments, S3 otherwise |
+| FLOW-13 | Idempotent critical actions | Double click or retry doesn't double-charge or double-create | Duplicates | S3–S4 (S4 for payments) |
 | FLOW-14 | Exit flows are as easy as entry flows | Cancel, downgrade, delete and export are reachable and proportional | Cancellation harder than sign-up (also legal risk, → TRUST) | S3 |
 | FLOW-15 | Error recovery inside the flow | Errors are recoverable in place, with inputs kept | Error page that discards progress | S3 |
 | FLOW-16 | Expert efficiency | Repeated flows have shortcuts: bulk actions, templates, duplicate, keyboard | Experts forced through the novice wizard every time | S2 |
@@ -99,6 +101,7 @@ For each flow, write the **proposed step table** next to the current one, and qu
 | FLOW-18 | Consistent flow patterns | Similar tasks (create X, create Y) follow the same pattern | Each creation flow behaves differently | S2 |
 | FLOW-19 | Confirmation proportional to risk | Low-risk: no confirmation (use undo); high-risk: explicit confirmation | Confirm dialogs everywhere (users stop reading them) or nowhere | S2–S4 |
 | FLOW-20 | Completion is clear | The end state confirms success and suggests the next step | Flow ends on an ambiguous screen | S2 |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

@@ -1,0 +1,81 @@
+area: onboarding-activation
+prefix: ONB
+criteria:
+- id: ONB-01
+  name: Aha moment and activation event defined
+  fail_signal: No definition; onboarding ends at "profile complete"
+  severity: S2
+- id: ONB-02
+  name: Activation instrumented
+  fail_signal: No event for activation
+  severity: S2
+  related:
+  - MEAS
+- id: ONB-03
+  name: Short time-to-value
+  fail_signal: Many steps or minutes before first value; exceeds the marketing promise
+  severity: S3
+- id: ONB-04
+  name: Try before commit (where feasible)
+  fail_signal: Hard sign-up wall for a product that could demo value
+  severity: S2
+- id: ONB-05
+  name: Minimal sign-up
+  fail_signal: '> 3 fields at sign-up without justification; no SSO for the audience'
+  severity: S2–S3
+- id: ONB-06
+  name: Non-blocking verification
+  fail_signal: Email verification blocks first use without a security reason
+  severity: S2
+- id: ONB-07
+  name: Setup questions change the experience
+  fail_signal: Questions that personalize nothing
+  severity: S2
+- id: ONB-08
+  name: Skippable, deferrable setup
+  fail_signal: Forced integrations or imports with no fallback
+  severity: S3
+- id: ONB-09
+  name: Clear first-run next action
+  fail_signal: First screen with no obvious next step, or many competing ones
+  severity: S3
+- id: ONB-10
+  name: Templates, samples or examples
+  fail_signal: Blank-canvas start only
+  severity: S2
+- id: ONB-11
+  name: Contextual education
+  fail_signal: Long upfront tours; help disconnected from the moment
+  severity: S2
+- id: ONB-12
+  name: Tours well-behaved
+  fail_signal: '> 5 steps; unskippable; covering the UI; restarting every visit'
+  severity: S2
+- id: ONB-13
+  name: Meaningful checklist (if any)
+  fail_signal: Vanity tasks; no progress; can't dismiss
+  severity: S1–S2
+- id: ONB-14
+  name: Invite flow preserves context
+  fail_signal: Invitee lands on a generic page; must re-find the shared object
+  severity: S2–S3
+- id: ONB-15
+  name: Lifecycle messages tied to progress
+  fail_signal: Generic drip emails; no opt-out
+  severity: S2
+- id: ONB-16
+  name: Permission priming at moment of need
+  fail_signal: OS permission prompts on first launch without context
+  severity: S2–S3
+- id: ONB-17
+  name: Returning-user re-onboarding
+  fail_signal: Users lose orientation after inactivity or major changes
+  severity: S1–S2
+- id: ONB-18
+  name: New-feature discovery
+  fail_signal: New features invisible, or announced via disruptive modals
+  severity: S1–S2
+- id: ONB-19
+  name: Promise–experience consistency
+  fail_signal: Landing or App Store promises not met in the first run
+  severity: S2–S3

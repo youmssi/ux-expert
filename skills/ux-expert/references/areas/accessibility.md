@@ -80,10 +80,12 @@ Map the findings to WCAG success criteria. For pre-launch or enterprise mode, re
 
 ## Criteria
 
-| ID | Criterion (WCAG ref) | Fail signal | Default severity |
+<!-- BEGIN GENERATED criteria (accessibility) -->
+<!-- Source: criteria/accessibility.yaml. Edit the YAML, then run scripts/generate.py. -->
+| ID | Criterion | Fail signal | Default severity |
 |---|---|---|---|
-| A11Y-01 | Automated scan clean on critical screens (axe) | Serious/critical violations | S2–S4 by impact |
-| A11Y-02 | Keyboard operable everything (2.1.1) | Any critical control unreachable or inoperable by keyboard | S4 on critical flow |
+| A11Y-01 | Automated scan clean on critical screens (axe) | Serious/critical violations | S2–S4 (by impact) |
+| A11Y-02 | Keyboard operable everything (2.1.1) | Any critical control unreachable or inoperable by keyboard | S4 (on critical flow) |
 | A11Y-03 | No keyboard trap (2.1.2) | Focus stuck | S4 |
 | A11Y-04 | Visible focus (2.4.7; 2.4.11; 2.4.13 AAA) | `outline: none` without replacement; focus hidden by sticky UI | S3 |
 | A11Y-05 | Logical focus order (2.4.3) | Positive tabindex; DOM order differs from visual order | S2–S3 |
@@ -114,7 +116,8 @@ Map the findings to WCAG success criteria. For pre-launch or enterprise mode, re
 | A11Y-30 | Orientation (1.3.4) | Locked orientation | S2 |
 | A11Y-31 | Zoom not disabled | `user-scalable=no`, `maximum-scale=1` | S3 |
 | A11Y-32 | Native mobile accessibility APIs | Missing labels, roles, Dynamic Type | S3 |
-| A11Y-33 | Accessibility process | No a11y lint, test or statement; no VPAT where required | S1–S3 by obligation |
+| A11Y-33 | Accessibility process | No a11y lint, test or statement; no VPAT where required | S1–S3 (by obligation) |
+<!-- END GENERATED criteria -->
 
 ## Code probes
 

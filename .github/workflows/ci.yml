@@ -21,10 +21,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test the repository validator
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install script dependencies
+        run: pip install -r scripts/requirements.txt
+      - name: Test the scripts
         run: python -m unittest discover -s scripts -p "test_*.py"
       - name: Repository rules
         run: python scripts/validate.py
+      - name: Criteria catalogue and generated tables
+        run: python scripts/generate.py --check
       - name: Agent Skills spec
         run: |
           pip install "$SKILLS_REF"
