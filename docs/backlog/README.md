@@ -23,13 +23,13 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 | [UXE-4](UXE-4-design-mode.md) | Design mode: user story → UX requirements, acceptance criteria and Definition of Done | M | done |
 | [UXE-5](UXE-5-refactor-mode.md) | Refactor mode: gap analysis → sequenced, regression-safe improvement plan | M | done |
 | [UXE-6](UXE-6-content-tightening.md) | Content tightening: gotchas in every area, clear defaults, token budgets per file | M | done |
-| [UXE-7](UXE-7-citation-verification.md) | Citation verification: every number traced to a checked source, with status and date | M | in progress |
+| [UXE-7](UXE-7-citation-verification.md) | Citation verification: every number traced to a checked source, with status and date | M | done |
 
 ## v0.3: every agent can load it
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| UXE-8 | MCP server (TypeScript, read-only): prompts per mode, resources, criteria and scoring tools | L | to refine |
+| [UXE-8](UXE-8-mcp-server.md) | MCP server (TypeScript, read-only, MCP 2026-07-28): prompts per mode, resources, criteria and scoring tools | L | in progress |
 | UXE-9 | Single-file bundles per mode for chat apps; install guide per agent | S | to refine |
 
 ## v0.4: proven quality

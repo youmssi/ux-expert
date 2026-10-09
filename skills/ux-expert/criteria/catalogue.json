@@ -9720,5 +9720,69 @@
    "verified_against": "Search results quoting MedlinePlus; consistent with Birch (2010, Eye) and a 2025 pooled analysis",
    "supports": "Red–green color vision deficiency affects about 1 in 12 males and 1 in 200 females of Northern European ancestry; rates are lower in other populations."
   }
- ]
+ ],
+ "scoring": {
+  "priority_matrix": {
+   "S4": {
+    "R3": "P0",
+    "R2": "P0",
+    "R1": "P1"
+   },
+   "S3": {
+    "R3": "P0",
+    "R2": "P1",
+    "R1": "P2"
+   },
+   "S2": {
+    "R3": "P1",
+    "R2": "P2",
+    "R1": "P3"
+   },
+   "S1": {
+    "R3": "P2",
+    "R2": "P3",
+    "R1": "P3"
+   },
+   "S0": {
+    "R3": "P3",
+    "R2": "P3",
+    "R1": "P3"
+   }
+  },
+  "low_confidence_drop": 1,
+  "quick_win": {
+   "priorities": [
+    "P0",
+    "P1",
+    "P2"
+   ],
+   "efforts": [
+    "XS",
+    "S"
+   ]
+  },
+  "launch_gate": [
+   {
+    "verdict": "No-Go",
+    "when_any": [
+     "open_p0",
+     "critical_flow_unverified"
+    ],
+    "rule": "Any P0 open, or a critical flow was never verified end to end"
+   },
+   {
+    "verdict": "Conditional Go",
+    "when_any": [
+     "unowned_p1",
+     "critical_criteria_not_verified"
+    ],
+    "rule": "0 P0, but P1s are unowned or some critical criteria (FLOW, STATE, A11Y, TRUST on critical flows) are Not verified; list the exact conditions"
+   },
+   {
+    "verdict": "Go",
+    "when_any": [],
+    "rule": "0 P0, every P1 has an owner and a date, and critical-flow coverage has no Not verified rows for FLOW, STATE, A11Y or TRUST"
+   }
+  ]
+ }
 }

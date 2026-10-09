@@ -1,0 +1,24 @@
+# Scoring rules used by every audit, by the generated tables in
+# references/severity-and-scoring.md and by the MCP server's tools.
+priority_matrix:
+  # severity: {reach: priority}
+  S4: {R3: P0, R2: P0, R1: P1}
+  S3: {R3: P0, R2: P1, R1: P2}
+  S2: {R3: P1, R2: P2, R1: P3}
+  S1: {R3: P2, R2: P3, R1: P3}
+  S0: {R3: P3, R2: P3, R1: P3}
+low_confidence_drop: 1  # Low confidence lowers the priority by this many levels, with a "validate first" flag
+quick_win:
+  priorities: [P0, P1, P2]
+  efforts: [XS, S]
+launch_gate:
+  # Evaluated in order; the first verdict whose condition holds applies.
+  - verdict: No-Go
+    when_any: [open_p0, critical_flow_unverified]
+    rule: Any P0 open, or a critical flow was never verified end to end
+  - verdict: Conditional Go
+    when_any: [unowned_p1, critical_criteria_not_verified]
+    rule: 0 P0, but P1s are unowned or some critical criteria (FLOW, STATE, A11Y, TRUST on critical flows) are Not verified; list the exact conditions
+  - verdict: Go
+    when_any: []
+    rule: 0 P0, every P1 has an owner and a date, and critical-flow coverage has no Not verified rows for FLOW, STATE, A11Y or TRUST

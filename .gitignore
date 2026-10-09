@@ -5,3 +5,8 @@ node_modules/
 dist/
 *-workspace/
 .DS_Store
+# MCP package build outputs (the skill and licenses are copied in at build time)
+mcp/dist/
+mcp/skill/
+mcp/LICENSE
+mcp/LICENSE-CONTENT

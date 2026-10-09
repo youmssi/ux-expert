@@ -59,6 +59,7 @@ python3 -m unittest discover -s scripts -p "test_*.py"
 python3 scripts/validate.py
 python3 scripts/generate.py --check
 skills-ref validate skills/ux-expert
+(cd mcp && npm ci && npm test)   # when mcp/ or the skill changed
 ```
 
 And:

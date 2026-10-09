@@ -35,3 +35,23 @@ jobs:
         run: |
           pip install "$SKILLS_REF"
           for skill in skills/*/; do skills-ref validate "$skill"; done
+
+  mcp:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mcp/package-lock.json
+      - run: npm ci
+      - name: Build and test (unit, in-process protocol, stdio)
+        run: npm test
+      - name: Package contains the skill
+        run: |
+          npm pack --dry-run --json > pack.json
+          node -e "const f=require('./pack.json')[0].files.map(x=>x.path); for (const p of ['skill/SKILL.md','skill/criteria/catalogue.json','dist/index.js','LICENSE-CONTENT']) if (!f.includes(p)) { console.error('missing from package: '+p); process.exit(1) }"

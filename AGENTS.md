@@ -98,6 +98,7 @@ python3 -m unittest discover -s scripts -p "test_*.py"  # script tests
 python3 scripts/validate.py                              # repo rules: links, line budget
 python3 scripts/generate.py --check                      # criteria schema, IDs, tables in sync
 skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
+(cd mcp && npm ci && npm test)                           # MCP server: build, unit, protocol, stdio
 ```
 
 `skills-ref` is installed from the pinned commit in
@@ -116,15 +117,16 @@ with the commit from the workflow.
 ## 7. Releases
 
 - `develop` → `main` through a release PR merged with a **merge commit**.
-- Each release bumps the version in `skills/ux-expert/SKILL.md` metadata and
-  `.claude-plugin/marketplace.json`, updates `CHANGELOG.md`, and is tagged
+- Each release bumps the version in `skills/ux-expert/SKILL.md` metadata,
+  `.claude-plugin/marketplace.json` and `mcp/package.json`, updates `CHANGELOG.md`, and is tagged
   `vX.Y.Z` on `main`.
 - Releasing is outward-facing: it happens only when the maintainer asks.
 
 ## 8. Repository map
 
 ```
-skills/ux-expert/            the Agent Skill (SKILL.md, references/, criteria/)
+skills/ux-expert/            the Agent Skill (SKILL.md, references/, criteria/, scripts/, assets/)
+mcp/                         the MCP server package (TypeScript, built from the skill)
 .claude-plugin/              Claude Code plugin marketplace manifest
 scripts/                     validation and generation scripts
 docs/adr/                    architecture decision records

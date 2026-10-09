@@ -9,6 +9,13 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- **MCP server** `ux-expert-mcp` (`mcp/`): MCP 2026-07-28 over stdio on the
+  official TypeScript SDK v2; prompts `ux-design`, `ux-audit`, `ux-refactor`;
+  read-only tools `list_criteria`, `get_criterion`, `read_area`,
+  `score_finding`, `launch_gate`, `contrast_ratio`; every skill file as a
+  `skill://ux-expert/<path>` resource.
+- Scoring rules as data (`criteria/scoring.yaml`); the priority matrix and
+  launch-gate tables are generated from it.
 - Sources catalogue (`criteria/sources.yaml`) and generated bibliography
   (`references/sources.md`): every source with its verification status and
   date; 73 criteria list their sources; text cites them as `[src:<id>]`.
