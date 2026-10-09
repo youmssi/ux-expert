@@ -10,6 +10,8 @@ from generate import ROOT, run
 
 SCHEMA = ROOT / "skills" / "ux-expert" / "criteria" / "schema.json"
 SOURCES_SCHEMA = ROOT / "skills" / "ux-expert" / "criteria" / "sources.schema.json"
+CRITERIA = ROOT / "skills" / "ux-expert" / "criteria"
+SCORING_MD = "<!-- BEGIN GENERATED priority-matrix -->\n<!-- END GENERATED priority-matrix -->\n<!-- BEGIN GENERATED launch-gate -->\n<!-- END GENERATED launch-gate -->\n"
 SOURCE = {"id": "spec", "title": "A spec", "status": "primary", "verified_on": "2026-10-09", "verified_against": "repo@abc", "supports": "The 24 px rule."}
 AREA_MD = "# Demo\n\n## Criteria\n\n<!-- BEGIN GENERATED criteria (demo) -->\n<!-- END GENERATED criteria -->\n\n## Output\n"
 SKILL_MD = "# Skill\n\n<!-- BEGIN GENERATED applicability -->\n<!-- END GENERATED applicability -->\n"
@@ -30,6 +32,9 @@ class GenerateTest(unittest.TestCase):
         (self.skill / "references" / "areas").mkdir(parents=True)
         shutil.copy(SCHEMA, self.skill / "criteria" / "schema.json")
         shutil.copy(SOURCES_SCHEMA, self.skill / "criteria" / "sources.schema.json")
+        for name in ("scoring.yaml", "scoring.schema.json"):
+            shutil.copy(CRITERIA / name, self.skill / "criteria" / name)
+        (self.skill / "references" / "severity-and-scoring.md").write_text(SCORING_MD)
         self.write_sources([SOURCE])
         self.area_md = self.skill / "references" / "areas" / "demo.md"
         self.area_md.write_text(AREA_MD)
@@ -170,6 +175,21 @@ class GenerateTest(unittest.TestCase):
         (self.skill / "references" / "guide.md").write_text("Per [src:spec] and [src:missing]; `[disabled]` is CSS.\n")
         problems = run(self.skill, check=False)
         self.assertEqual([p.split(": ", 1)[1] for p in problems], ["cites [src:missing], which is not in criteria/sources.yaml"])
+
+    def test_scoring_tables_are_rendered_and_in_the_catalogue(self):
+        self.assertEqual(run(self.skill, check=False), [])
+        text = (self.skill / "references" / "severity-and-scoring.md").read_text()
+        self.assertIn("| **S3** | P0 | P1 | P2 |", text)
+        self.assertIn("| **No-Go** | Any P0 open", text)
+        catalogue = json.loads((self.skill / "criteria" / "catalogue.json").read_text())
+        self.assertEqual(catalogue["scoring"]["priority_matrix"]["S2"]["R3"], "P1")
+
+    def test_a_launch_gate_without_a_final_default_is_rejected(self):
+        path = self.skill / "criteria" / "scoring.yaml"
+        scoring = yaml.safe_load(path.read_text())
+        scoring["launch_gate"] = scoring["launch_gate"][:-1]
+        path.write_text(yaml.safe_dump(scoring))
+        self.assertIn("launch_gate needs exactly one default rule", run(self.skill, check=True)[0])
 
     def test_an_area_file_without_criteria_is_reported(self):
         run(self.skill, check=False)

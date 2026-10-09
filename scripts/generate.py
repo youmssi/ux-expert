@@ -9,7 +9,9 @@ them this script writes:
   ``<!-- BEGIN GENERATED applicability -->`` and ``<!-- END GENERATED applicability -->``;
 - ``criteria/catalogue.json``: every active criterion with its effective phases,
   product types and sources, for tools that should not parse YAML;
-- ``references/sources.md``: the bibliography, from ``criteria/sources.yaml``.
+- ``references/sources.md``: the bibliography, from ``criteria/sources.yaml``;
+- the priority matrix and launch-gate tables in ``references/severity-and-scoring.md``,
+  from ``criteria/scoring.yaml``.
 
 Usage:
     python3 scripts/generate.py           # validate the catalogue, rewrite the outputs
@@ -26,6 +28,8 @@ from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parent.parent
 CRITERIA_BLOCK = re.compile(r"<!-- BEGIN GENERATED criteria \((?P<area>[a-z0-9-]+)\) -->\n.*?<!-- END GENERATED criteria -->", re.DOTALL)
+PRIORITY_BLOCK = re.compile(r"<!-- BEGIN GENERATED priority-matrix -->\n.*?<!-- END GENERATED priority-matrix -->", re.DOTALL)
+GATE_BLOCK = re.compile(r"<!-- BEGIN GENERATED launch-gate -->\n.*?<!-- END GENERATED launch-gate -->", re.DOTALL)
 MATRIX_BLOCK = re.compile(r"<!-- BEGIN GENERATED applicability -->\n.*?<!-- END GENERATED applicability -->", re.DOTALL)
 PRODUCT_TYPES = {
     "web-app": "Web app",
@@ -42,6 +46,8 @@ SOURCE_CITATION = re.compile(r"\[src:([a-z0-9]+(?:-[a-z0-9]+)*)\]")
 
 
 SOURCES_FILE = "sources.yaml"
+SCORING_FILE = "scoring.yaml"
+NOT_AREAS = {SOURCES_FILE, SCORING_FILE}
 SOURCE_STATUS = {
     "primary": "checked against the source's own text",
     "secondary": "confirmed through reputable secondary sources",
@@ -67,13 +73,24 @@ def load_sources(criteria_dir: Path) -> tuple[list[dict], list[str]]:
     return document["sources"], problems
 
 
+def load_scoring(criteria_dir: Path) -> tuple[dict, list[str]]:
+    path = criteria_dir / SCORING_FILE
+    scoring = yaml.safe_load(path.read_text(encoding="utf-8"))
+    problems = schema_errors(criteria_dir / "scoring.schema.json", scoring, path)
+    if not problems:
+        defaults = [i for i, rule in enumerate(scoring["launch_gate"]) if not rule["when_any"]]
+        if defaults != [len(scoring["launch_gate"]) - 1]:
+            problems.append(f"{path}: launch_gate needs exactly one default rule (empty when_any), in last position")
+    return scoring, problems
+
+
 def load_catalogue(skill_dir: Path) -> tuple[dict[str, dict], list[dict], list[str]]:
     """Return {area: document}, the sources, and the list of problems found in the catalogue."""
     criteria_dir = skill_dir / "criteria"
     sources, problems = load_sources(criteria_dir)
     documents: dict[str, dict] = {}
     for path in sorted(criteria_dir.glob("*.yaml")):
-        if path.name == SOURCES_FILE:
+        if path.name in NOT_AREAS:
             continue
         document = yaml.safe_load(path.read_text(encoding="utf-8"))
         errors = schema_errors(criteria_dir / "schema.json", document, path)
@@ -210,7 +227,25 @@ def render_sources(sources: list[dict]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def render_catalogue(documents: dict[str, dict], sources: list[dict]) -> str:
+def render_priority_matrix(scoring: dict) -> str:
+    reaches = ["R3", "R2", "R1"]
+    lines = ["<!-- BEGIN GENERATED priority-matrix -->",
+             "<!-- Source: criteria/scoring.yaml. Run scripts/generate.py after editing. -->",
+             "|  | " + " | ".join(f"**{r}**" for r in reaches) + " |", "|---|---|---|---|"]
+    for severity, row in scoring["priority_matrix"].items():
+        lines.append(f"| **{severity}** | " + " | ".join(row[r] for r in reaches) + " |")
+    return "\n".join(lines + ["<!-- END GENERATED priority-matrix -->"])
+
+
+def render_launch_gate(scoring: dict) -> str:
+    lines = ["<!-- BEGIN GENERATED launch-gate -->",
+             "<!-- Source: criteria/scoring.yaml (checked in this order). Run scripts/generate.py after editing. -->",
+             "| Verdict | Rule |", "|---|---|"]
+    lines += [f"| **{rule['verdict']}** | {rule['rule']} |" for rule in scoring["launch_gate"]]
+    return "\n".join(lines + ["<!-- END GENERATED launch-gate -->"])
+
+
+def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict) -> str:
     areas, criteria, retired = [], [], []
     for area, document in documents.items():
         entry = {"area": area, "prefix": document["prefix"], "file": f"references/areas/{area}.md",
@@ -235,6 +270,7 @@ def render_catalogue(documents: dict[str, dict], sources: list[dict]) -> str:
         "criteria": criteria,
         "retired_ids": retired,
         "sources": sources,
+        "scoring": scoring,
     }
     return json.dumps(catalogue, ensure_ascii=False, indent=1) + "\n"
 
@@ -247,7 +283,7 @@ def replace_blocks(text: str, pattern: re.Pattern, block: str) -> str | None:
     return text[: matches[0].start()] + block + text[matches[0].end():]
 
 
-def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict]) -> tuple[dict[Path, str], list[str]]:
+def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict], scoring: dict) -> tuple[dict[Path, str], list[str]]:
     """Return {path: expected content} for every generated output, and the problems found."""
     outputs: dict[Path, str] = {}
     problems: list[str] = []
@@ -273,16 +309,26 @@ def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[d
         problems.append(f"{skill_md}: expected exactly one generated applicability block")
     else:
         outputs[skill_md] = updated
-    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources)
+    scoring_md = skill_dir / "references" / "severity-and-scoring.md"
+    text = scoring_md.read_text(encoding="utf-8")
+    for pattern, block in ((PRIORITY_BLOCK, render_priority_matrix(scoring)), (GATE_BLOCK, render_launch_gate(scoring))):
+        text = replace_blocks(text, pattern, block) if text is not None else None
+    if text is None:
+        problems.append(f"{scoring_md}: expected exactly one generated priority-matrix block and one launch-gate block")
+    else:
+        outputs[scoring_md] = text
+    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources, scoring)
     outputs[skill_dir / "references" / "sources.md"] = render_sources(sources)
     return outputs, problems
 
 
 def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]:
     documents, sources, problems = load_catalogue(skill_dir)
+    scoring, scoring_problems = load_scoring(skill_dir / "criteria")
+    problems += scoring_problems
     if problems:
         return problems
-    outputs, problems = planned_outputs(skill_dir, documents, sources)
+    outputs, problems = planned_outputs(skill_dir, documents, sources, scoring)
     problems += check_citations(skill_dir, documents, sources, list(extra_files))
     for path, content in outputs.items():
         current = path.read_text(encoding="utf-8") if path.exists() else None

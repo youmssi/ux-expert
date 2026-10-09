@@ -16,6 +16,7 @@
 - [ ] `python3 scripts/validate.py`
 - [ ] `python3 scripts/generate.py --check`
 - [ ] `skills-ref validate skills/ux-expert`
+- [ ] `cd mcp && npm test` (when `mcp/` or the skill changed)
 - [ ] Behaviour change checked by: <!-- eval run / manual run on a sample product / n.a. -->
 - [ ] `CHANGELOG.md` updated (if users notice the change)
 

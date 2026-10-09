@@ -49,6 +49,8 @@ Low-confidence findings are **never** P0. Mark them "validate first" and describ
 
 ## 5. Priority matrix
 
+<!-- BEGIN GENERATED priority-matrix -->
+<!-- Source: criteria/scoring.yaml. Run scripts/generate.py after editing. -->
 |  | **R3** | **R2** | **R1** |
 |---|---|---|---|
 | **S4** | P0 | P0 | P1 |
@@ -56,6 +58,7 @@ Low-confidence findings are **never** P0. Mark them "validate first" and describ
 | **S2** | P1 | P2 | P3 |
 | **S1** | P2 | P3 | P3 |
 | **S0** | P3 | P3 | P3 |
+<!-- END GENERATED priority-matrix -->
 
 Then apply confidence: **Low** confidence drops one level (P0 → P1, …), with a "validate first" flag.
 
@@ -81,10 +84,13 @@ Also report the **criteria pass rate** per area: Pass / (Pass + Partial + Fail).
 
 ## 7. Launch gate
 
+<!-- BEGIN GENERATED launch-gate -->
+<!-- Source: criteria/scoring.yaml (checked in this order). Run scripts/generate.py after editing. -->
 | Verdict | Rule |
 |---|---|
-| **Go** | 0 P0 findings, every P1 has an owner and a date, and critical-flow coverage has no "Not verified" rows for FLOW, STATE, A11Y or TRUST |
-| **Conditional Go** | 0 P0, but P1s are unowned **or** some critical criteria are Not verified; list the exact conditions |
-| **No-Go** | Any P0 open, **or** a critical flow was never verified end to end |
+| **No-Go** | Any P0 open, or a critical flow was never verified end to end |
+| **Conditional Go** | 0 P0, but P1s are unowned or some critical criteria (FLOW, STATE, A11Y, TRUST on critical flows) are Not verified; list the exact conditions |
+| **Go** | 0 P0, every P1 has an owner and a date, and critical-flow coverage has no Not verified rows for FLOW, STATE, A11Y or TRUST |
+<!-- END GENERATED launch-gate -->
 
 State the verdict with the list of P0s and conditions. Never give a Go with unverified critical flows.

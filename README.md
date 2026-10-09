@@ -43,6 +43,7 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 | Criteria catalogue | [`skills/ux-expert/criteria/`](skills/ux-expert/criteria/) | 465 criteria as YAML, with phases and product types; the area tables, the `SKILL.md` matrix and `catalogue.json` are generated from it |
 | Refactor mode | [`references/refactor-mode.md`](skills/ux-expert/references/refactor-mode.md) | From audit findings to a sequenced, guarded plan |
 | Design mode | [`references/design-mode.md`](skills/ux-expert/references/design-mode.md), [`assets/story-ux.md`](skills/ux-expert/assets/story-ux.md) | From brief to UX acceptance criteria per story |
+| MCP server | [`mcp/`](mcp/) | Prompts, read-only tools and resources for any MCP client |
 | Selector | [`scripts/select_criteria.py`](skills/ux-expert/scripts/select_criteria.py) | Lists the criteria for a product type and phase |
 
 Agents load only what a task needs: the skill's description at startup, `SKILL.md` when the skill activates, and an area file only when the scope includes that area.
@@ -53,7 +54,7 @@ Agents load only what a task needs: the skill's description at startup, `SKILL.m
 |---|---|---|
 | Claude Code | `/plugin marketplace add youmssi/ux-expert`, then `/plugin install ux-expert@ux-expert` | v0.1 |
 | Any Agent Skills client (Codex, Gemini CLI, Cursor…) | Copy `skills/ux-expert/` into the client's skills directory | now |
-| MCP clients (ChatGPT connectors, IDE agents…) | `npx ux-expert-mcp` | v0.3 |
+| MCP clients (Claude Code, Cursor, VS Code, Codex, Gemini CLI…) | `npx -y ux-expert-mcp` — see [`mcp/README.md`](mcp/README.md) for each client | after the first npm release |
 | Chat apps without skills or MCP | Upload the single-file bundle from the GitHub release | v0.3 |
 
 ## Usage
