@@ -1,7 +1,8 @@
 name: release
 
-# Runs when a release tag (vX.Y.Z) is pushed to main. It publishes the MCP
-# server to npm and attaches the release notes; see CONTRIBUTING.md §7.
+# Runs when a release tag (vX.Y.Z) is pushed to main. It creates the GitHub
+# release with the bundles and the skill zip, then publishes the MCP server to
+# npm; see CONTRIBUTING.md §7.
 on:
   push:
     tags: ["v*.*.*"]
@@ -11,6 +12,25 @@ permissions:
   id-token: write # npm provenance
 
 jobs:
+  github-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the bundles and the skill zip
+        run: python scripts/bundle.py dist
+      - name: Release notes from the changelog
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v v="$version" '$0 ~ "^## \\[" v "\\]" {on=1; next} /^## \[/ {on=0} on' CHANGELOG.md > notes.md
+          test -s notes.md || { echo "CHANGELOG.md has no section for $version"; exit 1; }
+      - name: Create the GitHub release
+        run: gh release create "$GITHUB_REF_NAME" dist/bundles/*.md dist/ux-expert-skill.zip --title "$GITHUB_REF_NAME" --notes-file notes.md
+        env:
+          GH_TOKEN: ${{ github.token }}
+
   publish-mcp:
     runs-on: ubuntu-latest
     defaults:
