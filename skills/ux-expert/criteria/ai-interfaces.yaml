@@ -1,5 +1,17 @@
 area: ai-interfaces
 prefix: AI
+applicability:
+  web-app: conditional
+  marketing-site: n/a
+  mobile: conditional
+  desktop: conditional
+  cli: conditional
+  sdk-api: conditional
+  ai-feature: run
+applicability_note: 'run when the product contains an AI or LLM feature'
+phases:
+- design
+- build
 criteria:
 - id: AI-01
   name: Capabilities discoverable

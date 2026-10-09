@@ -1,21 +1,43 @@
 area: performance-perceived
 prefix: PERF
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- build
 criteria:
 - id: PERF-01
   name: LCP on critical routes
   fail_signal: '> 2.5 s (p75 mobile) needs improvement; > 4 s poor'
   severity: S2–S3
   severity_note: S2 when it needs improvement, S3 when poor
+  applies_to:
+  - web-app
+  - marketing-site
+  - ai-feature
 - id: PERF-02
   name: INP / interaction latency
   fail_signal: '> 200 ms needs improvement; > 500 ms poor'
   severity: S2–S3
   severity_note: S2 when it needs improvement, S3 when poor
+  applies_to:
+  - web-app
+  - marketing-site
+  - ai-feature
 - id: PERF-03
   name: CLS
   fail_signal: '> 0.1 / > 0.25'
   severity: S2–S3
   severity_note: S2 when it needs improvement, S3 when poor
+  applies_to:
+  - web-app
+  - marketing-site
+  - ai-feature
 - id: PERF-04
   name: TTFB / server response
   fail_signal: Consistently > ~800 ms
@@ -24,6 +46,9 @@ criteria:
   name: Critical action feedback timing
   fail_signal: No acknowledgement within 100 ms; no result or progress within 1 s
   severity: S2–S3
+  phases: &id001
+  - design
+  - build
 - id: PERF-06
   name: JavaScript weight
   fail_signal: Far over budget; no code splitting; heavy libraries for small features
@@ -56,10 +81,12 @@ criteria:
   name: Perceived-speed patterns present
   fail_signal: No skeletons, no optimistic UI, spinner flashes
   severity: S2
+  phases: *id001
 - id: PERF-14
   name: Long tasks off the critical path
   fail_signal: Users blocked during long processing; no background option
   severity: S2–S3
+  phases: *id001
 - id: PERF-15
   name: Prefetching likely next steps
   fail_signal: Obvious next steps not prefetched (light)
@@ -73,14 +100,18 @@ criteria:
   fail_signal: Unusable on mid-range mobile or 3G
   severity: S3
   severity_note: if audience includes them
+  phases: *id001
 - id: PERF-18
   name: Mobile app start and frame rate
   fail_signal: Cold start > ~2–3 s; frequent dropped frames
   severity: S2–S3
+  applies_to:
+  - mobile
 - id: PERF-19
   name: Performance budgets enforced
   fail_signal: No budgets or CI checks (Lighthouse CI, size-limit, bundlesize)
   severity: S1–S2
+  phases: *id001
 - id: PERF-20
   name: Real-user monitoring
   fail_signal: No field data on vitals

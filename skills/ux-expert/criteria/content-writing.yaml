@@ -1,5 +1,15 @@
 area: content-writing
 prefix: CONT
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- design
 criteria:
 - id: CONT-01
   name: One term per concept
@@ -77,6 +87,9 @@ criteria:
   name: Transactional emails clear
   fail_signal: Generic subjects; broken deep links; no plain text
   severity: S2
+  phases:
+  - design
+  - build
 - id: CONT-19
   name: Placeholder text not carrying critical info
   fail_signal: Instructions only in the placeholder

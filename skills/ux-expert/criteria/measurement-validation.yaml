@@ -1,10 +1,23 @@
 area: measurement-validation
 prefix: MEAS
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: light
+  ai-feature: run
+phases:
+- design
+- build
 criteria:
 - id: MEAS-01
   name: UX goals and metrics defined
   fail_signal: No defined success metrics for critical jobs
   severity: S2
+  phases: &id002
+  - design
 - id: MEAS-02
   name: Critical-flow funnel instrumented
   fail_signal: Missing step, completion or error events
@@ -23,6 +36,8 @@ criteria:
   severity: S3
   related:
   - TRUST
+  phases: &id001
+  - build
 - id: MEAS-06
   name: Friction signals tracked
   fail_signal: Validation errors, failed submits, zero-results not tracked
@@ -31,10 +46,12 @@ criteria:
   name: Error monitoring with releases
   fail_signal: No front-end error monitoring
   severity: S2
+  phases: *id001
 - id: MEAS-08
   name: Real-user performance monitoring
   fail_signal: No field vitals
   severity: S1–S2
+  phases: *id001
 - id: MEAS-09
   name: Qualitative feedback channels
   fail_signal: No in-app feedback; no support tagging
@@ -43,15 +60,18 @@ criteria:
   name: Session replay privacy-safe (if used)
   fail_signal: Unmasked inputs; no consent
   severity: S3
+  phases: *id001
 - id: MEAS-11
   name: Usability testing practice
   fail_signal: No testing before launch on critical flows
   severity: S2–S3
   severity_note: pre-launch
+  phases: *id002
 - id: MEAS-12
   name: Attitudinal benchmark
   fail_signal: No SUS/SEQ/CSAT baseline
   severity: S1
+  phases: *id002
 - id: MEAS-13
   name: Experimentation readiness
   fail_signal: No flags; no way to roll out safely
@@ -60,17 +80,21 @@ criteria:
   name: Guardrail metrics
   fail_signal: Experiments or launches without guardrails
   severity: S2
+  phases: *id002
 - id: MEAS-15
   name: Analytics consent compliance
   fail_signal: Tracking without required consent
   severity: S3
   related:
   - TRUST-03
+  phases: *id001
 - id: MEAS-16
   name: UX health dashboard
   fail_signal: No shared view of UX metrics
   severity: S1
+  phases: *id002
 - id: MEAS-17
   name: Findings converted to testable hypotheses
   fail_signal: Fixes shipped without success criteria
   severity: S1–S2
+  phases: *id002

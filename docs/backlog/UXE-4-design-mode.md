@@ -23,7 +23,9 @@ Done.
 | `SKILL.md` modes | Audit, pre-launch gate, scoped, area deep-dive, change review | + Design |
 | `criteria/*.yaml` and schema | — | `applies_to` (product types) and `phases` (design, build, audit) for every criterion |
 | `references/design-mode.md` | — | Procedure: context discovery → flow design (remove, merge, reorder) → select criteria with `phase: design` per story and product type → write acceptance criteria → list open product decisions as `[INTERACTIVE STEP]` |
-| `references/templates/story-ux.md` | — | A "UX acceptance criteria" block that drops into any story template |
+| `assets/story-ux.md` | — | A "UX acceptance criteria" block that drops into any story template (the spec's `assets/` folder for templates) |
+| `scripts/select_criteria.py` (in the skill) and `criteria/catalogue.json` | — | Lists the criteria for a product type and phase; the catalogue is generated |
+| `docs/examples/design-mode-team-tasks.md` | — | Worked example on a sample web SaaS brief |
 
 #### Acceptance criteria
 

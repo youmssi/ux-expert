@@ -1,5 +1,15 @@
 area: layout-hierarchy
 prefix: LAY
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
 criteria:
 - id: LAY-01
   name: Attention order matches task priority
@@ -29,6 +39,9 @@ criteria:
   severity_note: systemic
   related:
   - DS
+  phases: &id001
+  - design
+  - build
 - id: LAY-06
   name: Proximity grouping
   check: Internal vs. external spacing
@@ -39,6 +52,7 @@ criteria:
   check: Count distinct alignment edges; layout primitives
   fail_signal: Ragged edges; no grid
   severity: S1–S2
+  phases: *id001
 - id: LAY-08
   name: Readable content width
   check: max-width on text and forms
@@ -64,11 +78,17 @@ criteria:
   check: Computed sizes of interactive elements
   fail_signal: < 24×24 CSS px (WCAG AA fail); < 44 pt / 48 dp on touch
   severity: S2–S3
+  phases: *id001
 - id: LAY-13
   name: Thumb-zone-aware mobile placement
   check: Primary actions in the reachable zone
   fail_signal: Key actions only at the top corners on mobile
   severity: S2
+  applies_to:
+  - web-app
+  - marketing-site
+  - mobile
+  - ai-feature
 - id: LAY-14
   name: Above-the-fold priority
   check: What is visible without scrolling at common viewports
@@ -79,16 +99,20 @@ criteria:
   check: Image dimensions, skeleton sizes, font loading
   fail_signal: Visible content jumps; CLS > 0.1
   severity: S2
+  phases: &id002
+  - build
 - id: LAY-16
   name: Sticky elements sized and non-obscuring
   check: Height of sticky bars; focus visibility
   fail_signal: '> ~25% of mobile viewport; focused element hidden'
   severity: S2
+  phases: *id001
 - id: LAY-17
   name: Predictable layering (z-index)
   check: z-index values and overlay system
   fail_signal: Arbitrary huge z-index; overlays covering each other
   severity: S1–S2
+  phases: *id002
 - id: LAY-18
   name: Consistent page templates
   check: Same structure for same page types

@@ -1,5 +1,15 @@
 area: i18n-localization
 prefix: I18N
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: light
+  ai-feature: run
+phases:
+- build
 criteria:
 - id: I18N-01
   name: Strings externalized
@@ -25,10 +35,14 @@ criteria:
   name: No text in images
   fail_signal: Text baked into images
   severity: S2
+  phases: &id001
+  - design
+  - build
 - id: I18N-07
   name: Expansion-resilient layout
   fail_signal: Fixed-width labels clip under pseudo-localization
   severity: S2
+  phases: *id001
 - id: I18N-08
   name: '`lang` and `dir` set correctly'
   fail_signal: Missing or not updated per locale
@@ -56,6 +70,7 @@ criteria:
   name: Time zones correct and explicit
   fail_signal: Wrong times; zone not shown in scheduling
   severity: S3
+  phases: *id001
 - id: I18N-14
   name: Locale-aware numbers and currencies
   fail_signal: Hard-coded symbols or separators; currency inferred from language
@@ -64,6 +79,7 @@ criteria:
   name: Units and measurement systems
   fail_signal: Imperial/metric not adapted where it matters
   severity: S1–S2
+  phases: *id001
 - id: I18N-16
   name: Locale-aware sorting and search
   fail_signal: ASCII sort for names; accent-sensitive search
@@ -72,10 +88,12 @@ criteria:
   name: Flexible names, addresses, phones
   fail_signal: Forced first/last; US-only address form; rigid phone format
   severity: S2–S3
+  phases: *id001
 - id: I18N-18
   name: Locale switching and persistence
   fail_signal: No override; flags for languages; preference lost
   severity: S2
+  phases: *id001
 - id: I18N-19
   name: Graceful fallback
   fail_signal: Raw keys (`checkout.title`) shown
@@ -84,6 +102,8 @@ criteria:
   name: Localized URLs and hreflang (marketing)
   fail_signal: Missing for multi-locale sites
   severity: S1–S2
+  applies_to:
+  - marketing-site
 - id: I18N-21
   name: Script/font coverage
   fail_signal: Tofu boxes (□); poor rendering for target scripts
@@ -92,7 +112,9 @@ criteria:
   name: Cultural appropriateness
   fail_signal: Culturally confusing or offensive imagery, icons or examples
   severity: S1–S3
+  phases: *id001
 - id: I18N-23
   name: Local payment and legal norms (commerce)
   fail_signal: Only card payments where local methods dominate; missing local legal info
   severity: S2
+  phases: *id001

@@ -1,5 +1,15 @@
 area: flows-friction
 prefix: FLOW
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- design
 criteria:
 - id: FLOW-01
   name: Every critical flow is completable
@@ -42,32 +52,41 @@ criteria:
   fail_signal: Silent success; silent failure
   severity: S3
   severity_note: S4 if silent failure
+  phases: &id001
+  - design
+  - build
 - id: FLOW-09
   name: Back and edit without data loss
   check: Back or edit within the flow preserves inputs
   fail_signal: Inputs cleared; must restart
   severity: S3
+  phases: *id001
 - id: FLOW-10
   name: Interruption-safe
   check: Drafts are saved; resumable after leaving or a session timeout
   fail_signal: Progress lost on tab close or timeout
   severity: S3
+  phases: *id001
 - id: FLOW-11
   name: Seams preserve intent
   check: After email, OAuth or payment redirects, the user lands at their goal with context
   fail_signal: Lands on a generic dashboard; intent lost
   severity: S3
+  phases: *id001
 - id: FLOW-12
   name: Edge seams handled
   check: Expired or used links, declined cards, denied OAuth, double submit
   fail_signal: Raw errors, or the user is stuck
   severity: S3–S4
+  phases: *id001
 - id: FLOW-13
   name: Idempotent critical actions
   check: Double click or retry doesn't double-charge or double-create
   fail_signal: Duplicates
   severity: S3–S4
   severity_note: S4 for payments
+  phases:
+  - build
 - id: FLOW-14
   name: Exit flows are as easy as entry flows
   check: Cancel, downgrade, delete and export are reachable and proportional
@@ -78,6 +97,7 @@ criteria:
   check: Errors are recoverable in place, with inputs kept
   fail_signal: Error page that discards progress
   severity: S3
+  phases: *id001
 - id: FLOW-16
   name: Expert efficiency
   check: 'Repeated flows have shortcuts: bulk actions, templates, duplicate, keyboard'
@@ -88,6 +108,7 @@ criteria:
   check: Users without permission see why and how to get access
   fail_signal: Blank screen or a generic 403
   severity: S2–S3
+  phases: *id001
 - id: FLOW-18
   name: Consistent flow patterns
   check: Similar tasks (create X, create Y) follow the same pattern

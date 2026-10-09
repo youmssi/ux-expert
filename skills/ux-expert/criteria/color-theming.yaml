@@ -1,5 +1,16 @@
 area: color-theming
 prefix: COL
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
+- build
 criteria:
 - id: COL-01
   name: Tokenized palette with semantic roles
@@ -72,11 +83,14 @@ criteria:
   check: '`prefers-color-scheme`, persisted override, no flash'
   fail_signal: Theme flashes on load; preference ignored
   severity: S2
+  phases: &id001
+  - build
 - id: COL-14
   name: Forced-colors / high-contrast support
   check: '`forced-colors` media query testing'
   fail_signal: Controls or focus disappear
   severity: S2–S3
+  phases: *id001
 - id: COL-15
   name: Text over images is legible
   check: Scrim or overlay present
@@ -99,3 +113,4 @@ criteria:
   severity: S1–S2
   related:
   - DS
+  phases: *id001

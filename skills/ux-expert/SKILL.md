@@ -1,6 +1,6 @@
 ---
 name: ux-expert
-description: Principal-level UX expertise for auditing and improving products (web apps, mobile apps, desktop apps, CLIs, SDKs and APIs, and AI features). Covers user goals and jobs, information architecture, flows and friction, layout and visual hierarchy, typography, color and contrast, interaction and feedback, forms, empty/loading/error states, accessibility (WCAG 2.2 AA), UX writing, onboarding, perceived performance, responsive and platform conventions, design systems, trust, dark patterns and privacy, i18n, tables, dashboards and search, developer experience, AI/LLM interfaces, UX metrics and usability testing, and launch readiness. Produces evidence-based findings with consistent severity, prioritized fixes and a Go/No-Go launch verdict. Use when asked to review, audit or improve UX or UI, check usability or accessibility, find friction or failure points, review a UI change, or decide whether a product is ready to launch.
+description: Principal-level UX expertise to design, audit and improve products (web and mobile apps, desktop, CLIs, SDKs/APIs, AI features). Turns briefs and user stories into testable UX acceptance criteria before building; audits flows, information architecture, layout, typography, color and contrast, interaction, forms, empty/loading/error states, accessibility (WCAG 2.2 AA), UX writing, onboarding, performance, responsive and platform conventions, design systems, trust and dark patterns, i18n, tables and search, developer experience, AI interfaces, UX metrics and launch readiness, with evidence, consistent severity and a Go/No-Go verdict. Use when designing features or writing stories, reviewing or auditing UX/UI, checking usability or accessibility, finding friction, reviewing a UI change, or deciding launch readiness.
 license: CC-BY-4.0 (content), MIT (code). See LICENSE files.
 metadata:
   author: youmssi
@@ -28,10 +28,11 @@ This file routes the work. The detailed criteria live in
 
 ## Modes
 
-Pick the mode from the request. If unclear, use **Full audit**.
+Pick the mode from the request. If nothing is built yet, use **Design**; otherwise, if unclear, use **Full audit**.
 
 | Mode | When | Areas | Depth |
 |---|---|---|---|
+| **Design** | A brief, epics or stories before building: "write the UX acceptance criteria" | Selected per story | Design-phase criteria; follow `references/design-mode.md` instead of the audit procedure below |
 | **Full audit** | "Audit the app", "review the UX" | All applicable | Every criterion |
 | **Pre-launch gate** | "Ready to ship?", "before go-to-market" | All applicable + launch-readiness | Every criterion + Go/No-Go verdict |
 | **Scoped audit** | One feature, flow or screen | context-discovery (light) + relevant areas | Every criterion in scope |
@@ -48,6 +49,10 @@ Read when needed:
 - `references/codebase-recon.md`: at the start of any audit of a codebase (Phase 1).
 - `references/laws-and-numbers.md`: when a finding needs a threshold or a research citation.
 - `references/report-template.md`: when writing the final report (Phase 8).
+- `references/design-mode.md`: in Design mode, instead of the audit procedure.
+- `assets/story-ux.md`: the per-story template for Design mode.
+- `criteria/catalogue.json`: every criterion with its phases (`design`, `build`) and product types.
+  To list what applies, run `python3 scripts/select_criteria.py --product <type> [--phase design|build] [--area <area>]`.
 
 ### Areas
 
@@ -106,26 +111,41 @@ critical flows, success metrics, assumptions) is the lens for every severity
 score. Without it, severity is arbitrary.
 
 ### Phase 3: Select areas
-Mark each area **Run**, **Light** (key criteria only) or **N/A**, with a reason.
+Mark each area **Run**, **Light** (key criteria only) or **N/A** for this
+product, with a reason, using this matrix:
 
-| Area | Web app | Marketing site | Mobile | Desktop | CLI | SDK/API | AI feature |
+<!-- BEGIN GENERATED applicability -->
+<!-- Source: the applicability field of criteria/*.yaml. Run scripts/generate.py after editing. -->
+| Area (`references/areas/…`) | Web app | Marketing site | Mobile | Desktop | CLI | SDK/API | AI feature |
 |---|---|---|---|---|---|---|---|
-| IA | Run | Run | Run | Run | Light | Light | Light |
-| FLOW | Run | Light | Run | Run | Run | Run | Run |
-| LAY, TYP, COL | Run | Run | Run | Run | Light | N/A | Run |
-| INT | Run | Light | Run | Run | Run | N/A | Run |
-| FORM | Run | Light | Run | Run | Light | N/A | Light |
-| STATE | Run | Light | Run | Run | Run | Run | Run |
-| A11Y | Run | Run | Run | Run | Light | N/A | Run |
-| CONT, ONB, PERF | Run | Run | Run | Run | Run | Run | Run |
-| RESP | Run | Run | Run | Light | N/A | N/A | Run |
-| DS | Run | Run | Run | Run | Light | N/A | Light |
-| TRUST, I18N | Run | Run | Run | Run | Light | Light | Run |
-| DATA | If data-heavy | N/A | If data-heavy | If data-heavy | Light | N/A | Light |
-| DX | Light (public API) | N/A | N/A | N/A | Run | Run | Light |
-| AI | If AI present | N/A | If AI present | If AI present | If AI present | If AI present | Run |
-| MEAS | Run | Run | Run | Run | Light | Light | Run |
-| LAUNCH | Pre-launch mode | Run | Pre-launch | Pre-launch | Pre-launch | Pre-launch | Pre-launch |
+| `accessibility.md` (A11Y) | Run | Run | Run | Run | Light | N/A | Run |
+| `ai-interfaces.md` (AI) | Conditional | N/A | Conditional | Conditional | Conditional | Conditional | Run |
+| `color-theming.md` (COL) | Run | Run | Run | Run | Light | N/A | Run |
+| `content-writing.md` (CONT) | Run | Run | Run | Run | Run | Run | Run |
+| `context-discovery.md` (CTX) | Run | Run | Run | Run | Run | Run | Run |
+| `data-display-search.md` (DATA) | Conditional | N/A | Conditional | Conditional | Light | N/A | Light |
+| `design-system.md` (DS) | Run | Run | Run | Run | Light | N/A | Light |
+| `developer-experience.md` (DX) | Light | N/A | N/A | N/A | Run | Run | Light |
+| `flows-friction.md` (FLOW) | Run | Light | Run | Run | Run | Run | Run |
+| `forms-input.md` (FORM) | Run | Light | Run | Run | Light | N/A | Light |
+| `i18n-localization.md` (I18N) | Run | Run | Run | Run | Light | Light | Run |
+| `information-architecture.md` (IA) | Run | Run | Run | Run | Light | Light | Light |
+| `interaction-feedback.md` (INT) | Run | Light | Run | Run | Run | N/A | Run |
+| `launch-readiness.md` (LAUNCH) | Conditional | Run | Conditional | Conditional | Conditional | Conditional | Conditional |
+| `layout-hierarchy.md` (LAY) | Run | Run | Run | Run | Light | N/A | Run |
+| `measurement-validation.md` (MEAS) | Run | Run | Run | Run | Light | Light | Run |
+| `onboarding-activation.md` (ONB) | Run | Run | Run | Run | Run | Run | Run |
+| `performance-perceived.md` (PERF) | Run | Run | Run | Run | Run | Run | Run |
+| `responsive-platform.md` (RESP) | Run | Run | Run | Light | N/A | N/A | Run |
+| `states-resilience.md` (STATE) | Run | Light | Run | Run | Run | Run | Run |
+| `trust-ethics-privacy.md` (TRUST) | Run | Run | Run | Run | Light | Light | Run |
+| `typography.md` (TYP) | Run | Run | Run | Run | Light | N/A | Run |
+
+- **AI**: run when the product contains an AI or LLM feature.
+- **DATA**: run when the product is data-heavy (tables, dashboards, search).
+- **DX**: light on web apps and AI features only when they expose a public API.
+- **LAUNCH**: run in pre-launch gate mode.
+<!-- END GENERATED applicability -->
 
 ### Phase 4: Run the areas
 **With subagents** (Agent/Task tool): dispatch areas in batches of 4–6 with this brief:

@@ -1,5 +1,16 @@
 area: responsive-platform
 prefix: RESP
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: light
+  cli: n/a
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
+- build
 criteria:
 - id: RESP-01
   name: Device/platform matrix defined and tested
@@ -9,10 +20,13 @@ criteria:
   name: No horizontal overflow at supported widths
   fail_signal: Horizontal scroll or cut-off content
   severity: S2–S3
+  phases: &id001
+  - build
 - id: RESP-03
   name: Content-driven breakpoints without gaps
   fail_signal: Broken layouts between breakpoints
   severity: S2
+  phases: *id001
 - id: RESP-04
   name: Content re-prioritized on small screens
   fail_signal: Desktop layout squeezed; primary task below secondary content
@@ -37,10 +51,12 @@ criteria:
   name: Virtual keyboard handled
   fail_signal: Inputs hidden under the keyboard; wrong keyboard; no `enterkeyhint`
   severity: S2–S3
+  phases: *id001
 - id: RESP-10
   name: Viewport units and safe areas correct
   fail_signal: '`100vh` cut-offs; content under the notch or home indicator'
   severity: S2
+  phases: *id001
 - id: RESP-11
   name: Orientation support
   fail_signal: Locked or broken in landscape
@@ -49,14 +65,21 @@ criteria:
   name: Platform conventions followed (iOS)
   fail_signal: Blocked back swipe; non-standard nav; no Dynamic Type
   severity: S2
+  applies_to:
+  - mobile
 - id: RESP-13
   name: Platform conventions followed (Android)
   fail_signal: System back exits or misbehaves; no edge-to-edge insets
   severity: S2–S3
+  applies_to:
+  - mobile
 - id: RESP-14
   name: Desktop conventions followed
   fail_signal: Wrong modifier keys; no context menus where expected; unusable at small window sizes
   severity: S2
+  applies_to:
+  - desktop
+  - web-app
 - id: RESP-15
   name: Tables and data usable on small screens
   fail_signal: Unreadable or unusable data views on mobile
@@ -71,14 +94,19 @@ criteria:
   name: PWA quality (if PWA)
   fail_signal: Not installable when intended; no offline fallback; stale updates
   severity: S2
+  applies_to:
+  - web-app
+  - marketing-site
 - id: RESP-18
   name: Cross-browser support
   fail_signal: Broken features in a supported browser; no graceful degradation
   severity: S2–S3
+  phases: *id001
 - id: RESP-19
   name: High-DPI and asset quality
   fail_signal: Blurry images and icons on retina/high-DPI screens
   severity: S1
+  phases: *id001
 - id: RESP-20
   name: 'Print styles (if users print: invoices, reports, tickets)'
   fail_signal: Printing produces broken or unusable output

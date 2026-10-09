@@ -34,7 +34,13 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
   edited by hand.
 - Each criterion has a permanent ID (`<PREFIX>-<NN>`), a name, a fail signal
   and a default severity, plus an optional check, severity note and related
-  areas or criteria. IDs are never renumbered or reused; a criterion
+  areas or criteria.
+- Each area sets its `applicability` per product type and default `phases`;
+  a criterion overrides `phases` or narrows `applies_to` only when it differs.
+  `design` means "specify it in stories and designs"; `build` means "implement
+  and test it in code". Every criterion is auditable.
+- Cite criteria by ID anywhere (skill files, examples). The generator rejects
+  IDs that do not exist or are retired. IDs are never renumbered or reused; a criterion
   that no longer applies is retired, not deleted.
 - A criterion is **observable**: someone else checking the same product would
   reach the same result. "Feels modern" is not a criterion.

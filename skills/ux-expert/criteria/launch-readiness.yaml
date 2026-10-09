@@ -1,5 +1,17 @@
 area: launch-readiness
 prefix: LAUNCH
+applicability:
+  web-app: conditional
+  marketing-site: run
+  mobile: conditional
+  desktop: conditional
+  cli: conditional
+  sdk-api: conditional
+  ai-feature: conditional
+applicability_note: 'run in pre-launch gate mode'
+phases:
+- design
+- build
 criteria:
 - id: LAUNCH-01
   name: Value proposition clear in 5 seconds
@@ -33,14 +45,22 @@ criteria:
   name: SEO and indexing basics
   fail_signal: '`noindex` in production; missing titles, sitemap or canonical'
   severity: S2–S3
+  applies_to:
+  - marketing-site
+  - web-app
 - id: LAUNCH-09
   name: Social previews
   fail_signal: Missing or broken OG images and titles
   severity: S1–S2
+  applies_to:
+  - marketing-site
+  - web-app
 - id: LAUNCH-10
   name: App store listing accurate and compliant
   fail_signal: Misleading screenshots; data labels inconsistent; no in-app deletion
   severity: S2–S3
+  applies_to:
+  - mobile
 - id: LAUNCH-11
   name: Help content for top tasks and problems
   fail_signal: No help, or help that doesn't cover critical flows
@@ -71,19 +91,25 @@ criteria:
   fail_signal: Not verified end to end
   severity: S4
   severity_note: gate
+  phases: &id001
+  - build
 - id: LAUNCH-18
   name: Analytics and monitoring live
   fail_signal: Not firing in production; no alerts
   severity: S2–S3
+  phases: *id001
 - id: LAUNCH-19
   name: Rollback and feature-flag plan
   fail_signal: No rollback path
   severity: S2–S3
+  phases: *id001
 - id: LAUNCH-20
   name: Launch-day runbook and owners
   fail_signal: No owners or monitoring plan
   severity: S2
+  phases: *id001
 - id: LAUNCH-21
   name: Gate verdict produced with conditions
   fail_signal: No explicit Go/No-Go with reasons
   severity: S2
+  phases: *id001

@@ -14,13 +14,13 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 | [UXE-1](UXE-1-repository-foundation.md) | Repository foundation: workflow, rules, templates, ADRs, licenses | S | done |
 | [UXE-2](UXE-2-spec-compliant-skill.md) | One spec-compliant `ux-expert` skill, validated in CI, installable as a Claude plugin | M | done |
 | [UXE-3](UXE-3-criteria-as-data.md) | Criteria as a YAML catalogue with schema; tables generated and drift-checked | M | done |
-| [UXE-17](UXE-17-project-readme.md) | Project README in the structure of established open-source projects | S | in progress |
+| [UXE-17](UXE-17-project-readme.md) | Project README in the structure of established open-source projects | S | done |
 
 ## v0.2: design and refactor, not only audit
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| [UXE-4](UXE-4-design-mode.md) | Design mode: user story → UX requirements, acceptance criteria and Definition of Done | M | ready |
+| [UXE-4](UXE-4-design-mode.md) | Design mode: user story → UX requirements, acceptance criteria and Definition of Done | M | in progress |
 | [UXE-5](UXE-5-refactor-mode.md) | Refactor mode: gap analysis → sequenced, regression-safe improvement plan | M | ready |
 | UXE-6 | Content tightening: cut what agents already know, add gotchas, clear defaults, token budgets per file | M | to refine |
 | UXE-7 | Citation verification: every number checked against its primary source, with a `verified_on` date | M | to refine |

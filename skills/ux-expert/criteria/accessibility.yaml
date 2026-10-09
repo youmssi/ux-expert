@@ -1,5 +1,15 @@
 area: accessibility
 prefix: A11Y
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- build
 criteria:
 - id: A11Y-01
   name: Automated scan clean on critical screens (axe)
@@ -11,6 +21,9 @@ criteria:
   fail_signal: Any critical control unreachable or inoperable by keyboard
   severity: S4
   severity_note: on critical flow
+  phases: &id001
+  - design
+  - build
 - id: A11Y-03
   name: No keyboard trap (2.1.2)
   fail_signal: Focus stuck
@@ -23,10 +36,12 @@ criteria:
   name: Logical focus order (2.4.3)
   fail_signal: Positive tabindex; DOM order differs from visual order
   severity: S2–S3
+  phases: *id001
 - id: A11Y-06
   name: Focus management on dynamic UI
   fail_signal: Modals don't move or return focus; SPA route change loses focus
   severity: S3
+  phases: *id001
 - id: A11Y-07
   name: Skip link / bypass blocks (2.4.1)
   fail_signal: No way to bypass repeated navigation
@@ -55,6 +70,7 @@ criteria:
   name: Status messages announced (4.1.3)
   fail_signal: Toasts, async errors and results not announced
   severity: S2–S3
+  phases: *id001
 - id: A11Y-14
   name: Text alternatives (1.1.1)
   fail_signal: Missing alt; meaningless alt ("image", file names)
@@ -63,10 +79,12 @@ criteria:
   name: Contrast (1.4.3, 1.4.11), from COL
   fail_signal: Below thresholds
   severity: S3
+  phases: *id001
 - id: A11Y-16
   name: Use of color (1.4.1)
   fail_signal: Color-only meaning
   severity: S3
+  phases: *id001
 - id: A11Y-17
   name: Resize and reflow (1.4.4, 1.4.10)
   fail_signal: Content lost or 2-D scrolling at 320 px or 200%
@@ -79,38 +97,47 @@ criteria:
   name: Content on hover/focus (1.4.13)
   fail_signal: Tooltips not dismissible or hoverable
   severity: S2
+  phases: *id001
 - id: A11Y-20
   name: Target size (2.5.8)
   fail_signal: < 24×24 CSS px without spacing
   severity: S2
+  phases: *id001
 - id: A11Y-21
   name: Dragging alternatives (2.5.7), pointer gestures (2.5.1), pointer cancellation (2.5.2)
   fail_signal: Drag-only or path-gesture-only operations
   severity: S3
+  phases: *id001
 - id: A11Y-22
   name: Motion and flashing (2.2.2, 2.3.1, 2.3.3)
   fail_signal: Unstoppable motion; flashing; ignores reduced motion
   severity: S2–S4
+  phases: *id001
 - id: A11Y-23
   name: Timing adjustable (2.2.1)
   fail_signal: Hard time limits with no extension
   severity: S3
+  phases: *id001
 - id: A11Y-24
   name: 'Forms: labels, errors, suggestions, prevention (1.3.1, 3.3.1–3.3.4, 1.3.5)'
   fail_signal: See FORM
   severity: S2–S4
+  phases: *id001
 - id: A11Y-25
   name: Redundant entry and accessible auth (3.3.7, 3.3.8)
   fail_signal: Re-entry; cognitive test without alternative
   severity: S3
+  phases: *id001
 - id: A11Y-26
   name: Consistent navigation, identification and help (3.2.3, 3.2.4, 3.2.6)
   fail_signal: Inconsistent
   severity: S2
+  phases: *id001
 - id: A11Y-27
   name: No unexpected context change (3.2.1, 3.2.2)
   fail_signal: Auto-navigation on select or focus
   severity: S2–S3
+  phases: *id001
 - id: A11Y-28
   name: Language of page and parts (3.1.1, 3.1.2)
   fail_signal: Missing `lang`; wrong `lang` on translated pages
@@ -119,10 +146,12 @@ criteria:
   name: Media alternatives (1.2.x)
   fail_signal: Video without captions; audio without transcript
   severity: S3
+  phases: *id001
 - id: A11Y-30
   name: Orientation (1.3.4)
   fail_signal: Locked orientation
   severity: S2
+  phases: *id001
 - id: A11Y-31
   name: Zoom not disabled
   fail_signal: '`user-scalable=no`, `maximum-scale=1`'
@@ -131,8 +160,11 @@ criteria:
   name: Native mobile accessibility APIs
   fail_signal: Missing labels, roles, Dynamic Type
   severity: S3
+  applies_to:
+  - mobile
 - id: A11Y-33
   name: Accessibility process
   fail_signal: No a11y lint, test or statement; no VPAT where required
   severity: S1–S3
   severity_note: by obligation
+  phases: *id001
