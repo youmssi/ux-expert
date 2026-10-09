@@ -9,6 +9,9 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Sources catalogue (`criteria/sources.yaml`) and generated bibliography
+  (`references/sources.md`): every source with its verification status and
+  date; 73 criteria list their sources; text cites them as `[src:<id>]`.
 - A Gotchas section in every area (77 concrete corrections, e.g. react-hook-form
   validation defaults, `rem` with a 62.5 % root, iOS Safari viewport limits,
   consent tools that block scripts with `type="text/plain"`).
@@ -43,3 +46,12 @@ the skill layout, criterion schema or MCP interface is a major version.
 - Repository foundation: contribution workflow, engineering and content rules,
   story and ADR templates, roadmap, and licensing (MIT for code, CC BY 4.0 for
   content).
+
+### Fixed
+
+- FORM-09: validate on submit by default (GOV.UK and CMS design systems), not
+  when the user leaves a field.
+- Unconfirmed research figures (first click 87/46 %, inline validation +22 %,
+  top-aligned labels fastest) are no longer stated as fact.
+- Text expansion per the W3C table; password minimum 15 characters per NIST
+  SP 800-63B-4 in the design-mode example.

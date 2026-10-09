@@ -4,7 +4,7 @@
 
 A senior designer treats color as a **signal system**, not decoration. In a well-designed product, color is mostly **neutral** (greys carry about 80–90% of the surface), and saturated color is **rare and meaningful**: it marks the primary action, status (success, warning, error, info), selection and links. When everything is colorful, color stops meaning anything.
 
-They also know color is the **least reliable channel**: about 1 in 12 men and 1 in 200 women have a color-vision deficiency (most commonly red–green), screens vary, sunlight washes out contrast, and dark mode changes every relationship. So every color meaning must be **backed by a second channel** (icon, text, shape or position), and every contrast must be **computed**, not eyeballed.
+They also know color is the **least reliable channel**: about 1 in 12 men and 1 in 200 women of Northern European ancestry have a red–green color-vision deficiency, with lower rates in other populations [src:medlineplus-cvd], screens vary, sunlight washes out contrast, and dark mode changes every relationship. So every color meaning must be **backed by a second channel** (icon, text, shape or position), and every contrast must be **computed**, not eyeballed.
 
 ## Scope
 

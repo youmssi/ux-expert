@@ -7,8 +7,9 @@ them this script writes:
   ``<!-- BEGIN GENERATED criteria (<area>) -->`` and ``<!-- END GENERATED criteria -->``;
 - the area applicability matrix in ``SKILL.md``, between
   ``<!-- BEGIN GENERATED applicability -->`` and ``<!-- END GENERATED applicability -->``;
-- ``criteria/catalogue.json``: every active criterion with its effective phases
-  and product types, for tools that should not parse YAML.
+- ``criteria/catalogue.json``: every active criterion with its effective phases,
+  product types and sources, for tools that should not parse YAML;
+- ``references/sources.md``: the bibliography, from ``criteria/sources.yaml``.
 
 Usage:
     python3 scripts/generate.py           # validate the catalogue, rewrite the outputs
@@ -37,24 +38,59 @@ PRODUCT_TYPES = {
 }
 DEPTH_LABELS = {"run": "Run", "light": "Light", "conditional": "Conditional", "n/a": "N/A"}
 CITATION = re.compile(r"\b([A-Z][A-Z0-9]*)-(\d{2,})\b")
+SOURCE_CITATION = re.compile(r"\[src:([a-z0-9]+(?:-[a-z0-9]+)*)\]")
 
 
-def load_catalogue(skill_dir: Path) -> tuple[dict[str, dict], list[str]]:
-    """Return {area: document} and the list of problems found in the catalogue."""
+SOURCES_FILE = "sources.yaml"
+SOURCE_STATUS = {
+    "primary": "checked against the source's own text",
+    "secondary": "confirmed through reputable secondary sources",
+    "unconfirmed": "could not be confirmed; its numbers are not stated as fact",
+    "unchecked": "classic reference; no threshold depends on it",
+}
+
+
+def schema_errors(schema_path: Path, document, path: Path) -> list[str]:
+    validator = Draft202012Validator(json.loads(schema_path.read_text(encoding="utf-8")))
+    errors = sorted(validator.iter_errors(document), key=lambda e: list(e.absolute_path))
+    return [f"{path}: {'/'.join(map(str, e.absolute_path)) or '<root>'}: {e.message}" for e in errors]
+
+
+def load_sources(criteria_dir: Path) -> tuple[list[dict], list[str]]:
+    path = criteria_dir / SOURCES_FILE
+    document = yaml.safe_load(path.read_text(encoding="utf-8"))
+    problems = schema_errors(criteria_dir / "sources.schema.json", document, path)
+    if problems:
+        return [], problems
+    ids = [s["id"] for s in document["sources"]]
+    problems += [f"{path}: duplicate source ID {i}" for i in sorted({i for i in ids if ids.count(i) > 1})]
+    return document["sources"], problems
+
+
+def load_catalogue(skill_dir: Path) -> tuple[dict[str, dict], list[dict], list[str]]:
+    """Return {area: document}, the sources, and the list of problems found in the catalogue."""
     criteria_dir = skill_dir / "criteria"
-    validator = Draft202012Validator(json.loads((criteria_dir / "schema.json").read_text(encoding="utf-8")))
+    sources, problems = load_sources(criteria_dir)
     documents: dict[str, dict] = {}
-    problems: list[str] = []
     for path in sorted(criteria_dir.glob("*.yaml")):
+        if path.name == SOURCES_FILE:
+            continue
         document = yaml.safe_load(path.read_text(encoding="utf-8"))
-        errors = sorted(validator.iter_errors(document), key=lambda e: list(e.absolute_path))
-        problems += [f"{path}: {'/'.join(map(str, e.absolute_path)) or '<root>'}: {e.message}" for e in errors]
+        errors = schema_errors(criteria_dir / "schema.json", document, path)
+        problems += errors
         if errors:
             continue
         if document["area"] != path.stem:
             problems.append(f"{path}: area '{document['area']}' must match the file name '{path.stem}'")
         documents[path.stem] = document
-    return documents, problems + check_consistency(criteria_dir, documents)
+    problems += check_consistency(criteria_dir, documents)
+    source_ids = {s["id"] for s in sources}
+    for area, document in documents.items():
+        for criterion in document["criteria"]:
+            for source in criterion.get("sources", []):
+                if source not in source_ids:
+                    problems.append(f"{criteria_dir / f'{area}.yaml'}: {criterion['id']} cites unknown source '{source}'")
+    return documents, sources, problems
 
 
 def area_product_types(document: dict) -> list[str]:
@@ -91,16 +127,21 @@ def check_consistency(criteria_dir: Path, documents: dict[str, dict]) -> list[st
     return problems
 
 
-def check_citations(skill_dir: Path, documents: dict[str, dict], extra_files: list[Path]) -> list[str]:
-    """Every criterion ID cited with a known prefix must exist and be active."""
+def check_citations(skill_dir: Path, documents: dict[str, dict], sources: list[dict], extra_files: list[Path]) -> list[str]:
+    """Every criterion ID cited with a known prefix must be active; every [src:<id>] must exist."""
     prefixes = {doc["prefix"] for doc in documents.values()}
     ids = {c["id"] for doc in documents.values() for c in active(doc)}
+    source_ids = {s["id"] for s in sources}
     problems = []
     for path in sorted(skill_dir.rglob("*.md")) + extra_files:
-        for prefix, number in CITATION.findall(path.read_text(encoding="utf-8")):
+        text = path.read_text(encoding="utf-8")
+        for prefix, number in CITATION.findall(text):
             cited = f"{prefix}-{number}"
             if prefix in prefixes and cited not in ids:
                 problems.append(f"{path}: cites {cited}, which is not an active criterion")
+        for source in SOURCE_CITATION.findall(text):
+            if source not in source_ids:
+                problems.append(f"{path}: cites [src:{source}], which is not in criteria/sources.yaml")
     return problems
 
 
@@ -149,7 +190,27 @@ def render_matrix_block(documents: dict[str, dict]) -> str:
     return "\n".join(lines + [""] + notes + ["<!-- END GENERATED applicability -->"])
 
 
-def render_catalogue(documents: dict[str, dict]) -> str:
+def render_sources(sources: list[dict]) -> str:
+    lines = [
+        "# Sources",
+        "",
+        "<!-- Generated from criteria/sources.yaml by scripts/generate.py. Edit the YAML, then run the script. -->",
+        "",
+        "The evidence behind the numbers and claims in this skill. Cite a source by its ID.",
+        "Status: " + "; ".join(f"**{k}**: {v}" for k, v in SOURCE_STATUS.items()) + ".",
+        "",
+        "| ID | Source | Status | Verified | Backs |",
+        "|---|---|---|---|---|",
+    ]
+    for s in sources:
+        name = f"[{s['title']}]({s['url']})" if "url" in s else s["title"]
+        by = ", ".join(str(s[k]) for k in ("publisher", "year") if k in s)
+        verified = s.get("verified_on", "—") + (f" ({s['verified_against']})" if "verified_against" in s else "")
+        lines.append(f"| `{s['id']}` | {name}{f' — {by}' if by else ''} | {s['status']} | {verified} | {s['supports']} |")
+    return "\n".join(lines) + "\n"
+
+
+def render_catalogue(documents: dict[str, dict], sources: list[dict]) -> str:
     areas, criteria, retired = [], [], []
     for area, document in documents.items():
         entry = {"area": area, "prefix": document["prefix"], "file": f"references/areas/{area}.md",
@@ -162,7 +223,7 @@ def render_catalogue(documents: dict[str, dict]) -> str:
                 retired.append(criterion["id"])
                 continue
             item = {"id": criterion["id"], "area": area}
-            item |= {k: criterion[k] for k in ("name", "check", "fail_signal", "severity", "severity_note", "related") if k in criterion}
+            item |= {k: criterion[k] for k in ("name", "check", "fail_signal", "severity", "severity_note", "related", "sources") if k in criterion}
             item["phases"] = criterion.get("phases", document["phases"])
             item["applies_to"] = criterion.get("applies_to", area_product_types(document))
             criteria.append(item)
@@ -173,6 +234,7 @@ def render_catalogue(documents: dict[str, dict]) -> str:
         "areas": areas,
         "criteria": criteria,
         "retired_ids": retired,
+        "sources": sources,
     }
     return json.dumps(catalogue, ensure_ascii=False, indent=1) + "\n"
 
@@ -185,7 +247,7 @@ def replace_blocks(text: str, pattern: re.Pattern, block: str) -> str | None:
     return text[: matches[0].start()] + block + text[matches[0].end():]
 
 
-def planned_outputs(skill_dir: Path, documents: dict[str, dict]) -> tuple[dict[Path, str], list[str]]:
+def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict]) -> tuple[dict[Path, str], list[str]]:
     """Return {path: expected content} for every generated output, and the problems found."""
     outputs: dict[Path, str] = {}
     problems: list[str] = []
@@ -211,16 +273,17 @@ def planned_outputs(skill_dir: Path, documents: dict[str, dict]) -> tuple[dict[P
         problems.append(f"{skill_md}: expected exactly one generated applicability block")
     else:
         outputs[skill_md] = updated
-    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents)
+    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources)
+    outputs[skill_dir / "references" / "sources.md"] = render_sources(sources)
     return outputs, problems
 
 
 def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]:
-    documents, problems = load_catalogue(skill_dir)
+    documents, sources, problems = load_catalogue(skill_dir)
     if problems:
         return problems
-    outputs, problems = planned_outputs(skill_dir, documents)
-    problems += check_citations(skill_dir, documents, list(extra_files))
+    outputs, problems = planned_outputs(skill_dir, documents, sources)
+    problems += check_citations(skill_dir, documents, sources, list(extra_files))
     for path, content in outputs.items():
         current = path.read_text(encoding="utf-8") if path.exists() else None
         if current == content:

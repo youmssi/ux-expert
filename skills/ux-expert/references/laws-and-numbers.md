@@ -2,6 +2,8 @@
 
 A quick reference for areas. **Cite the source** when using a number in a finding. These numbers are guidelines; context can justify exceptions, but the exception must be argued.
 
+Source IDs in brackets (e.g. [src:wcag22]) point to `references/sources.md`, which says how each one was verified. Never state the numbers of an **unconfirmed** source as fact.
+
 ## Psychology and interaction laws
 
 | Law / effect | Statement | How to apply in an audit |
@@ -12,8 +14,8 @@ A quick reference for areas. **Cite the source** when using a number in a findin
 | **Jakob's law** (Nielsen) | Users spend most of their time on other products and expect yours to work the same way | Follow platform and category conventions unless a deviation is clearly better and taught |
 | **Tesler's law** (conservation of complexity) | Some complexity cannot be removed, only moved | Ask whether complexity was moved to the system (good) or pushed to the user (bad) |
 | **Postel's law** (robustness principle) | Be liberal in what you accept and conservative in what you send | Accept many input formats (phone numbers with spaces, dates); output one clear format |
-| **Doherty threshold** (Doherty & Thadani, IBM 1982) | Productivity rises sharply when system response is under ~400 ms | Interactive feedback under 400 ms; acknowledge input instantly |
-| **Response-time limits** (Miller 1968; Nielsen 1993) | 0.1 s feels instant; 1 s keeps flow of thought; 10 s is the limit of attention | < 0.1 s: no indicator. 0.1–1 s: subtle. 1–10 s: spinner or skeleton. > 10 s: progress plus the ability to cancel or run in the background |
+| **Doherty threshold** (Doherty & Thadani, IBM 1982) [src:doherty-thadani-1982] | Productivity rises sharply when system response is under ~400 ms | Interactive feedback under 400 ms; acknowledge input instantly |
+| **Response-time limits** (Miller 1968; Nielsen 1993) [src:nielsen-response-times] | 0.1 s feels instant; 1 s keeps flow of thought; 10 s is the limit of attention | < 0.1 s: no indicator. 0.1–1 s: subtle. 1–10 s: spinner or skeleton. > 10 s: progress plus the ability to cancel or run in the background |
 | **Serial position effect** | First and last items are remembered best | Put the most important nav items first and last |
 | **Von Restorff (isolation) effect** | The item that differs is remembered and noticed | Only one visually distinct primary action per view |
 | **Peak–end rule** (Kahneman) | Experiences are judged by their peak and their end | Invest in success states, completion moments and graceful failure |
@@ -26,12 +28,11 @@ A quick reference for areas. **Cite the source** when using a number in a findin
 
 ## Usability research results commonly cited
 
-- **5 users per round** find most usability problems for one user group (Nielsen & Landauer, 1993). Run several small iterative rounds rather than one big one. Use more users per distinct user group, and for quantitative studies (20+).
-- **First click:** when the first click is correct, about 87% of users complete the task, versus about 46% when it is wrong (Bob Bailey & Cari Wolfson, first-click studies, ~2009).
+- **5 users per round** find, on average, about 85 % of the problems one user group runs into, from Nielsen & Landauer's model with an average detection rate of about 0.31 [src:nielsen-landauer-1993]. It is an average: groups of five found 55–100 % in later work. Run several small rounds, use five per distinct user group, and use 20+ for quantitative measures.
+- **First click:** a correct first click strongly predicts task success. The often-quoted "87 % versus 46 %" could not be confirmed [src:bailey-first-click], so use the direction, not the numbers.
 - **F-pattern** scanning on text-heavy pages (NN/g eye-tracking, 2006, re-confirmed 2017). Users also show layer-cake, spotted and commitment patterns. Good headings and front-loaded words support scanning.
-- **Top-aligned labels** give the fastest form completion (Matteo Penzo eye-tracking, 2006).
-- **Inline validation** (after the field is completed) improved success rates and reduced errors and completion time in Luke Wroblewski's 2009 study (~22% higher success reported).
-- **System Usability Scale (SUS):** the average is about **68**; above ~80 is excellent (Sauro, analysis of 500+ studies).
+- **Form validation timing:** government design systems validate on submit by default and advise against validating when the user leaves a field [src:govuk-validation] [src:cms-validation]; studies report more errors when errors appear as soon as a field is left. The widely repeated "inline validation: 22 % more success" claim could not be confirmed [src:wroblewski-inline-2009].
+- **System Usability Scale (SUS):** the average is about **68** (50th percentile); scores are not percentages [src:sauro-sus].
 - **Banner blindness:** users ignore elements that look like ads (NN/g eye-tracking).
 
 ## Numeric thresholds
@@ -60,7 +61,7 @@ A quick reference for areas. **Cite the source** when using a number in a findin
 
 ### Typography
 - Body text on web: **16 px** minimum for most products (with exceptions for dense pro tools, at around 13–14 px, if they are zoomable and have strong contrast).
-- Line length: **45–75 characters** (about 66 ideal) for body copy (Bringhurst).
+- Line length: **45–75 characters** (about 66 ideal) for body copy [src:bringhurst-line-length].
 - Line height: **1.4–1.6** for body text; 1.1–1.3 for headings.
 - A type scale of about **4–6 sizes** covers almost all product UI.
 
@@ -87,4 +88,4 @@ A quick reference for areas. **Cite the source** when using a number in a findin
 - Notifications and toasts: visible long enough to read. A rough guide is ~**1 s per 10–15 words, minimum 4–5 s**. Never auto-dismiss errors or anything with an action that users need.
 
 ### Localization
-- Plan for **30–40% text expansion** from English for long text, and **100–300%** for very short strings (labels, buttons), per W3C/IBM guidance.
+- Plan for translated text to be about **130 %** of the English length for text over 70 characters, and **200–300 %** for strings up to 10 characters (labels, buttons) [src:w3c-text-size].

@@ -49,6 +49,7 @@ Read these two **before writing any finding**:
 Read when needed:
 - `references/codebase-recon.md`: at the start of any audit of a codebase (Phase 1).
 - `references/laws-and-numbers.md`: when a finding needs a threshold or a research citation.
+- `references/sources.md`: to check how a number was verified before stating it; never state the numbers of an **unconfirmed** source as fact.
 - `references/report-template.md`: when writing the final report (Phase 8).
 - `references/design-mode.md`: in Design mode, instead of the audit procedure.
 - `references/refactor-mode.md`: in Refactor mode, after the audit (Phase 8).

@@ -335,6 +335,10 @@
    "fail_signal": "Serious/critical violations",
    "severity": "S2–S4",
    "severity_note": "by impact",
+   "sources": [
+    "gds-automated-2017",
+    "deque-coverage-2021"
+   ],
    "phases": [
     "build"
    ],
@@ -354,6 +358,9 @@
    "fail_signal": "Any critical control unreachable or inoperable by keyboard",
    "severity": "S4",
    "severity_note": "on critical flow",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -373,6 +380,9 @@
    "name": "No keyboard trap (2.1.2)",
    "fail_signal": "Focus stuck",
    "severity": "S4",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -391,6 +401,9 @@
    "name": "Visible focus (2.4.7; 2.4.11; 2.4.13 AAA)",
    "fail_signal": "`outline: none` without replacement; focus hidden by sticky UI",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -409,6 +422,9 @@
    "name": "Logical focus order (2.4.3)",
    "fail_signal": "Positive tabindex; DOM order differs from visual order",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -428,6 +444,9 @@
    "name": "Focus management on dynamic UI",
    "fail_signal": "Modals don't move or return focus; SPA route change loses focus",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -447,6 +466,9 @@
    "name": "Skip link / bypass blocks (2.4.1)",
    "fail_signal": "No way to bypass repeated navigation",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -465,6 +487,9 @@
    "name": "Page titles (2.4.2)",
    "fail_signal": "Missing, duplicate or generic titles",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -483,6 +508,9 @@
    "name": "Landmarks and headings (1.3.1, 2.4.6)",
    "fail_signal": "No `main`; heading levels used for styling",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -501,6 +529,9 @@
    "name": "Accessible names (4.1.2, 2.5.3 label-in-name)",
    "fail_signal": "Unlabeled icon buttons; visible label not contained in the accessible name",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -519,6 +550,9 @@
    "name": "Roles and states exposed (4.1.2)",
    "fail_signal": "Custom widgets with no role or state",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -555,6 +589,9 @@
    "name": "Status messages announced (4.1.3)",
    "fail_signal": "Toasts, async errors and results not announced",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -574,6 +611,9 @@
    "name": "Text alternatives (1.1.1)",
    "fail_signal": "Missing alt; meaningless alt (\"image\", file names)",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -592,6 +632,9 @@
    "name": "Contrast (1.4.3, 1.4.11), from COL",
    "fail_signal": "Below thresholds",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -611,6 +654,9 @@
    "name": "Use of color (1.4.1)",
    "fail_signal": "Color-only meaning",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -630,6 +676,9 @@
    "name": "Resize and reflow (1.4.4, 1.4.10)",
    "fail_signal": "Content lost or 2-D scrolling at 320 px or 200%",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -648,6 +697,9 @@
    "name": "Text spacing (1.4.12)",
    "fail_signal": "Clipping",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -666,6 +718,9 @@
    "name": "Content on hover/focus (1.4.13)",
    "fail_signal": "Tooltips not dismissible or hoverable",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -685,6 +740,9 @@
    "name": "Target size (2.5.8)",
    "fail_signal": "< 24×24 CSS px without spacing",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -704,6 +762,9 @@
    "name": "Dragging alternatives (2.5.7), pointer gestures (2.5.1), pointer cancellation (2.5.2)",
    "fail_signal": "Drag-only or path-gesture-only operations",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -723,6 +784,9 @@
    "name": "Motion and flashing (2.2.2, 2.3.1, 2.3.3)",
    "fail_signal": "Unstoppable motion; flashing; ignores reduced motion",
    "severity": "S2–S4",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -742,6 +806,9 @@
    "name": "Timing adjustable (2.2.1)",
    "fail_signal": "Hard time limits with no extension",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -761,6 +828,9 @@
    "name": "Forms: labels, errors, suggestions, prevention (1.3.1, 3.3.1–3.3.4, 1.3.5)",
    "fail_signal": "See FORM",
    "severity": "S2–S4",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -780,6 +850,9 @@
    "name": "Redundant entry and accessible auth (3.3.7, 3.3.8)",
    "fail_signal": "Re-entry; cognitive test without alternative",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -799,6 +872,9 @@
    "name": "Consistent navigation, identification and help (3.2.3, 3.2.4, 3.2.6)",
    "fail_signal": "Inconsistent",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -818,6 +894,9 @@
    "name": "No unexpected context change (3.2.1, 3.2.2)",
    "fail_signal": "Auto-navigation on select or focus",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -837,6 +916,9 @@
    "name": "Language of page and parts (3.1.1, 3.1.2)",
    "fail_signal": "Missing `lang`; wrong `lang` on translated pages",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -855,6 +937,9 @@
    "name": "Media alternatives (1.2.x)",
    "fail_signal": "Video without captions; audio without transcript",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -874,6 +959,9 @@
    "name": "Orientation (1.3.4)",
    "fail_signal": "Locked orientation",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -893,6 +981,9 @@
    "name": "Zoom not disabled",
    "fail_signal": "`user-scalable=no`, `maximum-scale=1`",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -1489,6 +1580,9 @@
    "fail_signal": "< 4.5:1",
    "severity": "S3",
    "severity_note": "WCAG AA",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -1509,6 +1603,9 @@
    "check": "Computed ratio",
    "fail_signal": "< 4.5:1 for meaningful muted text; placeholder carrying instructions < 4.5:1",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -1529,6 +1626,9 @@
    "check": "Computed ratio",
    "fail_signal": "< 3:1",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -1549,6 +1649,9 @@
    "check": "Computed ratio",
    "fail_signal": "< 3:1 against adjacent colors",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -1569,6 +1672,9 @@
    "check": "Button labels, badges, banners",
    "fail_signal": "< 4.5:1 (common with white on mid-brand colors such as orange or light green)",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -1590,6 +1696,9 @@
    "fail_signal": "Meaning lost in greyscale",
    "severity": "S3",
    "severity_note": "WCAG 1.4.1",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -1673,6 +1782,9 @@
    "check": "Simulation on critical screens and charts",
    "fail_signal": "Indistinguishable critical pairs",
    "severity": "S2–S3",
+   "sources": [
+    "medlineplus-cvd"
+   ],
    "phases": [
     "design",
     "build"
@@ -1909,6 +2021,9 @@
    "fail_signal": "\"Click here\", ambiguous \"Learn more\"",
    "severity": "S2",
    "severity_note": "WCAG 2.4.4",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design"
    ],
@@ -4076,6 +4191,9 @@
    "related": [
     "A11Y"
    ],
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -4096,6 +4214,9 @@
    "check": "`for`/`id`, `aria-describedby`",
    "fail_signal": "Unassociated labels or help",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -4155,6 +4276,9 @@
    "fail_signal": "Missing on personal, address, payment or credential fields",
    "severity": "S2",
    "severity_note": "WCAG 1.3.5",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -4214,9 +4338,13 @@
    "id": "FORM-09",
    "area": "forms-input",
    "name": "Validation timing",
-   "check": "On blur/submit; live re-validation after an error",
-   "fail_signal": "Errors on first keystroke; validation only server-side after a round trip",
+   "check": "Errors shown on submit; live re-validation while correcting; positive feedback may be live",
+   "fail_signal": "Errors appear while typing or as soon as a field is left; errors only after a server round trip; fixed errors stay visible",
    "severity": "S2",
+   "sources": [
+    "govuk-validation",
+    "cms-validation"
+   ],
    "phases": [
     "design",
     "build"
@@ -4237,6 +4365,9 @@
    "check": "Inline, specific, with fix guidance",
    "fail_signal": "Generic \"Invalid\" or \"Error\"; errors only at the top",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -4257,6 +4388,9 @@
    "check": "Focus to first error or summary on submit",
    "fail_signal": "Errors appear off-screen with no focus change",
    "severity": "S2–S3",
+   "sources": [
+    "govuk-validation"
+   ],
    "phases": [
     "build"
    ],
@@ -4353,6 +4487,9 @@
    "check": "Show/hide, rules upfront, paste, manager support, sane max length",
    "fail_signal": "Paste blocked; rules revealed only after failure",
    "severity": "S2–S3",
+   "sources": [
+    "nist-800-63b-4"
+   ],
    "phases": [
     "design",
     "build"
@@ -4394,6 +4531,9 @@
    "fail_signal": "Inaccessible CAPTCHA blocks sign-up",
    "severity": "S3–S4",
    "severity_note": "WCAG 3.3.8",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -4475,6 +4615,9 @@
    "fail_signal": "Re-asking known data",
    "severity": "S2",
    "severity_note": "WCAG 3.3.7",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design"
    ],
@@ -4647,6 +4790,9 @@
    "name": "Expansion-resilient layout",
    "fail_signal": "Fixed-width labels clip under pseudo-localization",
    "severity": "S2",
+   "sources": [
+    "w3c-text-size"
+   ],
    "phases": [
     "design",
     "build"
@@ -4669,6 +4815,9 @@
    "severity": "S2",
    "related": [
     "A11Y-28"
+   ],
+   "sources": [
+    "wcag22"
    ],
    "phases": [
     "build"
@@ -5436,6 +5585,9 @@
    "check": "Visual response ≤ 100 ms",
    "fail_signal": "No pressed state; clicks feel ignored, causing double clicks",
    "severity": "S2",
+   "sources": [
+    "nielsen-response-times"
+   ],
    "phases": [
     "design",
     "build"
@@ -5456,6 +5608,9 @@
    "check": "Indicators at 1 s and 10 s",
    "fail_signal": "No feedback during multi-second actions",
    "severity": "S3",
+   "sources": [
+    "nielsen-response-times"
+   ],
    "phases": [
     "design",
     "build"
@@ -5536,6 +5691,9 @@
    "check": "`prefers-reduced-motion` handling",
    "fail_signal": "Large/parallax/auto motion with no reduction",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -5557,6 +5715,9 @@
    "fail_signal": "> 3 flashes/second",
    "severity": "S4",
    "severity_note": "WCAG 2.3.1",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -5616,6 +5777,9 @@
    "check": "Hover + focus, dismissible, not essential",
    "fail_signal": "Essential info only in a tooltip; hover-only",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -5697,6 +5861,9 @@
    "fail_signal": "Reorder/move only by drag",
    "severity": "S2–S3",
    "severity_note": "WCAG 2.5.7",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -5778,6 +5945,9 @@
    "fail_signal": "Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions",
    "severity": "S2",
    "severity_note": "WCAG 2.5.2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -6356,6 +6526,9 @@
    "check": "max-width on text and forms",
    "fail_signal": "Text lines > ~90 characters; full-width forms on desktop",
    "severity": "S2",
+   "sources": [
+    "bringhurst-line-length"
+   ],
    "phases": [
     "design"
    ],
@@ -6432,6 +6605,11 @@
    "check": "Computed sizes of interactive elements",
    "fail_signal": "< 24×24 CSS px (WCAG AA fail); < 44 pt / 48 dp on touch",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22",
+    "apple-hig-targets",
+    "material-targets"
+   ],
    "phases": [
     "design",
     "build"
@@ -6507,6 +6685,9 @@
    "check": "Height of sticky bars; focus visibility",
    "fail_signal": "> ~25% of mobile viewport; focused element hidden",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -6804,6 +6985,9 @@
    "fail_signal": "No testing before launch on critical flows",
    "severity": "S2–S3",
    "severity_note": "pre-launch",
+   "sources": [
+    "nielsen-landauer-1993"
+   ],
    "phases": [
     "design"
    ],
@@ -6823,6 +7007,9 @@
    "name": "Attitudinal benchmark",
    "fail_signal": "No SUS/SEQ/CSAT baseline",
    "severity": "S1",
+   "sources": [
+    "sauro-sus"
+   ],
    "phases": [
     "design"
    ],
@@ -7304,6 +7491,9 @@
    "fail_signal": "> 2.5 s (p75 mobile) needs improvement; > 4 s poor",
    "severity": "S2–S3",
    "severity_note": "S2 when it needs improvement, S3 when poor",
+   "sources": [
+    "web-vitals"
+   ],
    "phases": [
     "build"
    ],
@@ -7320,6 +7510,9 @@
    "fail_signal": "> 200 ms needs improvement; > 500 ms poor",
    "severity": "S2–S3",
    "severity_note": "S2 when it needs improvement, S3 when poor",
+   "sources": [
+    "web-vitals"
+   ],
    "phases": [
     "build"
    ],
@@ -7336,6 +7529,9 @@
    "fail_signal": "> 0.1 / > 0.25",
    "severity": "S2–S3",
    "severity_note": "S2 when it needs improvement, S3 when poor",
+   "sources": [
+    "web-vitals"
+   ],
    "phases": [
     "build"
    ],
@@ -7351,6 +7547,9 @@
    "name": "TTFB / server response",
    "fail_signal": "Consistently > ~800 ms",
    "severity": "S2",
+   "sources": [
+    "web-vitals"
+   ],
    "phases": [
     "build"
    ],
@@ -7370,6 +7569,10 @@
    "name": "Critical action feedback timing",
    "fail_signal": "No acknowledgement within 100 ms; no result or progress within 1 s",
    "severity": "S2–S3",
+   "sources": [
+    "nielsen-response-times",
+    "doherty-thadani-1982"
+   ],
    "phases": [
     "design",
     "build"
@@ -7783,6 +7986,11 @@
    "name": "Touch target size and spacing",
    "fail_signal": "< 44 pt / 48 dp; cramped adjacent targets",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22",
+    "apple-hig-targets",
+    "material-targets"
+   ],
    "phases": [
     "design",
     "build"
@@ -7853,6 +8061,9 @@
    "name": "Orientation support",
    "fail_signal": "Locked or broken in landscape",
    "severity": "S2",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -8251,6 +8462,9 @@
    "check": "Re-auth in place, work preserved, warnings",
    "fail_signal": "Redirect to login and lose work",
    "severity": "S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "design",
     "build"
@@ -8796,6 +9010,9 @@
    "name": "Safe account recovery",
    "fail_signal": "Insecure or broken recovery; security questions",
    "severity": "S3",
+   "sources": [
+    "nist-800-63b-4"
+   ],
    "phases": [
     "design",
     "build"
@@ -9019,6 +9236,9 @@
    "check": "Container width for paragraphs",
    "fail_signal": "> ~80–90 characters, or < ~35 for body text",
    "severity": "S2",
+   "sources": [
+    "bringhurst-line-length"
+   ],
    "phases": [
     "design",
     "build"
@@ -9119,6 +9339,9 @@
    "check": "rem/em/sp/Dynamic Type",
    "fail_signal": "Fixed px everywhere; font scaling disabled",
    "severity": "S2–S3",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -9139,6 +9362,9 @@
    "fail_signal": "Clipped or overlapping text",
    "severity": "S3",
    "severity_note": "WCAG AA",
+   "sources": [
+    "wcag22"
+   ],
    "phases": [
     "build"
    ],
@@ -9294,5 +9520,205 @@
    ]
   }
  ],
- "retired_ids": []
+ "retired_ids": [],
+ "sources": [
+  {
+   "id": "wcag22",
+   "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+   "publisher": "W3C",
+   "year": 2023,
+   "url": "https://www.w3.org/TR/WCAG22/",
+   "status": "primary",
+   "verified_on": "2026-10-09",
+   "verified_against": "w3c/wcag@23bad59, guidelines/sc/20–22 and terms/20/large-scale",
+   "supports": "Every WCAG success criterion and threshold cited (contrast 4.5:1 and 3:1, large text 18pt or 14pt bold, non-text contrast, reflow at 320 CSS px, text spacing, target size 24 and 44 CSS px, timing 20 s and 10×, three flashes, focus, redundant entry, accessible authentication, consistent help, dragging)."
+  },
+  {
+   "id": "web-vitals",
+   "title": "Core Web Vitals thresholds (web-vitals library)",
+   "publisher": "Google Chrome team",
+   "year": 2026,
+   "url": "https://github.com/GoogleChrome/web-vitals",
+   "status": "primary",
+   "verified_on": "2026-10-09",
+   "verified_against": "GoogleChrome/web-vitals@400d019, src/onLCP.ts, onINP.ts, onCLS.ts, onTTFB.ts",
+   "supports": "LCP good ≤ 2,500 ms, poor > 4,000 ms; INP 200 / 500 ms; CLS 0.1 / 0.25; TTFB 800 / 1,800 ms."
+  },
+  {
+   "id": "w3c-text-size",
+   "title": "Text size in translation",
+   "publisher": "W3C Internationalization",
+   "url": "https://www.w3.org/International/articles/article-text-size",
+   "status": "primary",
+   "verified_on": "2026-10-09",
+   "verified_against": "w3c/i18n-drafts@59e5e64, articles/article-text-size.en.html",
+   "supports": "Translated length relative to English, by source length — up to 10 characters 200–300 %, 11–20 180–200 %, 21–30 160–180 %, 31–50 140–160 %, 51–70 151–170 %, over 70 about 130 %."
+  },
+  {
+   "id": "govuk-validation",
+   "title": "Recover from validation errors (pattern)",
+   "publisher": "GOV.UK Design System",
+   "url": "https://design-system.service.gov.uk/patterns/validation/",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Search results quoting the pattern page (the page itself was not reachable)",
+   "supports": "Validate on submit; do not validate when the user moves away from a field; keep answers, add an error summary with focus, show messages next to fields; use novalidate."
+  },
+  {
+   "id": "cms-validation",
+   "title": "Error validation (pattern)",
+   "publisher": "CMS Design System (US Centers for Medicare & Medicaid Services)",
+   "url": "https://design.cms.gov/patterns/Forms/error-validation/",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Search results quoting the pattern page",
+   "supports": "Validation on submit for most cases; instant validation only where answers are not obvious or fields are hard to complete."
+  },
+  {
+   "id": "nist-800-63b-4",
+   "title": "Digital Identity Guidelines, Authentication and Lifecycle Management (SP 800-63B-4)",
+   "publisher": "NIST",
+   "year": 2025,
+   "url": "https://pages.nist.gov/800-63-4/sp800-63b/passwords",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Secondary summaries of the final revision (the NIST site was not reachable)",
+   "supports": "Passwords at least 15 characters when used alone (8 when part of multi-factor authentication); accept at least 64 characters; no composition rules; no periodic forced changes; check against breached and common passwords."
+  },
+  {
+   "id": "apple-hig-targets",
+   "title": "Human Interface Guidelines and design tips (hit targets)",
+   "publisher": "Apple",
+   "url": "https://developer.apple.com/design/tips/",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Search results quoting Apple's design tips page",
+   "supports": "Controls of at least 44 × 44 pt; the visible control can be smaller than the tappable area."
+  },
+  {
+   "id": "material-targets",
+   "title": "Material Design accessibility (touch targets)",
+   "publisher": "Google",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Secondary sources citing Material's touch-target guidance",
+   "supports": "Touch targets of at least 48 × 48 dp, with the visible element allowed inside a larger target."
+  },
+  {
+   "id": "gds-automated-2017",
+   "title": "Automated accessibility testing (audit of tools against 142 known issues)",
+   "publisher": "UK Government Digital Service, cited by the DWP Accessibility Manual",
+   "year": 2017,
+   "url": "https://accessibility-manual.dwp.gov.uk/tools-and-resources/automated-accessibility-testing",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "DWP Accessibility Manual and GOV.UK guidance (search results)",
+   "supports": "The best automated tools found about 30–40 % of 142 known issues on a deliberately inaccessible page."
+  },
+  {
+   "id": "deque-coverage-2021",
+   "title": "Automated testing coverage report",
+   "publisher": "Deque Systems (vendor data)",
+   "year": 2021,
+   "url": "https://www.businesswire.com/news/home/20210310005156/en",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Deque press releases (2021, 2022)",
+   "supports": "Automated tests covered about 57 % of issues by volume across about 2,000 audits; a vendor figure measured by issue count, not by success criteria."
+  },
+  {
+   "id": "nielsen-response-times",
+   "title": "Response Times — The 3 Important Limits (Usability Engineering, ch. 5); after Miller (1968)",
+   "publisher": "Jakob Nielsen",
+   "year": 1993,
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Search results quoting the chapter and Miller (1968)",
+   "supports": "0.1 s feels instant; 1 s keeps the flow of thought; 10 s is the limit of attention, beyond which progress feedback is needed."
+  },
+  {
+   "id": "doherty-thadani-1982",
+   "title": "The Economic Value of Rapid Response Time (IBM GE20-0752)",
+   "publisher": "W. J. Doherty and A. J. Thadani, IBM",
+   "year": 1982,
+   "url": "https://www.vm.ibm.com/devpages/jelliott/evrrt1.html",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "IBM-hosted copy (figure titles only) and secondary accounts",
+   "supports": "Productivity rises sharply when system response is under about 400 ms (the \"Doherty threshold\")."
+  },
+  {
+   "id": "bringhurst-line-length",
+   "title": "The Elements of Typographic Style (3rd ed., pp. 36–37)",
+   "publisher": "Robert Bringhurst",
+   "year": 2004,
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Secondary sources quoting the book",
+   "supports": "45–75 characters per line for single-column printed text, 66 as a common ideal."
+  },
+  {
+   "id": "nielsen-landauer-1993",
+   "title": "A mathematical model of the finding of usability problems (INTERCHI '93)",
+   "publisher": "J. Nielsen and T. K. Landauer",
+   "year": 1993,
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Secondary summaries (CACM 2012 \"Sample size in usability studies\")",
+   "supports": "Problems found ≈ N(1 − (1 − λ)^n); with the average λ ≈ 0.31, five users find about 85 % of problems on average. Later studies found 55–100 % for groups of five (Faulkner 2003), so treat five as a per-round minimum for one user group, not a guarantee."
+  },
+  {
+   "id": "sauro-sus",
+   "title": "System Usability Scale benchmarks",
+   "publisher": "Jeff Sauro, MeasuringU",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Secondary sources citing the 500-study analysis",
+   "supports": "The average SUS score is about 68 (50th percentile); scores are not percentages."
+  },
+  {
+   "id": "bailey-first-click",
+   "title": "First-click studies (Bob Bailey and Cari Wolfson)",
+   "status": "unconfirmed",
+   "verified_on": "2026-10-09",
+   "verified_against": "Searched; no primary or reliable secondary source found",
+   "supports": "Only the direction is used: a correct first click strongly predicts task success. The often-quoted 87 % versus 46 % is not stated as fact."
+  },
+  {
+   "id": "wroblewski-inline-2009",
+   "title": "Inline validation in web forms (A List Apart, 2009)",
+   "publisher": "Luke Wroblewski",
+   "year": 2009,
+   "status": "unconfirmed",
+   "verified_on": "2026-10-09",
+   "verified_against": "Searched; the 22 % figure appears only in uncited summaries, and later studies report more errors with validation on leaving a field",
+   "supports": "Not used for any default. Recorded so the old claim is not reintroduced."
+  },
+  {
+   "id": "penzo-labels-2006",
+   "title": "Label placement in forms (UXmatters, 2006)",
+   "publisher": "Matteo Penzo",
+   "year": 2006,
+   "status": "unconfirmed",
+   "verified_on": "2026-10-09",
+   "verified_against": "Searched; secondary sources report findings favouring left alignment for scanning, and the \"top-aligned is fastest\" claim is disputed",
+   "supports": "Not used as evidence. Top-aligned labels remain the default for other reasons (narrow screens, translation, design-system practice)."
+  },
+  {
+   "id": "classic-laws",
+   "title": "Classic HCI laws (Fitts 1954, Hick 1952, Miller 1956, Cowan 2001, Gestalt principles, Iyengar & Lepper 2000, Kurosu & Kashimura 1995, Kivetz et al. 2006)",
+   "status": "unchecked",
+   "supports": "Qualitative principles only (target size and distance, choice count, memory limits, grouping, choice overload, aesthetic-usability, goal gradient). No numeric threshold in the skill depends on them."
+  },
+  {
+   "id": "medlineplus-cvd",
+   "title": "Color vision deficiency",
+   "publisher": "MedlinePlus, US National Library of Medicine",
+   "url": "https://medlineplus.gov/genetics/condition/color-vision-deficiency",
+   "status": "secondary",
+   "verified_on": "2026-10-09",
+   "verified_against": "Search results quoting MedlinePlus; consistent with Birch (2010, Eye) and a 2025 pooled analysis",
+   "supports": "Red–green color vision deficiency affects about 1 in 12 males and 1 in 200 females of Northern European ancestry; rates are lower in other populations."
+  }
+ ]
 }

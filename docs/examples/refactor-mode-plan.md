@@ -15,7 +15,7 @@ flags available, Playwright already used for 2 smoke tests.
 | F-002 Sign-up submit unreachable by keyboard (`div` with onClick) | A11Y-02 | P0 | `SignupForm.tsx:142` |
 | F-003 187 hard-coded hex colors, 6 near-identical blues | DS-03, COL-08 | P1 | 43 files |
 | F-004 Muted text `#9CA3AF` on white: 2.5:1 | COL-03 | P1 | `globals.css:12` |
-| F-005 Each of 7 forms validates differently; errors only on submit | FORM-09, FORM-10 | P1 | 7 forms |
+| F-005 Each of 7 forms validates differently; 3 show errors while the user types | FORM-09, FORM-10 | P1 | 7 forms |
 | F-006 Placeholder-only labels on 4 forms | FORM-02 | P1 | 4 forms |
 | F-007 "Something went wrong" for every API error; input cleared | CONT-06, FORM-12 | P1 | `api.ts:31` |
 | F-008 No error boundary: a widget crash blanks the page | STATE-10 | P1 | `App.tsx` |
@@ -70,7 +70,7 @@ R-8, R-9, R-10        → R-12 i18n layer (extract strings once, from final comp
 | 3 | R-3 Onboarding funnel events (baseline) | Guard | F-012 | — | Event contract test | S |
 | 4 | R-13 Guards for strengths to protect | Guard | — | — | E2E board shortcuts; LCP budget in CI | S |
 | 5 | R-4 Semantic tokens (color, spacing, type) | Foundation | — | — | Visual snapshots of 5 key screens | M |
-| 6 | R-5 Form field component with label, help, error and validation on blur | Foundation | — | — | Unit + axe on the component | M |
+| 6 | R-5 Form field component with label, help, error, and validation on submit | Foundation | — | — | Unit + axe on the component | M |
 | 7 | R-6 Error pattern: boundary, typed API errors, message catalog | Foundation | F-008 | — | Unit: each error type renders its message | M |
 | 8 | R-7 Muted-text contrast via token | Migration | F-004 | R-4 | Contrast unit test on tokens | XS |
 | 9 | R-8 Migrate screens to tokens, critical flows first | Migration | F-003, F-010 | R-4 | Visual snapshots | L (3 PRs) |
@@ -87,7 +87,7 @@ Quick wins that ride along: R-2 and R-7 (XS each).
 **Class:** foundation · **Depends on:** — · **Size:** M
 **Closes:** prepares F-005, F-006 (FORM-02, FORM-03, FORM-09, FORM-10, FORM-11, A11Y-10)
 **Why:** 7 forms validate 7 different ways, and 4 have placeholder-only labels, so users can't predict errors and screen-reader users can't identify fields.
-**Change:** a `FormField` component with a visible label, help text and an error linked by `aria-describedby`, validation on blur and re-validation while typing after an error; documented in Storybook. Old inputs stay until R-9 (expand → migrate → contract).
+**Change:** a `FormField` component with a visible label, help text and an error linked by `aria-describedby`, validation on submit with focus on the first error, and re-validation while typing once an error is shown; documented in Storybook. Old inputs stay until R-9 (expand → migrate → contract).
 **Guard:** unit tests for label association and validation timing; axe on all Storybook states.
 **Verify:** FORM-02, FORM-03, FORM-09 and FORM-10 checks pass on the Storybook stories.
 **Rollback:** not needed (no screen uses it yet).

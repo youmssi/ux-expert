@@ -32,6 +32,8 @@ criteria:
   fail_signal: '"Click here", ambiguous "Learn more"'
   severity: S2
   severity_note: WCAG 2.4.4
+  sources:
+  - wcag22
 - id: CONT-06
   name: 'Errors: what + why + what to do'
   fail_signal: '"Something went wrong", raw codes, stack traces'

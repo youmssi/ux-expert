@@ -42,6 +42,8 @@ criteria:
   check: Container width for paragraphs
   fail_signal: '> ~80–90 characters, or < ~35 for body text'
   severity: S2
+  sources:
+  - bringhurst-line-length
 - id: TYP-06
   name: Distinct hierarchy levels
   check: Size and weight steps between levels
@@ -68,6 +70,8 @@ criteria:
   fail_signal: Fixed px everywhere; font scaling disabled
   severity: S2–S3
   phases: *id001
+  sources:
+  - wcag22
 - id: TYP-11
   name: Survives 200% zoom and text spacing
   check: Runtime zoom; fixed-height text containers
@@ -75,6 +79,8 @@ criteria:
   severity: S3
   severity_note: WCAG AA
   phases: *id001
+  sources:
+  - wcag22
 - id: TYP-12
   name: Safe truncation
   check: Ellipsis usage on critical data

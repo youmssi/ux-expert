@@ -22,8 +22,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 |---|---|---|---|
 | [UXE-4](UXE-4-design-mode.md) | Design mode: user story → UX requirements, acceptance criteria and Definition of Done | M | done |
 | [UXE-5](UXE-5-refactor-mode.md) | Refactor mode: gap analysis → sequenced, regression-safe improvement plan | M | done |
-| [UXE-6](UXE-6-content-tightening.md) | Content tightening: gotchas in every area, clear defaults, token budgets per file | M | in progress |
-| UXE-7 | Citation verification: every number checked against its primary source, with a `verified_on` date | M | to refine |
+| [UXE-6](UXE-6-content-tightening.md) | Content tightening: gotchas in every area, clear defaults, token budgets per file | M | done |
+| [UXE-7](UXE-7-citation-verification.md) | Citation verification: every number traced to a checked source, with status and date | M | in progress |
 
 ## v0.3: every agent can load it
 
@@ -62,8 +62,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 ## Known limitations (tracked by the stories above)
 
 - Never evaluated on real products yet: precision and recall unknown (UXE-10).
-- Some research figures were written from memory and await primary-source checks
-  (UXE-7).
+- Research figures are traced to sources (UXE-7); 3 remain unconfirmed and are
+  not stated as fact. Sources need re-checking when standards change.
 - Code search patterns favour web and React (UXE-14).
 - Pixel-level visual review needs runtime screenshots and design files, not
   code alone (UXE-13).

@@ -5,7 +5,7 @@
 A senior treats accessibility as **usability for the full range of humans and situations**: permanent (blind, deaf, motor impairment), temporary (broken arm, eye surgery) and situational (bright sunlight, holding a baby, noisy train, slow connection). Microsoft's Inclusive Design toolkit calls this "solve for one, extend to many". Captions help everyone in a noisy room; keyboard shortcuts help power users.
 
 They also know two hard facts:
-1. **Automated tools catch only a part of WCAG issues** (commonly cited at roughly 30–40%). Manual keyboard and screen-reader testing is not optional.
+1. **Automated tools catch only part of the problems.** The best tools found about 30–40 % of 142 known issues in a UK government audit [src:gds-automated-2017]; a vendor reports about 57 % by issue volume [src:deque-coverage-2021]. Manual keyboard and screen-reader testing is not optional.
 2. **Accessibility is increasingly a legal launch requirement**: the European Accessibility Act (applicable since June 2025 for many consumer digital services in the EU), ADA lawsuits in the US, Section 508 for US federal work, and EN 301 549 in EU procurement. An inaccessible critical flow can be a launch blocker, not a nice-to-have.
 
 The senior's rule: **use native semantic elements first** (`<button>`, `<a href>`, `<label>`, `<dialog>`, `<select>`). The first rule of ARIA is "don't use ARIA if a native element does the job". Most bugs come from `div`s pretending to be buttons.

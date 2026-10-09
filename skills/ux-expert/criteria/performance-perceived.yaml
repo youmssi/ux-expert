@@ -20,6 +20,8 @@ criteria:
   - web-app
   - marketing-site
   - ai-feature
+  sources:
+  - web-vitals
 - id: PERF-02
   name: INP / interaction latency
   fail_signal: '> 200 ms needs improvement; > 500 ms poor'
@@ -29,6 +31,8 @@ criteria:
   - web-app
   - marketing-site
   - ai-feature
+  sources:
+  - web-vitals
 - id: PERF-03
   name: CLS
   fail_signal: '> 0.1 / > 0.25'
@@ -38,10 +42,14 @@ criteria:
   - web-app
   - marketing-site
   - ai-feature
+  sources:
+  - web-vitals
 - id: PERF-04
   name: TTFB / server response
   fail_signal: Consistently > ~800 ms
   severity: S2
+  sources:
+  - web-vitals
 - id: PERF-05
   name: Critical action feedback timing
   fail_signal: No acknowledgement within 100 ms; no result or progress within 1 s
@@ -49,6 +57,9 @@ criteria:
   phases: &id001
   - design
   - build
+  sources:
+  - nielsen-response-times
+  - doherty-thadani-1982
 - id: PERF-06
   name: JavaScript weight
   fail_signal: Far over budget; no code splitting; heavy libraries for small features

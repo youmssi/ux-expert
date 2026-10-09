@@ -31,7 +31,7 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 
 ### Step 3: Labels and help
 - Every field has a **visible, persistent label** (placeholder is not a label: it disappears on input, often has low contrast, and screen readers may skip it).
-- Labels are **top-aligned** for fastest completion (Penzo 2006); left-aligned labels are acceptable for dense settings forms on wide screens.
+- Labels are **top-aligned** by default: they keep label and field in one reading path, survive narrow screens and longer translations, and are the design-system norm. Left-aligned labels are acceptable for dense settings forms on wide screens. (The often-cited eye-tracking evidence for top-aligned labels could not be confirmed [src:penzo-labels-2006].)
 - Help text (format, why we ask, privacy reassurance) sits **below the label, before** input, and is programmatically linked (`aria-describedby`).
 - Mark **optional** fields ("(optional)") when most are required, or mark required ones when most are optional. Do it consistently, and don't rely on a red asterisk alone without an explanation.
 
@@ -45,7 +45,7 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 - Field width hints the expected length (postal code short, address long).
 
 ### Step 5: Validation
-- **Timing:** validate on **blur** (after the user leaves the field) or on submit, not on every keystroke for format rules (it yells at users mid-typing). Exceptions: positive confirmation such as password strength or username availability, which can be live.
+- **Timing:** validate **on submit** by default [src:govuk-validation] [src:cms-validation]. Do not show an error while the user is typing, and do not validate as soon as they leave a field: people fill fields in different orders, and early errors increase mistakes. Exceptions: live *positive* feedback (password strength, username available) and, sparingly, a field whose format is hard to get right, checked only once the user has finished it.
 - Once a field is in an error state, **re-validate as the user types**, so the error disappears as soon as it's fixed.
 - **Placement:** the error appears next to the field (below it, usually), with an icon and text (not color alone), and is linked via `aria-describedby`. `aria-invalid="true"` is set.
 - **On submit with errors:** focus moves to the first error field, or to an **error summary** at the top that lists links to each invalid field (for long forms).
@@ -82,7 +82,7 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 | FORM-06 | Autocomplete tokens | `autocomplete` attributes | Missing on personal, address, payment or credential fields | S2 (WCAG 1.3.5) |
 | FORM-07 | Format tolerance | Accept spaces, dashes, parentheses; trim whitespace; case-insensitive emails | Rejects valid input over formatting | S2–S3 |
 | FORM-08 | Smart, safe defaults | Defaults present and in the user's interest | No defaults; or defaults against the user (pre-checked consent) | S2 (S3+ if it is a dark pattern; → TRUST) |
-| FORM-09 | Validation timing | On blur/submit; live re-validation after an error | Errors on first keystroke; validation only server-side after a round trip | S2 |
+| FORM-09 | Validation timing | Errors shown on submit; live re-validation while correcting; positive feedback may be live | Errors appear while typing or as soon as a field is left; errors only after a server round trip; fixed errors stay visible | S2 |
 | FORM-10 | Error placement and clarity | Inline, specific, with fix guidance | Generic "Invalid" or "Error"; errors only at the top | S2–S3 |
 | FORM-11 | Error focus management | Focus to first error or summary on submit | Errors appear off-screen with no focus change | S2–S3 |
 | FORM-12 | Input preserved on error | Data retained after server or validation errors | Form cleared | S3 |
@@ -112,7 +112,7 @@ Find forms through: `<form`, `useForm`, `Formik`, `react-hook-form`, `zod`/`yup`
 
 ## Gotchas
 
-- react-hook-form defaults to `mode: 'onSubmit'` with `reValidateMode: 'onChange'`: errors appear only on submit. FORM-09 needs `mode: 'onBlur'` or `'onTouched'`.
+- react-hook-form's defaults (`mode: 'onSubmit'`, `reValidateMode: 'onChange'`) already match FORM-09: errors on submit, then live re-validation while correcting. `mode: 'onChange'` or `'all'` shows errors while typing and fails FORM-09.
 - `type="number"` drops leading zeros and accepts `e`. For codes, card numbers and postal codes use `type="text"` with `inputmode="numeric"`.
 - Password managers need a username or email field in the same form, even a hidden one, to save the credentials.
 - Native validation bubbles are inconsistent across browsers. A form with `noValidate` and custom inline errors is the intended pattern, not a bug.

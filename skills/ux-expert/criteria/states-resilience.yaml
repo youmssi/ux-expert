@@ -78,6 +78,8 @@ criteria:
   check: Re-auth in place, work preserved, warnings
   fail_signal: Redirect to login and lose work
   severity: S3
+  sources:
+  - wcag22
 - id: STATE-13
   name: Concurrency conflicts handled
   check: Versioning, conflict UI

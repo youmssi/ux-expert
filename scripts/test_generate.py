@@ -9,6 +9,8 @@ import yaml
 from generate import ROOT, run
 
 SCHEMA = ROOT / "skills" / "ux-expert" / "criteria" / "schema.json"
+SOURCES_SCHEMA = ROOT / "skills" / "ux-expert" / "criteria" / "sources.schema.json"
+SOURCE = {"id": "spec", "title": "A spec", "status": "primary", "verified_on": "2026-10-09", "verified_against": "repo@abc", "supports": "The 24 px rule."}
 AREA_MD = "# Demo\n\n## Criteria\n\n<!-- BEGIN GENERATED criteria (demo) -->\n<!-- END GENERATED criteria -->\n\n## Output\n"
 SKILL_MD = "# Skill\n\n<!-- BEGIN GENERATED applicability -->\n<!-- END GENERATED applicability -->\n"
 TYPES = ["web-app", "marketing-site", "mobile", "desktop", "cli", "sdk-api", "ai-feature"]
@@ -27,6 +29,8 @@ class GenerateTest(unittest.TestCase):
         (self.skill / "criteria").mkdir()
         (self.skill / "references" / "areas").mkdir(parents=True)
         shutil.copy(SCHEMA, self.skill / "criteria" / "schema.json")
+        shutil.copy(SOURCES_SCHEMA, self.skill / "criteria" / "sources.schema.json")
+        self.write_sources([SOURCE])
         self.area_md = self.skill / "references" / "areas" / "demo.md"
         self.area_md.write_text(AREA_MD)
         (self.skill / "SKILL.md").write_text(SKILL_MD)
@@ -34,6 +38,9 @@ class GenerateTest(unittest.TestCase):
 
     def tearDown(self):
         self._tmp.cleanup()
+
+    def write_sources(self, sources):
+        (self.skill / "criteria" / "sources.yaml").write_text(yaml.safe_dump({"sources": sources}, allow_unicode=True))
 
     def write(self, criteria, area="demo", prefix="DEMO", **fields):
         document = {"area": area, "prefix": prefix, "applicability": {t: "run" for t in TYPES} | {"sdk-api": "n/a"},
@@ -139,6 +146,30 @@ class GenerateTest(unittest.TestCase):
         problems = run(self.skill, check=False)
         self.assertEqual([p.split(": ", 1)[1] for p in problems],
                          ["cites DEMO-02, which is not an active criterion", "cites DEMO-09, which is not an active criterion"])
+
+    def test_sources_are_rendered_and_attached_to_criteria(self):
+        self.write([criterion(sources=["spec"])])
+        self.assertEqual(run(self.skill, check=False), [])
+        bibliography = (self.skill / "references" / "sources.md").read_text()
+        self.assertIn("| `spec` | A spec | primary | 2026-10-09 (repo@abc) | The 24 px rule. |", bibliography)
+        catalogue = json.loads((self.skill / "criteria" / "catalogue.json").read_text())
+        self.assertEqual(catalogue["criteria"][0]["sources"], ["spec"])
+        self.assertEqual(catalogue["sources"][0]["id"], "spec")
+
+    def test_a_criterion_citing_an_unknown_source_is_rejected(self):
+        self.write([criterion(sources=["nope"])])
+        self.assertIn("DEMO-01 cites unknown source 'nope'", run(self.skill, check=True)[0])
+
+    def test_a_verified_source_without_its_verification_is_rejected(self):
+        source = dict(SOURCE)
+        del source["verified_against"]
+        self.write_sources([source])
+        self.assertIn("'verified_against' is a required property", run(self.skill, check=True)[0])
+
+    def test_an_unknown_source_citation_in_text_is_reported(self):
+        (self.skill / "references" / "guide.md").write_text("Per [src:spec] and [src:missing]; `[disabled]` is CSS.\n")
+        problems = run(self.skill, check=False)
+        self.assertEqual([p.split(": ", 1)[1] for p in problems], ["cites [src:missing], which is not in criteria/sources.yaml"])
 
     def test_an_area_file_without_criteria_is_reported(self):
         run(self.skill, check=False)

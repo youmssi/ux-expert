@@ -8,7 +8,7 @@ applicability:
   cli: conditional
   sdk-api: conditional
   ai-feature: run
-applicability_note: 'run when the product contains an AI or LLM feature'
+applicability_note: run when the product contains an AI or LLM feature
 phases:
 - design
 - build

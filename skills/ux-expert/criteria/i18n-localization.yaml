@@ -43,12 +43,16 @@ criteria:
   fail_signal: Fixed-width labels clip under pseudo-localization
   severity: S2
   phases: *id001
+  sources:
+  - w3c-text-size
 - id: I18N-08
   name: '`lang` and `dir` set correctly'
   fail_signal: Missing or not updated per locale
   severity: S2
   related:
   - A11Y-28
+  sources:
+  - wcag22
 - id: I18N-09
   name: Logical CSS properties (RTL)
   fail_signal: Physical left/right properties throughout
