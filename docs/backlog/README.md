@@ -13,7 +13,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 |---|---|---|---|
 | [UXE-1](UXE-1-repository-foundation.md) | Repository foundation: workflow, rules, templates, ADRs, licenses | S | done |
 | [UXE-2](UXE-2-spec-compliant-skill.md) | One spec-compliant `ux-expert` skill, validated in CI, installable as a Claude plugin | M | done |
-| [UXE-3](UXE-3-criteria-as-data.md) | Criteria as a YAML catalogue with schema; tables generated and drift-checked | M | in progress |
+| [UXE-3](UXE-3-criteria-as-data.md) | Criteria as a YAML catalogue with schema; tables generated and drift-checked | M | done |
+| [UXE-17](UXE-17-project-readme.md) | Project README in the structure of established open-source projects | S | in progress |
 
 ## v0.2: design and refactor, not only audit
 

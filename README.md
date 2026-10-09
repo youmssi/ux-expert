@@ -1,56 +1,92 @@
-# ux-expert
+<h1 align="center">ux-expert</h1>
 
-Senior UX expertise packaged for AI agents.
+<p align="center">
+    Principal-level UX expertise for AI agents
+</p>
 
-`ux-expert` gives any AI agent (Claude, ChatGPT, Gemini, DeepSeek, Grok, Codex, Cursor…) the method of a principal UX engineer, so it can:
+<p align="center">
+    <a href="https://github.com/youmssi/ux-expert/actions/workflows/ci.yml?query=branch%3Adevelop"><img src="https://img.shields.io/github/actions/workflow/status/youmssi/ux-expert/ci.yml?branch=develop&label=ci" alt="CI status"/></a>
+    <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-compatible-6f42c1" alt="Agent Skills compatible"/></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-blue" alt="Code license: MIT"/></a>
+    <a href="LICENSE-CONTENT"><img src="https://img.shields.io/badge/content-CC%20BY%204.0-blue" alt="Content license: CC BY 4.0"/></a>
+    <a href="https://github.com/youmssi/ux-expert/issues"><img src="https://img.shields.io/github/issues/youmssi/ux-expert" alt="Issues"/></a>
+</p>
 
-- **Design:** turn user stories into precise UX requirements and acceptance criteria before the backlog is written *(v0.2)*.
-- **Refactor:** find the gaps in an existing product and plan the fixes in a safe order *(v0.2)*.
-- **Audit:** review a product or a change across 22 areas of UX, score every finding the same way, and give a launch verdict: Go, Conditional Go or No-Go.
+## Introduction
 
-Every judgement starts from the user's goal, cites its evidence and its source, and is checked against a catalogue of more than 460 permanent, ID'd criteria (e.g. `FORM-09`). Those IDs let you trace a rule from the design phase through to the launch report.
+`ux-expert` gives any AI agent the working method of a principal UX engineer. It reviews products and changes across 22 areas of UX, backs every finding with evidence and a source, scores severity the same way every time, and ends with a launch verdict: Go, Conditional Go or No-Go.
 
-> **Status:** pre-release (v0.1 in progress). See the [roadmap](docs/backlog/README.md).
+It is not a generic checklist. Every judgement starts from the user's goal, cites `file:line`, a route or a measurement, and says how confident it is. The 465 criteria have permanent IDs (such as `FORM-09`), so a rule can be traced from design through to the launch report.
 
-## Coverage
+It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any agent that supports [Agent Skills](https://agentskills.io) or MCP.
 
-| Foundation | Visual & interaction | Robustness | Platform & system | Specialist & go-to-market |
-|---|---|---|---|---|
-| Users and goals | Layout and hierarchy | Empty, loading and error states | Perceived performance | i18n and localization |
-| Information architecture | Typography | Accessibility (WCAG 2.2 AA) | Responsive and platform | Data display and search |
-| Flows and friction | Color and theming | Content and UX writing | Design system | Developer experience |
-| | Interaction and feedback | Onboarding and activation | Trust, ethics and privacy | AI interfaces |
-| | Forms and input | | | Measurement and validation |
-| | | | | Launch readiness |
+## Features
+
+- **Full audits**: review a whole product, or one flow, screen or area, and get a prioritized report
+- **Launch gate**: an explicit Go / Conditional Go / No-Go decision, listing blockers and conditions
+- **Change review**: check a pull request's UI changes and the regressions they could cause
+- **22 areas, 465 criteria**: flows, information architecture, layout, typography, color, interaction, forms, states, accessibility (WCAG 2.2 AA), content, onboarding, performance, responsive and platform conventions, design system, trust and privacy, i18n, data display and search, developer experience, AI interfaces, measurement, launch readiness
+- **Evidence-first findings**: every finding has a location, evidence type, severity, reach, confidence, priority, fix and verification step
+- **Consistent scoring**: one model for every agent: severity S0–S4 × reach R1–R3 → priority P0–P3, with an explicit launch gate
+- **Built for codebases**: search patterns for React, Vue, Svelte, Angular, React Native, Flutter, CLIs and SDKs locate evidence in real code
+- **Queryable catalogue**: criteria are validated YAML with a JSON Schema, ready for tools and the MCP server
+
+## How it works
+
+| Piece | Path | Role |
+|---|---|---|
+| Orchestrator | [`skills/ux-expert/SKILL.md`](skills/ux-expert/SKILL.md) | Picks the mode, selects the areas, runs the 8-phase procedure |
+| Areas | [`skills/ux-expert/references/areas/`](skills/ux-expert/references/areas/) | One file per area: the expert mindset, procedure, criteria and code probes |
+| Shared references | [`skills/ux-expert/references/`](skills/ux-expert/references/) | Finding format, severity and scoring, codebase recon, laws and thresholds, report template |
+| Criteria catalogue | [`skills/ux-expert/criteria/`](skills/ux-expert/criteria/) | 465 criteria as YAML; the tables in the area files are generated from it |
+
+Agents load only what a task needs: the skill's description at startup, `SKILL.md` when the skill activates, and an area file only when the scope includes that area.
 
 ## Install
 
-`ux-expert` follows the open [Agent Skills](https://agentskills.io) format, so it works in any agent that supports skills.
+| Agent | How | Available |
+|---|---|---|
+| Claude Code | `/plugin marketplace add youmssi/ux-expert`, then `/plugin install ux-expert@ux-expert` | v0.1 |
+| Any Agent Skills client (Codex, Gemini CLI, Cursor…) | Copy `skills/ux-expert/` into the client's skills directory | now |
+| MCP clients (ChatGPT connectors, IDE agents…) | `npx ux-expert-mcp` | v0.3 |
+| Chat apps without skills or MCP | Upload the single-file bundle from the GitHub release | v0.3 |
 
-| Agent | How |
+## Usage
+
+Ask in plain words. The skill picks the mode:
+
+```text
+Run a full UX audit of this app.
+Are we ready to launch on November 1?
+Audit the checkout flow.
+Check accessibility only.
+Review the UX of this pull request.
+Review the developer experience of our SDK.
+```
+
+The audit writes `ux-audit-report.md` and summarizes the verdict, top issues, quick wins and coverage gaps in chat.
+
+## Roadmap
+
+| Version | Focus |
 |---|---|
-| Claude Code | `/plugin marketplace add youmssi/ux-expert`, then `/plugin install ux-expert@ux-expert` *(from v0.1)* |
-| Any Agent Skills client (Codex, Gemini CLI, Cursor…) | Copy `skills/ux-expert/` into the client's skills directory |
-| MCP clients (ChatGPT connectors, IDE agents…) | `npx ux-expert-mcp` *(v0.3)* |
-| Chat apps without skills or MCP | Upload the single-file bundle from the GitHub release *(v0.3)* |
+| v0.1 | One spec-compliant skill, validated in CI, criteria as data |
+| v0.2 | **Design mode** (user story → UX acceptance criteria) and **refactor mode** (gap analysis → safe plan) |
+| v0.3 | MCP server and single-file bundles for every agent |
+| v0.4 | Evals on real products; calibrated severity |
+| v0.5 | Best-in-class pattern library, runtime checks (contrast, axe, screenshots), native platforms |
+| v1.0 | Stable criterion IDs and schema, documentation site |
 
-## Use
-
-Ask in plain words, for example:
-
-- "Run a full UX audit of this app."
-- "Are we ready to launch?"
-- "Audit the checkout flow."
-- "Check accessibility only."
-- "Review the developer experience of our SDK."
+The full backlog and the known limitations are in [`docs/backlog/`](docs/backlog/README.md).
 
 ## Contributing
 
-Read [`AGENTS.md`](AGENTS.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md). Work follows one story per branch, squash-merged into `develop`; releases go from `develop` to `main`.
+Contributions are welcome. Read [AGENTS.md](AGENTS.md) and [CONTRIBUTING.md](CONTRIBUTING.md): one story per branch, squash-merged into `develop`, with the checks green.
+
+<a href="https://github.com/youmssi/ux-expert/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=youmssi/ux-expert" alt="Contributors" />
+</a>
 
 ## License
 
-- Code (scripts, MCP server, tooling): [MIT](LICENSE)
-- Content (skill text, criteria, references): [CC BY 4.0](LICENSE-CONTENT)
-
-See [ADR-003](docs/adr/ADR-003-licensing.md) for the reasoning.
+Code is under the [MIT License](LICENSE); content (skill text, criteria, references) is under [CC BY 4.0](LICENSE-CONTENT). See [ADR-003](docs/adr/ADR-003-licensing.md) for details.
