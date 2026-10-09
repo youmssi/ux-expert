@@ -111,7 +111,8 @@ criteria:
   name: Sticky elements sized and non-obscuring
   check: Height of sticky bars; focus visibility
   fail_signal: '> ~25% of mobile viewport; focused element hidden'
-  severity: S2
+  severity: S2–S3
+  severity_note: S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   phases: *id001
   sources:
   - wcag22

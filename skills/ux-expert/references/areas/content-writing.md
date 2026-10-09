@@ -80,7 +80,7 @@ Plus: no blame ("You entered an invalid…" → "Enter a date after today"), no 
 | CONT-02 | No internal jargon | Engineering or internal words visible to users | S2 |
 | CONT-03 | Buttons are verb + object, specific | "Submit", "OK", "Yes/No", vague labels | S2 |
 | CONT-04 | Same action, same label | Save/Update/Apply inconsistency | S1–S2 |
-| CONT-05 | Descriptive link text | "Click here", ambiguous "Learn more" | S2 (WCAG 2.4.4) |
+| CONT-05 | Descriptive link text | "Click here", ambiguous "Learn more" | S2–S3 (WCAG 2.4.4; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | CONT-06 | Errors: what + why + what to do | "Something went wrong", raw codes, stack traces | S2–S3 |
 | CONT-07 | No blame, no humor in errors | "You failed to…", "Oops! 🙈" on serious failures | S1–S2 |
 | CONT-08 | Empty states explain value and action | "No data" | S2 |
@@ -92,7 +92,7 @@ Plus: no blame ("You entered an invalid…" → "Enter a date after today"), no 
 | CONT-14 | Plain-language readability | Complex sentences in critical instructions | S2 |
 | CONT-15 | Inclusive language | Gendered defaults; ableist terms; name-format assumptions | S2 |
 | CONT-16 | Scannable copy | Front-loaded words; headings; bullets for lists | S1–S2 |
-| CONT-17 | Notification content useful and controllable | Vague notifications; no settings or unsubscribe | S2 (for consent; → TRUST) |
+| CONT-17 | Notification content useful and controllable | Vague notifications; no settings or unsubscribe | S2–S3 (S3 when marketing messages have no unsubscribe; for consent aspects see TRUST; → TRUST) |
 | CONT-18 | Transactional emails clear | Generic subjects; broken deep links; no plain text | S2 |
 | CONT-19 | Placeholder text not carrying critical info | Instructions only in the placeholder | S2 (→ FORM) |
 | CONT-20 | Numbers, units and currency explicit | "Price: 49" without currency; ambiguous units | S2–S3 |

@@ -13,6 +13,7 @@ Evidence that the skill makes agents better at UX work, and a guard against regr
 | `fixtures/*/answers.yaml` | Answer keys: never shown to the agent under test |
 | `grade.py` | Grades a report against the answer key (recall, false positives, unknown IDs, format) or the design structure; aggregates a benchmark |
 | `run.sh` | Runs every eval with and without the skill in clean workspaces, then grades them |
+| `trigger_queries.json`, `run_triggers.py` | 20 realistic prompts (10 should trigger, 10 near-misses) and a runner that measures the description's trigger rate |
 
 ## How grading works
 
@@ -27,6 +28,8 @@ pip install -r scripts/requirements.txt
 evals/run.sh iteration-1          # 6 agent sessions; costs model tokens
 cat evals-workspace/iteration-1/benchmark.json
 ```
+
+Trigger evals: `python3 evals/run_triggers.py --runs 3` (60 agent sessions). Tune the description in `SKILL.md` on failures, but check that changes generalize rather than fit these 20 queries.
 
 `evals-workspace/` is not committed. When a skill change is meant to improve results, run the previous version as the baseline (`old_skill`) and compare, as the Agent Skills guide describes. Grade a single report by hand with:
 

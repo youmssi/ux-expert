@@ -71,8 +71,8 @@ criteria:
   name: Offline handling
   check: Detection, banner, queued or flagged writes
   fail_signal: Silent failure offline; data lost
-  severity: S2–S3
-  severity_note: S3+ for mobile/field apps
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost; at least S3 for mobile and field apps
 - id: STATE-12
   name: Session expiry is graceful
   check: Re-auth in place, work preserved, warnings
@@ -103,7 +103,8 @@ criteria:
   name: Autosave / unsaved-changes guard
   check: Autosave or a navigation guard
   fail_signal: Work lost on navigation
-  severity: S3
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost
 - id: STATE-17
   name: Undo / soft delete
   check: Undo for reversible actions; trash for important objects

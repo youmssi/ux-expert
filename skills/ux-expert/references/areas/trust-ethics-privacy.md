@@ -99,7 +99,7 @@ Check each trust-critical screen for these patterns:
 | TRUST-17 | Session and device visibility | No session list or security alerts | S2 |
 | TRUST-18 | Sensitive data handled visibly | Secrets shown unmasked; no re-auth for critical changes | S2–S3 |
 | TRUST-19 | System transparency | Unexplained denials, failures or automated decisions | S2 |
-| TRUST-20 | Credibility basics | Missing contact, legal entity, policies or status page | S2 (→ LAUNCH) |
+| TRUST-20 | Credibility basics | Missing contact, legal entity, policies or status page | S2–S3 (S3 where the law requires the information (legal entity, privacy policy); → LAUNCH) |
 | TRUST-21 | Ethical notifications | No opt-out; manipulative re-engagement | S2 |
 | TRUST-22 | Minors and sensitive categories handled (if applicable) | No age-appropriate safeguards | S3 |
 <!-- END GENERATED criteria -->

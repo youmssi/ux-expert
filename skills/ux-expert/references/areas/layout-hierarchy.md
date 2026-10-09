@@ -83,7 +83,7 @@ Audit **every critical-flow screen** (from FLOW) plus the main templates (list, 
 | LAY-13 | Thumb-zone-aware mobile placement | Primary actions in the reachable zone | Key actions only at the top corners on mobile | S2 |
 | LAY-14 | Above-the-fold priority | What is visible without scrolling at common viewports | Primary task or value hidden below the fold | S2–S3 |
 | LAY-15 | Layout stability | Image dimensions, skeleton sizes, font loading | Visible content jumps; CLS > 0.1 | S2 |
-| LAY-16 | Sticky elements sized and non-obscuring | Height of sticky bars; focus visibility | > ~25% of mobile viewport; focused element hidden | S2 |
+| LAY-16 | Sticky elements sized and non-obscuring | Height of sticky bars; focus visibility | > ~25% of mobile viewport; focused element hidden | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | LAY-17 | Predictable layering (z-index) | z-index values and overlay system | Arbitrary huge z-index; overlays covering each other | S1–S2 |
 | LAY-18 | Consistent page templates | Same structure for same page types | Each list or detail page laid out differently | S2 (→ DS) |
 | LAY-19 | Visual balance and symmetry purpose | Weight distribution; intentional asymmetry | One side overloaded; random empty regions | S1 |

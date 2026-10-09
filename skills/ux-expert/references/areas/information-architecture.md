@@ -78,7 +78,7 @@ When the IA is uncertain, recommend **tree testing** (e.g. Treejack-style: users
 | IA-17 | Cross-linking between related objects | Detail pages link to related objects (invoice → customer) | Users must go back to the list and search again | S2 |
 | IA-18 | Utility nav where expected | Account/profile top-right (web), help, notifications in conventional places | Unconventional placement (Jakob's law) | S1–S2 |
 | IA-19 | Mobile navigation pattern fits | Bottom tab bar (3–5 items) for primary destinations on mobile; no hamburger-only for core jobs | Core destinations hidden behind a hamburger | S2 |
-| IA-20 | Footer / secondary IA for marketing sites | Legal, pricing, docs, contact and status reachable | Missing legal or contact links | S2 (→ TRUST, LAUNCH) |
+| IA-20 | Footer / secondary IA for marketing sites | Legal, pricing, docs, contact and status reachable | Missing legal or contact links | S2–S3 (S3 where the law requires the page (privacy policy, imprint); → TRUST, LAUNCH) |
 <!-- END GENERATED criteria -->
 
 ## Code probes

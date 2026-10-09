@@ -9,6 +9,10 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Trigger evals: 20 realistic queries (10 should trigger, 10 near-misses) and
+  `evals/run_triggers.py` to measure the description's trigger rate.
+- Calibration tests that keep every criterion's severity consistent with the
+  escalation rules.
 - Evals (`evals/`): audit evals on two seeded-defect apps (34 defects, 4
   decoys) and a design-mode eval, answer keys, a grader producing Agent Skills
   `grading.json` and `benchmark.json`, and a runner comparing runs with and
@@ -65,6 +69,11 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Fixed
 
+- Severity calibration: 17 WCAG-sourced criteria now reach S3 where
+  accessibility law applies; 4 lost-work criteria reach S4; 4 legal-information
+  criteria reach S3 where the law requires them.
+- The skill description now says when to use the skill in the user's terms
+  ("Use this skill whenever…"), including requests that never say "UX".
 - FORM-09: validate on submit by default (GOV.UK and CMS design systems), not
   when the user leaves a field.
 - Unconfirmed research figures (first click 87/46 %, inline validation +22 %,

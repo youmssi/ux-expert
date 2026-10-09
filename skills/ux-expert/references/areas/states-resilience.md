@@ -90,12 +90,12 @@ Test or reason through, with real component code:
 | STATE-08 | Errors actionable | Message + reason + action + retry | Generic messages, no retry | S2–S3 |
 | STATE-09 | Errors differentiated | Network/permission/validation/server/rate-limit | One generic message for all | S2 |
 | STATE-10 | Error boundaries | Component and route-level boundaries | White screen on a component crash | S3–S4 |
-| STATE-11 | Offline handling | Detection, banner, queued or flagged writes | Silent failure offline; data lost | S2–S3 (S3+ for mobile/field apps) |
+| STATE-11 | Offline handling | Detection, banner, queued or flagged writes | Silent failure offline; data lost | S3–S4 (S4 when user-created content is lost; at least S3 for mobile and field apps) |
 | STATE-12 | Session expiry is graceful | Re-auth in place, work preserved, warnings | Redirect to login and lose work | S3 |
 | STATE-13 | Concurrency conflicts handled | Versioning, conflict UI | Last write silently wins over another user's work | S3 |
 | STATE-14 | Extreme content safe | Long, zero, huge, null, special characters, missing media | Broken layout; "undefined"/"NaN"/"null" shown | S2 |
 | STATE-15 | Large data sets scale | Pagination, virtualization, limits | Freezes or crashes with large data | S3 (→ PERF, DATA) |
-| STATE-16 | Autosave / unsaved-changes guard | Autosave or a navigation guard | Work lost on navigation | S3 |
+| STATE-16 | Autosave / unsaved-changes guard | Autosave or a navigation guard | Work lost on navigation | S3–S4 (S4 when user-created content is lost) |
 | STATE-17 | Undo / soft delete | Undo for reversible actions; trash for important objects | Irreversible delete with no confirmation | S4 |
 | STATE-18 | Destructive scope clarity | Counts and names in confirmations; type-to-confirm for critical | "Are you sure?" with no specifics | S2–S3 |
 | STATE-19 | Permission-denied states | Explain why and how to get access | Blank, or a raw 403 | S2 |

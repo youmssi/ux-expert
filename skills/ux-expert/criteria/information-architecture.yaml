@@ -124,7 +124,8 @@ criteria:
   name: Footer / secondary IA for marketing sites
   check: Legal, pricing, docs, contact and status reachable
   fail_signal: Missing legal or contact links
-  severity: S2
+  severity: S2–S3
+  severity_note: S3 where the law requires the page (privacy policy, imprint)
   related:
   - TRUST
   - LAUNCH

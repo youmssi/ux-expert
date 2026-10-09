@@ -87,7 +87,8 @@ criteria:
   name: Tooltips supplementary and accessible
   check: Hover + focus, dismissible, not essential
   fail_signal: Essential info only in a tooltip; hover-only
-  severity: S2
+  severity: S2–S3
+  severity_note: S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   sources:
   - wcag22
 - id: INT-14
@@ -132,8 +133,8 @@ criteria:
   name: Prevention of accidental activation
   check: Down-event vs. up-event activation, safe spacing
   fail_signal: Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions
-  severity: S2
-  severity_note: WCAG 2.5.2
+  severity: S2–S3
+  severity_note: WCAG 2.5.2; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   phases: *id001
   sources:
   - wcag22

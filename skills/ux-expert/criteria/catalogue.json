@@ -465,7 +465,8 @@
    "area": "accessibility",
    "name": "Skip link / bypass blocks (2.4.1)",
    "fail_signal": "No way to bypass repeated navigation",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -486,7 +487,8 @@
    "area": "accessibility",
    "name": "Page titles (2.4.2)",
    "fail_signal": "Missing, duplicate or generic titles",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -507,7 +509,8 @@
    "area": "accessibility",
    "name": "Landmarks and headings (1.3.1, 2.4.6)",
    "fail_signal": "No `main`; heading levels used for styling",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -696,7 +699,8 @@
    "area": "accessibility",
    "name": "Text spacing (1.4.12)",
    "fail_signal": "Clipping",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -717,7 +721,8 @@
    "area": "accessibility",
    "name": "Content on hover/focus (1.4.13)",
    "fail_signal": "Tooltips not dismissible or hoverable",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -739,7 +744,8 @@
    "area": "accessibility",
    "name": "Target size (2.5.8)",
    "fail_signal": "< 24×24 CSS px without spacing",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -871,7 +877,8 @@
    "area": "accessibility",
    "name": "Consistent navigation, identification and help (3.2.3, 3.2.4, 3.2.6)",
    "fail_signal": "Inconsistent",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -915,7 +922,8 @@
    "area": "accessibility",
    "name": "Language of page and parts (3.1.1, 3.1.2)",
    "fail_signal": "Missing `lang`; wrong `lang` on translated pages",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -958,7 +966,8 @@
    "area": "accessibility",
    "name": "Orientation (1.3.4)",
    "fail_signal": "Locked orientation",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -2019,8 +2028,8 @@
    "area": "content-writing",
    "name": "Descriptive link text",
    "fail_signal": "\"Click here\", ambiguous \"Learn more\"",
-   "severity": "S2",
-   "severity_note": "WCAG 2.4.4",
+   "severity": "S2–S3",
+   "severity_note": "WCAG 2.4.4; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -2251,8 +2260,8 @@
    "area": "content-writing",
    "name": "Notification content useful and controllable",
    "fail_signal": "Vague notifications; no settings or unsubscribe",
-   "severity": "S2",
-   "severity_note": "for consent",
+   "severity": "S2–S3",
+   "severity_note": "S3 when marketing messages have no unsubscribe; for consent aspects see TRUST",
    "related": [
     "TRUST"
    ],
@@ -3942,7 +3951,8 @@
    "name": "Interruption-safe",
    "check": "Drafts are saved; resumable after leaving or a session timeout",
    "fail_signal": "Progress lost on tab close or timeout",
-   "severity": "S3",
+   "severity": "S3–S4",
+   "severity_note": "S4 when user-created content is lost",
    "phases": [
     "design",
     "build"
@@ -4274,8 +4284,8 @@
    "name": "Autocomplete tokens",
    "check": "`autocomplete` attributes",
    "fail_signal": "Missing on personal, address, payment or credential fields",
-   "severity": "S2",
-   "severity_note": "WCAG 1.3.5",
+   "severity": "S2–S3",
+   "severity_note": "WCAG 1.3.5; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -4593,7 +4603,8 @@
    "name": "Long-form resilience",
    "check": "Autosave and resume",
    "fail_signal": "Long form lost on timeout or navigation",
-   "severity": "S3",
+   "severity": "S3–S4",
+   "severity_note": "S4 when user-created content is lost",
    "phases": [
     "design",
     "build"
@@ -4613,8 +4624,8 @@
    "name": "No redundant entry",
    "check": "Previously given info isn't asked again; billing = shipping option",
    "fail_signal": "Re-asking known data",
-   "severity": "S2",
-   "severity_note": "WCAG 3.3.7",
+   "severity": "S2–S3",
+   "severity_note": "WCAG 3.3.7; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -4812,7 +4823,8 @@
    "area": "i18n-localization",
    "name": "`lang` and `dir` set correctly",
    "fail_signal": "Missing or not updated per locale",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "related": [
     "A11Y-28"
    ],
@@ -5103,7 +5115,8 @@
    "area": "i18n-localization",
    "name": "Local payment and legal norms (commerce)",
    "fail_signal": "Only card payments where local methods dominate; missing local legal info",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where local legal information is required",
    "phases": [
     "design",
     "build"
@@ -5506,7 +5519,8 @@
    "name": "Footer / secondary IA for marketing sites",
    "check": "Legal, pricing, docs, contact and status reachable",
    "fail_signal": "Missing legal or contact links",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where the law requires the page (privacy policy, imprint)",
    "related": [
     "TRUST",
     "LAUNCH"
@@ -5776,7 +5790,8 @@
    "name": "Tooltips supplementary and accessible",
    "check": "Hover + focus, dismissible, not essential",
    "fail_signal": "Essential info only in a tooltip; hover-only",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -5943,8 +5958,8 @@
    "name": "Prevention of accidental activation",
    "check": "Down-event vs. up-event activation, safe spacing",
    "fail_signal": "Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions",
-   "severity": "S2",
-   "severity_note": "WCAG 2.5.2",
+   "severity": "S2–S3",
+   "severity_note": "WCAG 2.5.2; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -6684,7 +6699,8 @@
    "name": "Sticky elements sized and non-obscuring",
    "check": "Height of sticky bars; focus visibility",
    "fail_signal": "> ~25% of mobile viewport; focused element hidden",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -8060,7 +8076,8 @@
    "area": "responsive-platform",
    "name": "Orientation support",
    "fail_signal": "Locked or broken in landscape",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508",
    "sources": [
     "wcag22"
    ],
@@ -8439,8 +8456,8 @@
    "name": "Offline handling",
    "check": "Detection, banner, queued or flagged writes",
    "fail_signal": "Silent failure offline; data lost",
-   "severity": "S2–S3",
-   "severity_note": "S3+ for mobile/field apps",
+   "severity": "S3–S4",
+   "severity_note": "S4 when user-created content is lost; at least S3 for mobile and field apps",
    "phases": [
     "design",
     "build"
@@ -8551,7 +8568,8 @@
    "name": "Autosave / unsaved-changes guard",
    "check": "Autosave or a navigation guard",
    "fail_signal": "Work lost on navigation",
-   "severity": "S3",
+   "severity": "S3–S4",
+   "severity_note": "S4 when user-created content is lost",
    "phases": [
     "design",
     "build"
@@ -9091,7 +9109,8 @@
    "area": "trust-ethics-privacy",
    "name": "Credibility basics",
    "fail_signal": "Missing contact, legal entity, policies or status page",
-   "severity": "S2",
+   "severity": "S2–S3",
+   "severity_note": "S3 where the law requires the information (legal entity, privacy policy)",
    "related": [
     "LAUNCH"
    ],

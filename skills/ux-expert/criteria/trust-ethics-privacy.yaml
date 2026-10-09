@@ -103,7 +103,8 @@ criteria:
 - id: TRUST-20
   name: Credibility basics
   fail_signal: Missing contact, legal entity, policies or status page
-  severity: S2
+  severity: S2–S3
+  severity_note: S3 where the law requires the information (legal entity, privacy policy)
   related:
   - LAUNCH
 - id: TRUST-21

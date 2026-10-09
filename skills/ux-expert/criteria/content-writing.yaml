@@ -30,8 +30,8 @@ criteria:
 - id: CONT-05
   name: Descriptive link text
   fail_signal: '"Click here", ambiguous "Learn more"'
-  severity: S2
-  severity_note: WCAG 2.4.4
+  severity: S2–S3
+  severity_note: WCAG 2.4.4; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
   sources:
   - wcag22
 - id: CONT-06
@@ -81,8 +81,8 @@ criteria:
 - id: CONT-17
   name: Notification content useful and controllable
   fail_signal: Vague notifications; no settings or unsubscribe
-  severity: S2
-  severity_note: for consent
+  severity: S2–S3
+  severity_note: S3 when marketing messages have no unsubscribe; for consent aspects see TRUST
   related:
   - TRUST
 - id: CONT-18

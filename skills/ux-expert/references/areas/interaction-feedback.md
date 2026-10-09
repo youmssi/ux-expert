@@ -80,7 +80,7 @@ For each action on critical flows:
 | INT-10 | No harmful flashing | Flash frequency | > 3 flashes/second | S4 (WCAG 2.3.1) |
 | INT-11 | Modal behavior correct | Focus trap, Esc, focus return, scroll lock, close button | Any missing | S2–S3 |
 | INT-12 | Modals used appropriately | Modals only for focused, blocking tasks | Modal for long forms, stacked modals, modal on page load | S2 |
-| INT-13 | Tooltips supplementary and accessible | Hover + focus, dismissible, not essential | Essential info only in a tooltip; hover-only | S2 |
+| INT-13 | Tooltips supplementary and accessible | Hover + focus, dismissible, not essential | Essential info only in a tooltip; hover-only | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | INT-14 | Toasts well behaved | Duration, placement, error persistence, actions reachable | Errors auto-dismiss; toasts cover controls | S2–S3 |
 | INT-15 | Disabled states explained | Reason visible for disabled primary actions | Disabled submit with no reason | S2 |
 | INT-16 | Keyboard shortcuts discoverable and safe | Cheat sheet, tooltips, no conflicts, single-key can be disabled | Hidden or conflicting shortcuts | S1–S2 |
@@ -88,7 +88,7 @@ For each action on critical flows:
 | INT-18 | Hover-only actions reachable | Focus and touch alternatives | Actions invisible on touch or keyboard | S2–S3 |
 | INT-19 | Undo for reversible actions | Undo or soft-delete | Destructive action without undo or confirmation | S3–S4 |
 | INT-20 | Consistent interaction patterns | Same gesture or click → same result across the product | Double-click opens in one list but selects in another | S2 |
-| INT-21 | Prevention of accidental activation | Down-event vs. up-event activation, safe spacing | Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions | S2 (WCAG 2.5.2) |
+| INT-21 | Prevention of accidental activation | Down-event vs. up-event activation, safe spacing | Actions fire on mousedown/touchstart; accidental taps on adjacent destructive actions | S2–S3 (WCAG 2.5.2; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508) |
 | INT-22 | Scroll behavior sane | No scroll-jacking, no nested-scroll traps, restore scroll position on back | Hijacked scroll; lost position after back | S2 |
 <!-- END GENERATED criteria -->
 

@@ -78,7 +78,7 @@ From CTX: current and planned locales and regions. If English-only with no plans
 | I18N-05 | Translator context | Ambiguous keys without descriptions | S1 |
 | I18N-06 | No text in images | Text baked into images | S2 |
 | I18N-07 | Expansion-resilient layout | Fixed-width labels clip under pseudo-localization | S2 |
-| I18N-08 | `lang` and `dir` set correctly | Missing or not updated per locale | S2 (→ A11Y-28) |
+| I18N-08 | `lang` and `dir` set correctly | Missing or not updated per locale | S2–S3 (S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508; → A11Y-28) |
 | I18N-09 | Logical CSS properties (RTL) | Physical left/right properties throughout | S2–S3 (if RTL targeted) |
 | I18N-10 | Icon mirroring rules | Arrows not mirrored, or logos mirrored | S1–S2 |
 | I18N-11 | Bidi isolation for user content | Garbled mixed-direction text | S2 |
@@ -93,7 +93,7 @@ From CTX: current and planned locales and regions. If English-only with no plans
 | I18N-20 | Localized URLs and hreflang (marketing) | Missing for multi-locale sites | S1–S2 |
 | I18N-21 | Script/font coverage | Tofu boxes (□); poor rendering for target scripts | S2–S3 |
 | I18N-22 | Cultural appropriateness | Culturally confusing or offensive imagery, icons or examples | S1–S3 |
-| I18N-23 | Local payment and legal norms (commerce) | Only card payments where local methods dominate; missing local legal info | S2 |
+| I18N-23 | Local payment and legal norms (commerce) | Only card payments where local methods dominate; missing local legal info | S2–S3 (S3 where local legal information is required) |
 <!-- END GENERATED criteria -->
 
 ## Code probes
