@@ -19,6 +19,7 @@ handling), then flows, then polish. Each step has a regression guard.
 | Where | Before | After |
 |---|---|---|
 | `SKILL.md` modes | … + Design | + Refactor |
+| `docs/examples/refactor-mode-plan.md` | — | Worked example from a sample audit (12 findings → 13 stories) |
 | `references/refactor-mode.md` | — | Procedure: audit → group by root cause → dependency graph → sequence (foundations → systemic fixes → flows → polish) → regression guards (visual, a11y and flow tests) → stories in the team's template |
 
 #### Acceptance criteria

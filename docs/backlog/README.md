@@ -20,8 +20,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| [UXE-4](UXE-4-design-mode.md) | Design mode: user story → UX requirements, acceptance criteria and Definition of Done | M | in progress |
-| [UXE-5](UXE-5-refactor-mode.md) | Refactor mode: gap analysis → sequenced, regression-safe improvement plan | M | ready |
+| [UXE-4](UXE-4-design-mode.md) | Design mode: user story → UX requirements, acceptance criteria and Definition of Done | M | done |
+| [UXE-5](UXE-5-refactor-mode.md) | Refactor mode: gap analysis → sequenced, regression-safe improvement plan | M | in progress |
 | UXE-6 | Content tightening: cut what agents already know, add gotchas, clear defaults, token budgets per file | M | to refine |
 | UXE-7 | Citation verification: every number checked against its primary source, with a `verified_on` date | M | to refine |
 
