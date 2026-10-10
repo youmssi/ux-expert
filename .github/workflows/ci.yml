@@ -45,6 +45,13 @@ jobs:
         working-directory: tools/runtime-check
     steps:
       - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install script dependencies (the site builder)
+        run: pip install -r ../../scripts/requirements.txt
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -52,7 +59,7 @@ jobs:
           cache-dependency-path: tools/runtime-check/package-lock.json
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Runtime checks on a fixture with known problems
+      - name: Runtime checks on a fixture with known problems, and on the documentation site
         run: npm test
 
   mcp:

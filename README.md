@@ -31,7 +31,9 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 - **Evidence-first findings**: every finding has a location, evidence type, severity, reach, confidence, priority, fix and verification step
 - **Proven patterns**: 17 patterns from the public design systems of GOV.UK, GitHub (Primer), Shopify (Polaris) and IBM (Carbon), linked to the criteria they satisfy and cited in recommendations
 - **Consistent scoring**: one model for every agent: severity S0–S4 × reach R1–R3 → priority P0–P3, with an explicit launch gate
-- **Built for codebases**: search patterns for React, Vue, Svelte, Angular, React Native, Flutter, CLIs and SDKs locate evidence in real code
+- **Built for codebases**: search patterns for React, Vue, Svelte, Angular, CLIs and SDKs, plus 45 native probes for SwiftUI, Jetpack Compose, Flutter and React Native (`scripts/probe.py`), locate evidence in real code
+- **Measured, not guessed**: `scripts/ux_check.mjs` takes screenshots and runs axe, target-size, focus and reflow checks on the running product
+- **Stable IDs**: criterion, pattern and probe IDs never change meaning or disappear within a major version ([stability policy](docs/stability.md))
 - **Queryable catalogue**: criteria are validated YAML with a JSON Schema, ready for tools and the MCP server
 
 ## How it works
@@ -86,9 +88,10 @@ The audit writes `ux-audit-report.md` and summarizes the verdict, top issues, qu
 | v0.3 | MCP server and single-file bundles for every agent |
 | v0.4 | Evals on real products; calibrated severity |
 | v0.5 | Best-in-class pattern library, runtime checks (contrast, axe, screenshots), native platforms |
+| v0.6 | Collaboration, enterprise admin, notifications, commerce, in-product help, aesthetics |
 | v1.0 | Stable criterion IDs and schema, documentation site |
 
-The full backlog and the known limitations are in [`docs/backlog/`](docs/backlog/README.md).
+The full backlog and the known limitations are in [`docs/backlog/`](docs/backlog/README.md). What stays stable across releases is in the [stability policy](docs/stability.md).
 
 ## Contributing
 

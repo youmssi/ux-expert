@@ -51,13 +51,13 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| [UXE-15](UXE-15-new-areas.md) | New areas: collaboration, enterprise admin, notification systems, commerce, in-product help, aesthetics and delight | L | in progress |
+| [UXE-15](UXE-15-new-areas.md) | New areas: collaboration, enterprise admin, notification systems, commerce, in-product help, aesthetics and delight | L | done |
 
 ## v1.0: stable
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| UXE-16 | Stability guarantees (criterion ID and schema policy), docs site, 1.0 release | M | to refine |
+| [UXE-16](UXE-16-stability-and-docs-site.md) | Stability guarantees (criterion ID and schema policy), docs site, 1.0 release | M | in progress |
 
 ## Known limitations (tracked by the stories above)
 

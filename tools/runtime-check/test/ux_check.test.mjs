@@ -37,6 +37,8 @@ describe('ux_check.mjs on a fixture with known problems', () => {
     it('finds the 16 px target and the focus without indicator, but not the focus-visible ring', () => {
         const desktop = report.runs.find(r => r.width === 1280 && r.scheme === 'light');
         assert.ok(desktop.small_targets.some(t => t.size === '16x16'));
+        // WCAG 2.5.8 exempts inline links in text, including text in table cells.
+        assert.ok(!desktop.small_targets.some(t => t.element.includes('cell-link')));
         assert.ok(desktop.focus_without_indicator.some(e => e.includes('no-focus')));
         assert.ok(!desktop.focus_without_indicator.some(e => e.includes('ring')));
     });

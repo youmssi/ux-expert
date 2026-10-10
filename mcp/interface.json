@@ -1,0 +1,90 @@
+{
+  "resource_uri_prefix": "skill://ux-expert/",
+  "tools": {
+    "contrast_ratio": {
+      "inputs": [
+        "background",
+        "bold",
+        "font_size_px",
+        "foreground"
+      ],
+      "required": [
+        "background",
+        "foreground"
+      ]
+    },
+    "find_patterns": {
+      "inputs": [
+        "criterion_id",
+        "query"
+      ],
+      "required": []
+    },
+    "get_criterion": {
+      "inputs": [
+        "id"
+      ],
+      "required": [
+        "id"
+      ]
+    },
+    "launch_gate": {
+      "inputs": [
+        "critical_criteria_not_verified",
+        "critical_flow_unverified",
+        "open_p0",
+        "unowned_p1"
+      ],
+      "required": [
+        "critical_criteria_not_verified",
+        "critical_flow_unverified",
+        "open_p0",
+        "unowned_p1"
+      ]
+    },
+    "list_criteria": {
+      "inputs": [
+        "areas",
+        "phase",
+        "product_type"
+      ],
+      "required": [
+        "product_type"
+      ]
+    },
+    "read_area": {
+      "inputs": [
+        "area"
+      ],
+      "required": [
+        "area"
+      ]
+    },
+    "score_finding": {
+      "inputs": [
+        "confidence",
+        "effort",
+        "reach",
+        "severity"
+      ],
+      "required": [
+        "confidence",
+        "reach",
+        "severity"
+      ]
+    }
+  },
+  "prompts": {
+    "ux-audit": [
+      "mode",
+      "scope?"
+    ],
+    "ux-design": [
+      "brief",
+      "product_type"
+    ],
+    "ux-refactor": [
+      "findings"
+    ]
+  }
+}

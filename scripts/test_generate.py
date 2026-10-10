@@ -257,6 +257,33 @@ class GenerateTest(unittest.TestCase):
         self.assertTrue(any("unknown platform 'other'" in p for p in problems), problems)
         self.assertTrue(any("cites DEMO-77, which is not an active criterion" in p for p in problems), problems)
 
+    def test_published_ids_are_locked_and_new_ones_added(self):
+        self.assertEqual(run(self.skill, check=False), [])
+        lock = json.loads((self.skill / "criteria" / "ids.lock.json").read_text())
+        self.assertEqual((lock["criteria"], lock["patterns"], lock["probes"]), ({"DEMO-01": "demo"}, ["clear-labels"], ["demo-fixed-font"]))
+        self.write([criterion(), criterion(id="DEMO-02", name="Hints")])
+        self.assertTrue(any("ids.lock.json: out of date" in p for p in run(self.skill, check=True)))
+        self.assertEqual(run(self.skill, check=False), [])
+        self.assertIn("DEMO-02", json.loads((self.skill / "criteria" / "ids.lock.json").read_text())["criteria"])
+
+    def test_removing_a_published_id_is_rejected_but_retiring_it_is_not(self):
+        self.write([criterion(), criterion(id="DEMO-02", name="Hints")])
+        self.assertEqual(run(self.skill, check=False), [])
+        self.write([criterion()])
+        self.assertTrue(any("published criterion DEMO-02 was removed; set status: retired" in p for p in run(self.skill, check=True)))
+        self.write([criterion(), criterion(id="DEMO-02", name="Hints", status="retired")])
+        self.assertEqual(run(self.skill, check=False), [])
+        self.assertEqual(run(self.skill, check=True), [])
+
+    def test_removing_a_published_probe_is_rejected(self):
+        self.assertEqual(run(self.skill, check=False), [])
+        self.write_probes(id="demo-other")
+        self.assertTrue(any("published probe demo-fixed-font was removed" in p for p in run(self.skill, check=True)))
+
+    def test_the_catalogue_carries_its_schema_version(self):
+        self.assertEqual(run(self.skill, check=False), [])
+        self.assertEqual(json.loads((self.skill / "criteria" / "catalogue.json").read_text())["schema_version"], 1)
+
     def test_an_area_file_without_criteria_is_reported(self):
         run(self.skill, check=False)
         (self.skill / "references" / "areas" / "orphan.md").write_text("# Orphan\n")

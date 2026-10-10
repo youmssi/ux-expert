@@ -14,7 +14,10 @@ them this script writes:
   from ``criteria/scoring.yaml``;
 - ``references/patterns.md``: proven patterns, from ``criteria/patterns.yaml``;
 - ``references/native-probes.md``: code search probes for native mobile stacks,
-  from ``criteria/probes.yaml`` (also in ``catalogue.json`` for ``scripts/probe.py``).
+  from ``criteria/probes.yaml`` (also in ``catalogue.json`` for ``scripts/probe.py``);
+- ``criteria/ids.lock.json``: every published criterion, pattern and probe ID. It
+  only grows: an ID in the lock that disappears from the YAML is an error, because
+  published IDs are permanent (retire a criterion instead; see docs/stability.md).
 
 Usage:
     python3 scripts/generate.py           # validate the catalogue, rewrite the outputs
@@ -358,6 +361,34 @@ def render_probes(probes: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+LOCK_FILE = "ids.lock.json"
+# Major version of the catalogue.json layout; bump only with a major release (docs/stability.md).
+CATALOGUE_SCHEMA_VERSION = 1
+
+
+def lock_problems_and_content(criteria_dir: Path, documents: dict[str, dict], patterns: dict, probes: dict) -> tuple[list[str], str]:
+    """Return the problems with published IDs and the updated lock (the old lock plus new IDs)."""
+    path = criteria_dir / LOCK_FILE
+    old = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"criteria": {}, "patterns": [], "probes": []}
+    criteria = {c["id"]: area for area, doc in documents.items() for c in doc["criteria"]}
+    current = {"patterns": {p["id"] for p in patterns["patterns"]}, "probes": {p["id"] for p in probes["probes"]}}
+    problems = []
+    for criterion_id, area in old["criteria"].items():
+        if criterion_id not in criteria:
+            problems.append(f"{path}: published criterion {criterion_id} was removed; set status: retired instead")
+        elif criteria[criterion_id] != area:
+            problems.append(f"{path}: published criterion {criterion_id} moved from {area} to {criteria[criterion_id]}")
+    for kind in ("patterns", "probes"):
+        problems += [f"{path}: published {kind[:-1]} {i} was removed; published IDs are permanent" for i in old[kind] if i not in current[kind]]
+    lock = {
+        "about": "Published IDs. Maintained by scripts/generate.py: it adds new IDs and rejects removed ones. Do not edit.",
+        "criteria": dict(sorted((old["criteria"] | criteria).items())),
+        "patterns": sorted(set(old["patterns"]) | current["patterns"]),
+        "probes": sorted(set(old["probes"]) | current["probes"]),
+    }
+    return problems, json.dumps(lock, indent=1) + "\n"
+
+
 def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict, probes: dict) -> str:
     areas, criteria, retired = [], [], []
     for area, document in documents.items():
@@ -377,6 +408,7 @@ def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: d
             criteria.append(item)
     catalogue = {
         "generated_by": "scripts/generate.py from criteria/*.yaml; do not edit",
+        "schema_version": CATALOGUE_SCHEMA_VERSION,
         "product_types": list(PRODUCT_TYPES),
         "phases": ["design", "build"],
         "areas": areas,
@@ -438,6 +470,9 @@ def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[d
     outputs[skill_dir / "references" / "patterns.md"] = render_patterns(patterns)
     outputs[skill_dir / "references" / "native-probes.md"] = render_probes(probes)
     outputs[skill_dir / "references" / "sources.md"] = render_sources(sources)
+    lock_problems, lock = lock_problems_and_content(skill_dir / "criteria", documents, patterns, probes)
+    problems += lock_problems
+    outputs[skill_dir / "criteria" / LOCK_FILE] = lock
     return outputs, problems
 
 
@@ -453,7 +488,6 @@ def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]
     if problems:
         return problems
     outputs, problems = planned_outputs(skill_dir, documents, sources, scoring, patterns, probes)
-    problems += check_citations(skill_dir, documents, sources, list(extra_files))
     for path, content in outputs.items():
         current = path.read_text(encoding="utf-8") if path.exists() else None
         if current == content:
@@ -462,7 +496,8 @@ def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]
             problems.append(f"{path}: out of date with criteria/*.yaml; run scripts/generate.py")
         else:
             path.write_text(content, encoding="utf-8")
-    return problems
+    # After writing, so citations are checked against the regenerated tables.
+    return problems + check_citations(skill_dir, documents, sources, list(extra_files))
 
 
 def main() -> int:

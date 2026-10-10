@@ -21,7 +21,7 @@ sources.
 
 | Where | Before | After |
 |---|---|---|
-| `references/native-probes.md` | — | 39 probes over iOS, Android, Flutter and React Native, with platform notes and sources |
+| `references/native-probes.md` | — | 45 probes over iOS, Android, Flutter and React Native, with platform notes and sources |
 | `scripts/probe.py` | — | Detects platforms, runs the probes, prints hits per probe with file and line |
 | `references/codebase-recon.md`, `areas/accessibility.md`, `SKILL.md` | Two lines of React Native and Flutter route patterns | Point to the probes and the script |
 | Audit and full bundles | — | Include the probes |
