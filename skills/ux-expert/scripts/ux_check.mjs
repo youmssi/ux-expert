@@ -9,6 +9,7 @@
 // Set UX_CHECK_CHROMIUM to a Chromium executable to use an installed browser.
 // Results are evidence for findings ("measured"), not findings by themselves:
 // check each item before reporting it (e.g. a small target may have enough spacing).
+// Inline links in text (paragraphs, list items, table cells) are exempt from target size (WCAG 2.5.8).
 
 import { createRequire } from 'node:module';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -50,7 +51,7 @@ async function smallTargets(page) {
         nodes
             .map(node => ({ node, box: node.getBoundingClientRect() }))
             .filter(({ box }) => box.width > 0 && box.height > 0 && (box.width < min || box.height < min))
-            .filter(({ node }) => !(node.tagName === 'A' && node.closest('p, li') && getComputedStyle(node).display === 'inline'))
+            .filter(({ node }) => !(node.tagName === 'A' && node.closest('p, li, td, th, dd') && getComputedStyle(node).display === 'inline'))
             .slice(0, 50)
             .map(({ node, box }) => ({
                 element: node.outerHTML.slice(0, 120),

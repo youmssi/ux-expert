@@ -9,13 +9,22 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Stability policy (`docs/stability.md`, ADR-006): criterion, pattern and probe
+  IDs, the skill layout, `catalogue.json` (now with `schema_version`) and the
+  MCP interface are public and stable within a major version. Enforced by
+  `criteria/ids.lock.json` (published IDs cannot be removed, only retired) and
+  `mcp/interface.json` (a snapshot of tools and prompts).
+- Documentation site built from the repository (`scripts/build_site.py`):
+  areas, a searchable criteria catalogue, patterns, probes, sources and guides;
+  published to GitHub Pages from `main`. CI audits it with `ux_check.mjs`.
+
 - Six areas (100 criteria; 28 areas and 565 criteria in total): collaboration
   (COLLAB), enterprise administration (ADMIN), notification systems (NOTIF),
   commerce and payments (COMM), in-product help (HELP), aesthetics and delight
   (AES), with sources for notification permissions, one-click unsubscribe and
   EU price-reduction rules.
 - Native mobile probes (`criteria/probes.yaml`, generated
-  `references/native-probes.md`): 39 code search probes for iOS (SwiftUI,
+  `references/native-probes.md`): 45 code search probes for iOS (SwiftUI,
   UIKit), Android (Compose, Views), Flutter and React Native, with platform
   notes checked against each platform's source; `scripts/probe.py` detects the
   platforms in a project and runs them.
@@ -87,6 +96,10 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Fixed
 
+- `ux_check.mjs` no longer reports inline links in table cells as small
+  targets; WCAG 2.5.8 exempts inline targets in text.
+- `generate.py` checks citations after writing the regenerated tables, so
+  retiring a criterion needs one run, not two.
 - Severity calibration: 17 WCAG-sourced criteria now reach S3 where
   accessibility law applies; 4 lost-work criteria reach S4; 4 legal-information
   criteria reach S3 where the law requires them.

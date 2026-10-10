@@ -1,5 +1,6 @@
 {
  "generated_by": "scripts/generate.py from criteria/*.yaml; do not edit",
+ "schema_version": 1,
  "product_types": [
   "web-app",
   "marketing-site",

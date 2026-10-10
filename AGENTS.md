@@ -56,7 +56,9 @@ file and add what is specific to that tool.
 4. **Criterion IDs are permanent.** A published ID (e.g. `FORM-09`) never
    changes meaning and is never reused. Retire it (`status: retired`) instead.
    Criteria are edited in `skills/ux-expert/criteria/*.yaml` only; the tables in
-   the area files are generated (`python3 scripts/generate.py`).
+   the area files are generated (`python3 scripts/generate.py`). Published IDs
+   are recorded in `criteria/ids.lock.json`, which the generator maintains and
+   checks. What else is public is in `docs/stability.md`.
 5. **Every number has a source.** A threshold, statistic or research result in
    the content cites a source recorded in `criteria/sources.yaml`, with how it was
    verified. An estimate says it is an estimate.
@@ -93,14 +95,14 @@ file and add what is specific to that tool.
 ## 5. Checks before every push
 
 ```bash
-pip install -r scripts/requirements.txt                  # once: PyYAML, jsonschema
+pip install -r scripts/requirements.txt                  # once: PyYAML, jsonschema, Markdown
 python3 -m unittest discover -s scripts -p "test_*.py"  # script tests
 python3 -m unittest discover -s evals -p "test_*.py"    # eval grader and answer keys
 python3 scripts/validate.py                              # repo rules: links, line budget
 python3 scripts/generate.py --check                      # criteria schema, IDs, tables in sync
 skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
 (cd mcp && npm ci && npm test)                           # MCP server: build, unit, protocol, stdio
-(cd tools/runtime-check && npm ci && npm test)           # runtime checks (needs Chromium; UX_CHECK_CHROMIUM=<path>)
+(cd tools/runtime-check && npm ci && npm test)           # runtime checks and the docs site audit (needs Chromium; UX_CHECK_CHROMIUM=<path>)
 ```
 
 `skills-ref` is installed from the pinned commit in
@@ -132,7 +134,9 @@ mcp/                         the MCP server package (TypeScript, built from the 
 .claude-plugin/              Claude Code plugin marketplace manifest
 scripts/                     validation and generation scripts
 evals/                       eval cases, seeded-defect fixtures, grader, runner
-tools/runtime-check/         test harness for skills/ux-expert/scripts/ux_check.mjs
+tools/runtime-check/         tests for skills/ux-expert/scripts/ux_check.mjs, and the docs site audited with it
+docs/site/                   documentation site stylesheet (pages built by scripts/build_site.py)
+docs/stability.md            what is public and stable within a major version
 docs/adr/                    architecture decision records
 docs/backlog/                roadmap and stories
 docs/engineering/            principles (code) and content rules
