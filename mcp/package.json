@@ -1,7 +1,7 @@
 {
   "name": "ux-expert-mcp",
   "version": "0.1.0",
-  "description": "MCP server for ux-expert: principal-level UX design, refactor and audit expertise (465 criteria, sources, scoring) for any MCP client.",
+  "description": "MCP server for ux-expert: principal-level UX design, refactor and audit expertise (565 criteria, sources, scoring) for any MCP client.",
   "license": "MIT",
   "author": "youmssi",
   "repository": {

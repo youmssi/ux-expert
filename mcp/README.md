@@ -1,6 +1,6 @@
 # ux-expert-mcp
 
-MCP server for [ux-expert](https://github.com/youmssi/ux-expert): principal-level UX expertise for any MCP client. It turns stories into UX acceptance criteria, audits products and changes across 22 areas, plans safe refactors, and scores findings the same way every time.
+MCP server for [ux-expert](https://github.com/youmssi/ux-expert): principal-level UX expertise for any MCP client. It turns stories into UX acceptance criteria, audits products and changes across 28 areas, plans safe refactors, and scores findings the same way every time.
 
 - **Read-only and local:** no network access, no code execution, no writes. It serves the skill's files and computes from them.
 - **Protocol:** MCP 2026-07-28 over stdio, with older revisions negotiated automatically (official TypeScript SDK v2).

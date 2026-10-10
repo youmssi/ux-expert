@@ -1,0 +1,125 @@
+area: commerce
+prefix: COMM
+applicability:
+  web-app: conditional
+  marketing-site: conditional
+  mobile: conditional
+  desktop: conditional
+  cli: n/a
+  sdk-api: n/a
+  ai-feature: conditional
+applicability_note: Only when users buy, subscribe, upgrade or pay in the product
+phases:
+- design
+- build
+criteria:
+- id: COMM-01
+  name: Full price known before the final step
+  fail_signal: Taxes, fees or shipping first appear at the last step
+  severity: S3
+  related:
+  - TRUST-07
+- id: COMM-02
+  name: Guest checkout or deferred account
+  fail_signal: Account creation forced before payment without a reason
+  severity: S2–S3
+- id: COMM-03
+  name: Cart persistent and editable
+  fail_signal: Cart emptied by reload or sign-in; quantities not editable
+  severity: S2–S3
+- id: COMM-04
+  name: Payment methods fit the market
+  fail_signal: Card only where wallets or local methods dominate
+  severity: S2–S3
+  related:
+  - I18N-23
+- id: COMM-05
+  name: Payment fields easy to complete
+  fail_signal: No cc- autocomplete tokens, wrong keyboard, spaces in card numbers rejected
+  severity: S2–S3
+  related:
+  - FORM-05
+  - FORM-06
+  - FORM-07
+  phases: &id001
+  - build
+- id: COMM-06
+  name: Payment authentication inside the flow
+  fail_signal: A 3-D Secure or bank challenge loses the order or returns to an empty page
+  severity: S3–S4
+  severity_note: S4 when the payment cannot be completed
+  phases: *id001
+- id: COMM-07
+  name: Payment errors specific and recoverable
+  fail_signal: Generic error after a decline; entered details cleared
+  severity: S3
+  related:
+  - STATE-08
+- id: COMM-08
+  name: No double charge
+  fail_signal: Retry or double tap creates a second charge
+  severity: S3–S4
+  severity_note: S4 when money is taken twice
+  related:
+  - FORM-15
+  phases: *id001
+- id: COMM-09
+  name: Order review before paying
+  fail_signal: No summary of items, delivery and total before the pay button
+  severity: S2–S3
+  related:
+  - TRUST-14
+- id: COMM-10
+  name: Confirmation and receipt
+  fail_signal: No order number or next steps on screen; no receipt by email
+  severity: S2–S3
+  related:
+  - CONT-18
+- id: COMM-11
+  name: Honest reference prices
+  fail_signal: Strike-through price that was never charged; in the EU, not the lowest price of the prior 30 days
+  severity: S3
+  related:
+  - TRUST-06
+  sources:
+  - eu-price-indication
+- id: COMM-12
+  name: Promo code field does not distract
+  fail_signal: Large empty promo field at payment; invalid codes fail without a reason
+  severity: S1–S2
+- id: COMM-13
+  name: Plan changes previewed
+  fail_signal: Upgrade or downgrade charges without showing amount, proration and effective date
+  severity: S3
+  related:
+  - TRUST-08
+- id: COMM-14
+  name: Billing self-serve
+  fail_signal: Invoices, payment method or billing details only through support
+  severity: S2
+- id: COMM-15
+  name: Failed renewals handled before access ends
+  fail_signal: Access removed at a failed renewal with no warning, grace period or update link
+  severity: S3
+- id: COMM-16
+  name: Refund and return terms findable
+  fail_signal: Terms not shown before purchase or in order history
+  severity: S2
+  related:
+  - LAUNCH-14
+- id: COMM-17
+  name: Order status visible
+  fail_signal: No status or tracking after purchase
+  severity: S2
+- id: COMM-18
+  name: Trust at the moment of payment
+  fail_signal: Unknown processor, mismatched business name or no secure context on the payment step
+  severity: S2–S3
+  related:
+  - TRUST-20
+- id: COMM-19
+  name: Store purchases restorable on mobile
+  fail_signal: Digital purchases cannot be restored on a new device
+  severity: S3
+  applies_to:
+  - mobile

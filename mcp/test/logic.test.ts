@@ -19,7 +19,7 @@ describe('selectCriteria', () => {
     });
 
     it('matches the Python selector count for web-app design', () => {
-        assert.equal(selectCriteria(catalogue, 'web-app', 'design').length, 353);
+        assert.equal(selectCriteria(catalogue, 'web-app', 'design').length, 437);
     });
 
     it('rejects an unknown area and lists the known ones', () => {

@@ -14,9 +14,9 @@
 
 ## Introduction
 
-`ux-expert` gives any AI agent the working method of a principal UX engineer. It reviews products and changes across 22 areas of UX, backs every finding with evidence and a source, scores severity the same way every time, and ends with a launch verdict: Go, Conditional Go or No-Go.
+`ux-expert` gives any AI agent the working method of a principal UX engineer. It reviews products and changes across 28 areas of UX, backs every finding with evidence and a source, scores severity the same way every time, and ends with a launch verdict: Go, Conditional Go or No-Go.
 
-It is not a generic checklist. Every judgement starts from the user's goal, cites `file:line`, a route or a measurement, and says how confident it is. The 465 criteria have permanent IDs (such as `FORM-09`), so a rule can be traced from design through to the launch report.
+It is not a generic checklist. Every judgement starts from the user's goal, cites `file:line`, a route or a measurement, and says how confident it is. The 565 criteria have permanent IDs (such as `FORM-09`), so a rule can be traced from design through to the launch report.
 
 It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any agent that supports [Agent Skills](https://agentskills.io) or MCP.
 
@@ -27,7 +27,7 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 - **Full audits**: review a whole product, or one flow, screen or area, and get a prioritized report
 - **Launch gate**: an explicit Go / Conditional Go / No-Go decision, listing blockers and conditions
 - **Change review**: check a pull request's UI changes and the regressions they could cause
-- **22 areas, 465 criteria**: flows, information architecture, layout, typography, color, interaction, forms, states, accessibility (WCAG 2.2 AA), content, onboarding, performance, responsive and platform conventions, design system, trust and privacy, i18n, data display and search, developer experience, AI interfaces, measurement, launch readiness
+- **28 areas, 565 criteria**: flows, information architecture, layout, typography, color, interaction, forms, states, accessibility (WCAG 2.2 AA), content, onboarding, performance, responsive and platform conventions, design system, trust and privacy, i18n, data display and search, developer experience, AI interfaces, measurement, launch readiness, collaboration, enterprise administration, notification systems, commerce and payments, in-product help, aesthetics and delight
 - **Evidence-first findings**: every finding has a location, evidence type, severity, reach, confidence, priority, fix and verification step
 - **Proven patterns**: 17 patterns from the public design systems of GOV.UK, GitHub (Primer), Shopify (Polaris) and IBM (Carbon), linked to the criteria they satisfy and cited in recommendations
 - **Consistent scoring**: one model for every agent: severity S0–S4 × reach R1–R3 → priority P0–P3, with an explicit launch gate
@@ -41,7 +41,7 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 | Orchestrator | [`skills/ux-expert/SKILL.md`](skills/ux-expert/SKILL.md) | Picks the mode, selects the areas, runs the 8-phase procedure |
 | Areas | [`skills/ux-expert/references/areas/`](skills/ux-expert/references/areas/) | One file per area: the expert mindset, procedure, criteria and code probes |
 | Shared references | [`skills/ux-expert/references/`](skills/ux-expert/references/) | Finding format, severity and scoring, codebase recon, laws and thresholds, report template |
-| Criteria catalogue | [`skills/ux-expert/criteria/`](skills/ux-expert/criteria/) | 465 criteria as YAML, with phases and product types; the area tables, the `SKILL.md` matrix and `catalogue.json` are generated from it |
+| Criteria catalogue | [`skills/ux-expert/criteria/`](skills/ux-expert/criteria/) | 565 criteria as YAML, with phases and product types; the area tables, the `SKILL.md` matrix and `catalogue.json` are generated from it |
 | Refactor mode | [`references/refactor-mode.md`](skills/ux-expert/references/refactor-mode.md) | From audit findings to a sequenced, guarded plan |
 | Design mode | [`references/design-mode.md`](skills/ux-expert/references/design-mode.md), [`assets/story-ux.md`](skills/ux-expert/assets/story-ux.md) | From brief to UX acceptance criteria per story |
 | MCP server | [`mcp/`](mcp/) | Prompts, read-only tools and resources for any MCP client |

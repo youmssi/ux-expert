@@ -45,13 +45,13 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 |---|---|---|---|
 | [UXE-12](UXE-12-pattern-library.md) | Best-in-class pattern library: dated, sourced patterns from the public design systems of widely used products | M | done |
 | [UXE-13](UXE-13-runtime-checks.md) | Runtime scripts: contrast calculator, axe scan, screenshot matrix, visual review | L | done |
-| [UXE-14](UXE-14-native-probes.md) | Native platform probes: SwiftUI, Jetpack Compose, Flutter, React Native | M | in progress |
+| [UXE-14](UXE-14-native-probes.md) | Native platform probes: SwiftUI, Jetpack Compose, Flutter, React Native | M | done |
 
 ## v0.6: breadth
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| UXE-15 | New areas: collaboration, enterprise admin, notification systems, commerce, in-product help, aesthetics and delight | L | to refine |
+| [UXE-15](UXE-15-new-areas.md) | New areas: collaboration, enterprise admin, notification systems, commerce, in-product help, aesthetics and delight | L | in progress |
 
 ## v1.0: stable
 

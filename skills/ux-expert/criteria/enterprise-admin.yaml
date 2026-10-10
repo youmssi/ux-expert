@@ -1,0 +1,105 @@
+area: enterprise-admin
+prefix: ADMIN
+applicability:
+  web-app: conditional
+  marketing-site: n/a
+  mobile: conditional
+  desktop: conditional
+  cli: n/a
+  sdk-api: conditional
+  ai-feature: conditional
+applicability_note: 'Only for products sold to organizations: admin consoles, SSO, provisioning, roles, audit, seats'
+phases:
+- design
+- build
+criteria:
+- id: ADMIN-01
+  name: Admin console separate and findable
+  fail_signal: Admin settings mixed into personal settings, or hidden from admins
+  severity: S2
+  related:
+  - IA-16
+- id: ADMIN-02
+  name: SSO tested before it is enforced
+  fail_signal: Enforcing SSO without a successful test sign-in; the setup can lock everyone out
+  severity: S3–S4
+  severity_note: S4 when the organization can be locked out
+- id: ADMIN-03
+  name: Break-glass access
+  fail_signal: No owner can sign in when the identity provider fails or is misconfigured
+  severity: S3
+- id: ADMIN-04
+  name: Deprovisioning removes access
+  fail_signal: Removing a user in the directory leaves their account, sessions or tokens active
+  severity: S3
+  related:
+  - COLLAB-15
+  phases: &id001
+  - build
+- id: ADMIN-05
+  name: Roles and effective permissions visible
+  fail_signal: No role matrix; custom roles saved without a preview of what they allow
+  severity: S2–S3
+- id: ADMIN-06
+  name: Least-privilege defaults
+  fail_signal: New members join as admins or with full access by default
+  severity: S3
+- id: ADMIN-07
+  name: Bulk operations validated per row
+  fail_signal: Bulk import or invite fails as a whole, or partly, with no per-row report
+  severity: S2–S3
+- id: ADMIN-08
+  name: Audit log for security-relevant events
+  fail_signal: No audit log, or entries without actor, time, target and before/after values
+  severity: S2–S3
+  phases: *id001
+- id: ADMIN-09
+  name: Destructive admin actions guarded
+  fail_signal: Workspace or member deletion with no impact summary or grace period, and data lost
+  severity: S3–S4
+  severity_note: S4 when data is lost
+  related:
+  - TRUST-14
+- id: ADMIN-10
+  name: Policies state their scope and timing
+  fail_signal: Org-wide policy (2FA, sharing limits) applied with no notice to the people it affects
+  severity: S2–S3
+- id: ADMIN-11
+  name: Seats and charges previewed
+  fail_signal: Seat changes charged with no preview of cost, proration or who holds a seat
+  severity: S3
+  related:
+  - COMM-13
+  - TRUST-07
+- id: ADMIN-12
+  name: Usage against limits visible
+  fail_signal: Limits reached with no prior warning or usage view
+  severity: S2
+  related:
+  - STATE-21
+- id: ADMIN-13
+  name: Organization data export and retention
+  fail_signal: No org-level export; retention not configurable or not stated
+  severity: S2–S3
+  related:
+  - TRUST-10
+- id: ADMIN-14
+  name: No single admin as a point of failure
+  fail_signal: Only one admin possible; ownership cannot be transferred
+  severity: S2
+- id: ADMIN-15
+  name: Domain capture announced
+  fail_signal: Personal accounts on a company domain absorbed into the organization without notice
+  severity: S3
+- id: ADMIN-16
+  name: Members see the policies that apply to them
+  fail_signal: Members blocked by a policy with no explanation or admin contact
+  severity: S2
+  related:
+  - STATE-19
+- id: ADMIN-17
+  name: API keys and tokens governed
+  fail_signal: Keys cannot be listed, scoped, expired or revoked by admins
+  severity: S3
+  related:
+  - DX

@@ -29,6 +29,20 @@
    }
   },
   {
+   "area": "aesthetics-delight",
+   "prefix": "AES",
+   "file": "references/areas/aesthetics-delight.md",
+   "applicability": {
+    "web-app": "run",
+    "marketing-site": "run",
+    "mobile": "run",
+    "desktop": "run",
+    "cli": "light",
+    "sdk-api": "n/a",
+    "ai-feature": "light"
+   }
+  },
+  {
    "area": "ai-interfaces",
    "prefix": "AI",
    "file": "references/areas/ai-interfaces.md",
@@ -44,6 +58,21 @@
    "applicability_note": "run when the product contains an AI or LLM feature"
   },
   {
+   "area": "collaboration",
+   "prefix": "COLLAB",
+   "file": "references/areas/collaboration.md",
+   "applicability": {
+    "web-app": "conditional",
+    "marketing-site": "n/a",
+    "mobile": "conditional",
+    "desktop": "conditional",
+    "cli": "n/a",
+    "sdk-api": "n/a",
+    "ai-feature": "conditional"
+   },
+   "applicability_note": "Only when several people work on shared objects: documents, projects, boards, records, conversations"
+  },
+  {
    "area": "color-theming",
    "prefix": "COL",
    "file": "references/areas/color-theming.md",
@@ -56,6 +85,21 @@
     "sdk-api": "n/a",
     "ai-feature": "run"
    }
+  },
+  {
+   "area": "commerce",
+   "prefix": "COMM",
+   "file": "references/areas/commerce.md",
+   "applicability": {
+    "web-app": "conditional",
+    "marketing-site": "conditional",
+    "mobile": "conditional",
+    "desktop": "conditional",
+    "cli": "n/a",
+    "sdk-api": "n/a",
+    "ai-feature": "conditional"
+   },
+   "applicability_note": "Only when users buy, subscribe, upgrade or pay in the product"
   },
   {
    "area": "content-writing",
@@ -130,6 +174,21 @@
    "applicability_note": "light on web apps and AI features only when they expose a public API"
   },
   {
+   "area": "enterprise-admin",
+   "prefix": "ADMIN",
+   "file": "references/areas/enterprise-admin.md",
+   "applicability": {
+    "web-app": "conditional",
+    "marketing-site": "n/a",
+    "mobile": "conditional",
+    "desktop": "conditional",
+    "cli": "n/a",
+    "sdk-api": "conditional",
+    "ai-feature": "conditional"
+   },
+   "applicability_note": "Only for products sold to organizations: admin consoles, SSO, provisioning, roles, audit, seats"
+  },
+  {
    "area": "flows-friction",
    "prefix": "FLOW",
    "file": "references/areas/flows-friction.md",
@@ -168,6 +227,20 @@
     "desktop": "run",
     "cli": "light",
     "sdk-api": "light",
+    "ai-feature": "run"
+   }
+  },
+  {
+   "area": "in-product-help",
+   "prefix": "HELP",
+   "file": "references/areas/in-product-help.md",
+   "applicability": {
+    "web-app": "run",
+    "marketing-site": "light",
+    "mobile": "run",
+    "desktop": "run",
+    "cli": "light",
+    "sdk-api": "n/a",
     "ai-feature": "run"
    }
   },
@@ -240,6 +313,20 @@
     "cli": "light",
     "sdk-api": "light",
     "ai-feature": "run"
+   }
+  },
+  {
+   "area": "notifications",
+   "prefix": "NOTIF",
+   "file": "references/areas/notifications.md",
+   "applicability": {
+    "web-app": "run",
+    "marketing-site": "light",
+    "mobile": "run",
+    "desktop": "run",
+    "cli": "n/a",
+    "sdk-api": "n/a",
+    "ai-feature": "light"
    }
   },
   {
@@ -1039,6 +1126,284 @@
    ]
   },
   {
+   "id": "AES-01",
+   "area": "aesthetics-delight",
+   "name": "Craft details consistent",
+   "fail_signal": "Mixed corner radii, shadows, borders or icon styles for the same kind of element",
+   "severity": "S1–S2",
+   "related": [
+    "DS-04",
+    "DS-12"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-02",
+   "area": "aesthetics-delight",
+   "name": "Pixel polish on key screens",
+   "fail_signal": "Misalignments, clipped text or uneven gaps on critical screens at supported widths",
+   "severity": "S1–S2",
+   "related": [
+    "LAY-07"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-03",
+   "area": "aesthetics-delight",
+   "name": "Imagery coherent",
+   "fail_signal": "Mixed illustration styles; blurry, stretched or off-brand images; no dark-mode variants",
+   "severity": "S1–S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-04",
+   "area": "aesthetics-delight",
+   "name": "Expression placed where it helps",
+   "fail_signal": "Decoration competes with task content on dense work screens",
+   "severity": "S2",
+   "related": [
+    "LAY-01",
+    "COL-09"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-05",
+   "area": "aesthetics-delight",
+   "name": "Delightful motion never delays the task",
+   "fail_signal": "A celebratory or decorative animation blocks the next action or ignores reduced motion",
+   "severity": "S2",
+   "related": [
+    "INT-08",
+    "INT-09"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-06",
+   "area": "aesthetics-delight",
+   "name": "Celebrations proportional",
+   "fail_signal": "Confetti on routine actions; real milestones pass unnoticed",
+   "severity": "S0–S1",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-07",
+   "area": "aesthetics-delight",
+   "name": "Personality fits the moment",
+   "fail_signal": "Jokes or playful tone in errors, billing, security or bad news",
+   "severity": "S2",
+   "related": [
+    "CONT-07",
+    "CONT-13"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-08",
+   "area": "aesthetics-delight",
+   "name": "No placeholder content in production",
+   "fail_signal": "Lorem ipsum, broken images, default avatars or test data visible to users",
+   "severity": "S2–S3",
+   "related": [
+    "LAUNCH-03"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-09",
+   "area": "aesthetics-delight",
+   "name": "Edge states designed with the same care",
+   "fail_signal": "Polished happy path; raw, unstyled empty, error or loading screens",
+   "severity": "S2",
+   "related": [
+    "STATE-01"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-10",
+   "area": "aesthetics-delight",
+   "name": "Brand details complete",
+   "fail_signal": "Default framework favicon, app icon, splash or social image; unstyled emails",
+   "severity": "S1–S2",
+   "related": [
+    "LAUNCH-09",
+    "LAUNCH-16"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-11",
+   "area": "aesthetics-delight",
+   "name": "Sound and haptics optional and meaningful",
+   "fail_signal": "Sounds or vibrations by default with no setting to turn them off",
+   "severity": "S1–S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-12",
+   "area": "aesthetics-delight",
+   "name": "Easter eggs harmless",
+   "fail_signal": "Hidden features that obstruct tasks, trap focus or break assistive technology",
+   "severity": "S1",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "AES-13",
+   "area": "aesthetics-delight",
+   "name": "Perceived quality checked with users",
+   "fail_signal": "Brand-led or consumer product with no evidence of how users perceive its look",
+   "severity": "S0–S1",
+   "related": [
+    "MEAS"
+   ],
+   "phases": [
+    "design"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
    "id": "AI-01",
    "area": "ai-interfaces",
    "name": "Capabilities discoverable",
@@ -1559,6 +1924,326 @@
    ]
   },
   {
+   "id": "COLLAB-01",
+   "area": "collaboration",
+   "name": "Access visible on the object",
+   "fail_signal": "Users cannot tell who can see or edit what they are looking at",
+   "severity": "S2–S3",
+   "severity_note": "S3 when private content is exposed",
+   "related": [
+    "TRUST-13"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-02",
+   "area": "collaboration",
+   "name": "Roles explained in plain words",
+   "fail_signal": "Role names with no statement of what each allows",
+   "severity": "S2",
+   "related": [
+    "ADMIN-05"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-03",
+   "area": "collaboration",
+   "name": "Invite and request-access paths",
+   "fail_signal": "\"You don't have access\" with no way to request it; invitee lands on a generic home page",
+   "severity": "S2–S3",
+   "related": [
+    "ONB-14",
+    "STATE-19"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-04",
+   "area": "collaboration",
+   "name": "Link-sharing scope stated before sharing",
+   "fail_signal": "Public link created by default, or its scope hidden behind the copy button",
+   "severity": "S3",
+   "severity_note": "S4 when private data becomes public",
+   "related": [
+    "TRUST-13"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-05",
+   "area": "collaboration",
+   "name": "Presence of others shown",
+   "fail_signal": "Two people edit the same object without knowing it",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-06",
+   "area": "collaboration",
+   "name": "Concurrent edits never lose work",
+   "fail_signal": "Last write wins silently and work is lost",
+   "severity": "S3–S4",
+   "severity_note": "S4 when work is lost",
+   "related": [
+    "STATE-13"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-07",
+   "area": "collaboration",
+   "name": "Change history with attribution and restore",
+   "fail_signal": "No way to see who changed what, or to restore a previous version",
+   "severity": "S2–S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-08",
+   "area": "collaboration",
+   "name": "Comments anchored to content",
+   "fail_signal": "Comments detach or disappear when the content they point to is edited",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-09",
+   "area": "collaboration",
+   "name": "Mentions reach people who can see the content",
+   "fail_signal": "Mentioning someone without access fails silently",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-10",
+   "area": "collaboration",
+   "name": "Collaboration notifications batched",
+   "fail_signal": "One notification per edit or keystroke; no digest",
+   "severity": "S2",
+   "related": [
+    "NOTIF-08"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-11",
+   "area": "collaboration",
+   "name": "Content survives member removal",
+   "fail_signal": "Content orphaned or data lost when a member leaves or is removed",
+   "severity": "S3–S4",
+   "severity_note": "S4 when data is lost",
+   "related": [
+    "ADMIN-09"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-12",
+   "area": "collaboration",
+   "name": "Activity feed filterable",
+   "fail_signal": "Every event in one unfiltered stream",
+   "severity": "S1–S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-13",
+   "area": "collaboration",
+   "name": "Handoffs explicit",
+   "fail_signal": "No assignee or status where work passes between people; unclear whose turn it is",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-14",
+   "area": "collaboration",
+   "name": "Offline edits sync or conflict visibly",
+   "fail_signal": "Offline work lost silently on reconnect",
+   "severity": "S3–S4",
+   "severity_note": "S4 when work is lost",
+   "related": [
+    "STATE-11"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-15",
+   "area": "collaboration",
+   "name": "Access removal takes effect at once",
+   "fail_signal": "A removed member keeps viewing or editing in an open session or through a token",
+   "severity": "S3",
+   "related": [
+    "TRUST-17"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-16",
+   "area": "collaboration",
+   "name": "Awareness indicators do not obstruct",
+   "fail_signal": "Other people's cursors or selections cover content and cannot be hidden",
+   "severity": "S1",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COLLAB-17",
+   "area": "collaboration",
+   "name": "External collaborators marked",
+   "fail_signal": "No sign that a participant is outside the organization",
+   "severity": "S2–S3",
+   "severity_note": "S3 in regulated or confidential work",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
    "id": "COL-01",
    "area": "color-theming",
    "name": "Tokenized palette with semantic roles",
@@ -1945,6 +2630,381 @@
     "desktop",
     "cli",
     "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-01",
+   "area": "commerce",
+   "name": "Full price known before the final step",
+   "fail_signal": "Taxes, fees or shipping first appear at the last step",
+   "severity": "S3",
+   "related": [
+    "TRUST-07"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-02",
+   "area": "commerce",
+   "name": "Guest checkout or deferred account",
+   "fail_signal": "Account creation forced before payment without a reason",
+   "severity": "S2–S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-03",
+   "area": "commerce",
+   "name": "Cart persistent and editable",
+   "fail_signal": "Cart emptied by reload or sign-in; quantities not editable",
+   "severity": "S2–S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-04",
+   "area": "commerce",
+   "name": "Payment methods fit the market",
+   "fail_signal": "Card only where wallets or local methods dominate",
+   "severity": "S2–S3",
+   "related": [
+    "I18N-23"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-05",
+   "area": "commerce",
+   "name": "Payment fields easy to complete",
+   "fail_signal": "No cc- autocomplete tokens, wrong keyboard, spaces in card numbers rejected",
+   "severity": "S2–S3",
+   "related": [
+    "FORM-05",
+    "FORM-06",
+    "FORM-07"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-06",
+   "area": "commerce",
+   "name": "Payment authentication inside the flow",
+   "fail_signal": "A 3-D Secure or bank challenge loses the order or returns to an empty page",
+   "severity": "S3–S4",
+   "severity_note": "S4 when the payment cannot be completed",
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-07",
+   "area": "commerce",
+   "name": "Payment errors specific and recoverable",
+   "fail_signal": "Generic error after a decline; entered details cleared",
+   "severity": "S3",
+   "related": [
+    "STATE-08"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-08",
+   "area": "commerce",
+   "name": "No double charge",
+   "fail_signal": "Retry or double tap creates a second charge",
+   "severity": "S3–S4",
+   "severity_note": "S4 when money is taken twice",
+   "related": [
+    "FORM-15"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-09",
+   "area": "commerce",
+   "name": "Order review before paying",
+   "fail_signal": "No summary of items, delivery and total before the pay button",
+   "severity": "S2–S3",
+   "related": [
+    "TRUST-14"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-10",
+   "area": "commerce",
+   "name": "Confirmation and receipt",
+   "fail_signal": "No order number or next steps on screen; no receipt by email",
+   "severity": "S2–S3",
+   "related": [
+    "CONT-18"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-11",
+   "area": "commerce",
+   "name": "Honest reference prices",
+   "fail_signal": "Strike-through price that was never charged; in the EU, not the lowest price of the prior 30 days",
+   "severity": "S3",
+   "related": [
+    "TRUST-06"
+   ],
+   "sources": [
+    "eu-price-indication"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-12",
+   "area": "commerce",
+   "name": "Promo code field does not distract",
+   "fail_signal": "Large empty promo field at payment; invalid codes fail without a reason",
+   "severity": "S1–S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-13",
+   "area": "commerce",
+   "name": "Plan changes previewed",
+   "fail_signal": "Upgrade or downgrade charges without showing amount, proration and effective date",
+   "severity": "S3",
+   "related": [
+    "TRUST-08"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-14",
+   "area": "commerce",
+   "name": "Billing self-serve",
+   "fail_signal": "Invoices, payment method or billing details only through support",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-15",
+   "area": "commerce",
+   "name": "Failed renewals handled before access ends",
+   "fail_signal": "Access removed at a failed renewal with no warning, grace period or update link",
+   "severity": "S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-16",
+   "area": "commerce",
+   "name": "Refund and return terms findable",
+   "fail_signal": "Terms not shown before purchase or in order history",
+   "severity": "S2",
+   "related": [
+    "LAUNCH-14"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-17",
+   "area": "commerce",
+   "name": "Order status visible",
+   "fail_signal": "No status or tracking after purchase",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-18",
+   "area": "commerce",
+   "name": "Trust at the moment of payment",
+   "fail_signal": "Unknown processor, mismatched business name or no secure context on the payment step",
+   "severity": "S2–S3",
+   "related": [
+    "TRUST-20"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "COMM-19",
+   "area": "commerce",
+   "name": "Store purchases restorable on mobile",
+   "fail_signal": "Digital purchases cannot be restored on a new device",
+   "severity": "S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "mobile"
    ]
   },
   {
@@ -3763,6 +4823,337 @@
    ]
   },
   {
+   "id": "ADMIN-01",
+   "area": "enterprise-admin",
+   "name": "Admin console separate and findable",
+   "fail_signal": "Admin settings mixed into personal settings, or hidden from admins",
+   "severity": "S2",
+   "related": [
+    "IA-16"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-02",
+   "area": "enterprise-admin",
+   "name": "SSO tested before it is enforced",
+   "fail_signal": "Enforcing SSO without a successful test sign-in; the setup can lock everyone out",
+   "severity": "S3–S4",
+   "severity_note": "S4 when the organization can be locked out",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-03",
+   "area": "enterprise-admin",
+   "name": "Break-glass access",
+   "fail_signal": "No owner can sign in when the identity provider fails or is misconfigured",
+   "severity": "S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-04",
+   "area": "enterprise-admin",
+   "name": "Deprovisioning removes access",
+   "fail_signal": "Removing a user in the directory leaves their account, sessions or tokens active",
+   "severity": "S3",
+   "related": [
+    "COLLAB-15"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-05",
+   "area": "enterprise-admin",
+   "name": "Roles and effective permissions visible",
+   "fail_signal": "No role matrix; custom roles saved without a preview of what they allow",
+   "severity": "S2–S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-06",
+   "area": "enterprise-admin",
+   "name": "Least-privilege defaults",
+   "fail_signal": "New members join as admins or with full access by default",
+   "severity": "S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-07",
+   "area": "enterprise-admin",
+   "name": "Bulk operations validated per row",
+   "fail_signal": "Bulk import or invite fails as a whole, or partly, with no per-row report",
+   "severity": "S2–S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-08",
+   "area": "enterprise-admin",
+   "name": "Audit log for security-relevant events",
+   "fail_signal": "No audit log, or entries without actor, time, target and before/after values",
+   "severity": "S2–S3",
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-09",
+   "area": "enterprise-admin",
+   "name": "Destructive admin actions guarded",
+   "fail_signal": "Workspace or member deletion with no impact summary or grace period, and data lost",
+   "severity": "S3–S4",
+   "severity_note": "S4 when data is lost",
+   "related": [
+    "TRUST-14"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-10",
+   "area": "enterprise-admin",
+   "name": "Policies state their scope and timing",
+   "fail_signal": "Org-wide policy (2FA, sharing limits) applied with no notice to the people it affects",
+   "severity": "S2–S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-11",
+   "area": "enterprise-admin",
+   "name": "Seats and charges previewed",
+   "fail_signal": "Seat changes charged with no preview of cost, proration or who holds a seat",
+   "severity": "S3",
+   "related": [
+    "COMM-13",
+    "TRUST-07"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-12",
+   "area": "enterprise-admin",
+   "name": "Usage against limits visible",
+   "fail_signal": "Limits reached with no prior warning or usage view",
+   "severity": "S2",
+   "related": [
+    "STATE-21"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-13",
+   "area": "enterprise-admin",
+   "name": "Organization data export and retention",
+   "fail_signal": "No org-level export; retention not configurable or not stated",
+   "severity": "S2–S3",
+   "related": [
+    "TRUST-10"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-14",
+   "area": "enterprise-admin",
+   "name": "No single admin as a point of failure",
+   "fail_signal": "Only one admin possible; ownership cannot be transferred",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-15",
+   "area": "enterprise-admin",
+   "name": "Domain capture announced",
+   "fail_signal": "Personal accounts on a company domain absorbed into the organization without notice",
+   "severity": "S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-16",
+   "area": "enterprise-admin",
+   "name": "Members see the policies that apply to them",
+   "fail_signal": "Members blocked by a policy with no explanation or admin contact",
+   "severity": "S2",
+   "related": [
+    "STATE-19"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "ADMIN-17",
+   "area": "enterprise-admin",
+   "name": "API keys and tokens governed",
+   "fail_signal": "Keys cannot be listed, scoped, expired or revoked by admins",
+   "severity": "S3",
+   "related": [
+    "DX"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "mobile",
+    "desktop",
+    "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
    "id": "FLOW-01",
    "area": "flows-friction",
    "name": "Every critical flow is completable",
@@ -5128,6 +6519,339 @@
     "desktop",
     "cli",
     "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-01",
+   "area": "in-product-help",
+   "name": "Help in a consistent place (3.2.6)",
+   "fail_signal": "Help, contact or chat in different places across pages, or missing on some",
+   "severity": "S2–S3",
+   "severity_note": "S3 where accessibility law applies",
+   "related": [
+    "A11Y-26"
+   ],
+   "sources": [
+    "wcag22"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-02",
+   "area": "in-product-help",
+   "name": "Help at the point of difficulty",
+   "fail_signal": "Users must leave the task to understand a complex field or step",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-03",
+   "area": "in-product-help",
+   "name": "Help searchable in the product",
+   "fail_signal": "Only a link to the documentation home page",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-04",
+   "area": "in-product-help",
+   "name": "Help links land on the right answer",
+   "fail_signal": "Links open a generic help center instead of the relevant article",
+   "severity": "S1–S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-05",
+   "area": "in-product-help",
+   "name": "Essential instructions not hidden in tooltips",
+   "fail_signal": "Information needed to complete the task only in a tooltip",
+   "severity": "S2",
+   "related": [
+    "INT-13"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-06",
+   "area": "in-product-help",
+   "name": "Error and empty states link to help",
+   "fail_signal": "Dead-end states with no help or next step",
+   "severity": "S2",
+   "related": [
+    "STATE-08",
+    "STATE-02"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-07",
+   "area": "in-product-help",
+   "name": "Human support reachable",
+   "fail_signal": "Paying users cannot find a contact path or expected response time",
+   "severity": "S2–S3",
+   "related": [
+    "LAUNCH-12"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-08",
+   "area": "in-product-help",
+   "name": "Support handoff carries context",
+   "fail_signal": "Users must repeat the page, account and error to support",
+   "severity": "S2",
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-09",
+   "area": "in-product-help",
+   "name": "Errors carry a reference users can quote",
+   "fail_signal": "Errors with no ID that support can trace",
+   "severity": "S2",
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-10",
+   "area": "in-product-help",
+   "name": "Changes announced in the product",
+   "fail_signal": "Interface changes with no what's-new note or changelog",
+   "severity": "S1–S2",
+   "related": [
+    "ONB-18"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-11",
+   "area": "in-product-help",
+   "name": "Shortcuts and commands discoverable",
+   "fail_signal": "Shortcuts exist but are listed nowhere in the product",
+   "severity": "S1",
+   "related": [
+    "INT-16"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-12",
+   "area": "in-product-help",
+   "name": "Help matches the current interface",
+   "fail_signal": "Articles name buttons, menus or screens that no longer exist",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-13",
+   "area": "in-product-help",
+   "name": "AI help grounded and escalates",
+   "fail_signal": "Assistant answers without sources, invents features or cannot hand over to a person",
+   "severity": "S2–S3",
+   "related": [
+    "AI"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-14",
+   "area": "in-product-help",
+   "name": "Help usage measured",
+   "fail_signal": "No data on help searches without results or the most used articles",
+   "severity": "S1–S2",
+   "related": [
+    "MEAS"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-15",
+   "area": "in-product-help",
+   "name": "Incidents surfaced in the product",
+   "fail_signal": "During an outage the product shows nothing; users learn from errors",
+   "severity": "S2",
+   "related": [
+    "LAUNCH-13"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "HELP-16",
+   "area": "in-product-help",
+   "name": "Self-serve paths for top support reasons",
+   "fail_signal": "The most common support requests have no self-serve path",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "cli",
     "ai-feature"
    ]
   },
@@ -7135,6 +8859,355 @@
     "desktop",
     "cli",
     "sdk-api",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-01",
+   "area": "notifications",
+   "name": "Notification inventory",
+   "fail_signal": "No list of notification types with trigger, audience, channel and owner",
+   "severity": "S2",
+   "phases": [
+    "design"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-02",
+   "area": "notifications",
+   "name": "Channel matches urgency",
+   "fail_signal": "Security alerts only in-app; promotions sent as push or SMS",
+   "severity": "S2–S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-03",
+   "area": "notifications",
+   "name": "Push permission asked in context",
+   "fail_signal": "OS permission prompt on first launch, before any value is shown",
+   "severity": "S2–S3",
+   "related": [
+    "ONB-16"
+   ],
+   "sources": [
+    "apple-user-notifications",
+    "android-notification-permission"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-04",
+   "area": "notifications",
+   "name": "Denied permission recoverable",
+   "fail_signal": "After a denial the feature fails silently; no path to system settings",
+   "severity": "S2",
+   "sources": [
+    "apple-user-notifications"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-05",
+   "area": "notifications",
+   "name": "Preferences per type and channel",
+   "fail_signal": "Notifications are all on or all off",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-06",
+   "area": "notifications",
+   "name": "Transactional and marketing messages separated",
+   "fail_signal": "Unsubscribing from marketing stops receipts or security alerts, or marketing is sent without consent as \"transactional\"",
+   "severity": "S2–S3",
+   "related": [
+    "TRUST-21"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-07",
+   "area": "notifications",
+   "name": "One-click unsubscribe for bulk email",
+   "fail_signal": "Unsubscribing needs a sign-in or several steps; no List-Unsubscribe header pair",
+   "severity": "S3",
+   "related": [
+    "TRUST-21"
+   ],
+   "sources": [
+    "rfc8058-one-click"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-08",
+   "area": "notifications",
+   "name": "Batching and digests",
+   "fail_signal": "A burst of separate notifications for one chain of events",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-09",
+   "area": "notifications",
+   "name": "Timing respects the recipient",
+   "fail_signal": "Non-urgent messages sent at night in the recipient's time zone",
+   "severity": "S2",
+   "related": [
+    "I18N-13"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-10",
+   "area": "notifications",
+   "name": "Deep links land on the subject",
+   "fail_signal": "Tapping a notification opens the home screen instead of the item",
+   "severity": "S2",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-11",
+   "area": "notifications",
+   "name": "Read state consistent across channels",
+   "fail_signal": "Badges and unread counts stay after the item is read elsewhere",
+   "severity": "S1–S2",
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-12",
+   "area": "notifications",
+   "name": "Interruption level honest",
+   "fail_signal": "Promotions marked time-sensitive or high importance",
+   "severity": "S2–S3",
+   "sources": [
+    "apple-user-notifications"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-13",
+   "area": "notifications",
+   "name": "Android channels per notification type",
+   "fail_signal": "One channel for everything; users cannot mute one type",
+   "severity": "S2",
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "mobile"
+   ]
+  },
+  {
+   "id": "NOTIF-14",
+   "area": "notifications",
+   "name": "In-app notification center",
+   "fail_signal": "Important notices appear only as toasts that disappear",
+   "severity": "S2",
+   "related": [
+    "INT-14"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-15",
+   "area": "notifications",
+   "name": "Notification actions safe",
+   "fail_signal": "Destructive or paying actions available from a notification without confirmation",
+   "severity": "S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-16",
+   "area": "notifications",
+   "name": "Sensitive content hidden on lock screens",
+   "fail_signal": "Health, financial or private message content shown on the lock screen by default",
+   "severity": "S3",
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-17",
+   "area": "notifications",
+   "name": "Delivery monitored",
+   "fail_signal": "No tracking of bounces, failures or opt-outs for critical messages",
+   "severity": "S2",
+   "related": [
+    "LAUNCH-15"
+   ],
+   "phases": [
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
+    "ai-feature"
+   ]
+  },
+  {
+   "id": "NOTIF-18",
+   "area": "notifications",
+   "name": "Content says what happened and what to do",
+   "fail_signal": "Generic \"You have a new notification\"",
+   "severity": "S1–S2",
+   "related": [
+    "CONT-17"
+   ],
+   "phases": [
+    "design",
+    "build"
+   ],
+   "applies_to": [
+    "web-app",
+    "marketing-site",
+    "mobile",
+    "desktop",
     "ai-feature"
    ]
   },
@@ -9778,6 +11851,48 @@
    "verified_on": "2026-10-10",
    "verified_against": "facebook/react-native-website docs at commit b477b73b70162ae23b8d3062be2902b0ba660aec",
    "supports": "Text.allowFontScaling defaults to true and maxFontSizeMultiplier caps scaling; Image accepts alt and accessibilityLabel; Pressable hitSlop extends the press area; role and accessibilityRole props; AccessibilityInfo.isReduceMotionEnabled()."
+  },
+  {
+   "id": "apple-user-notifications",
+   "title": "User Notifications documentation (Asking permission to use notifications; UNNotificationInterruptionLevel)",
+   "publisher": "Apple",
+   "url": "https://developer.apple.com/documentation/usernotifications/asking-permission-to-use-notifications",
+   "status": "primary",
+   "verified_on": "2026-10-10",
+   "verified_against": "Apple developer documentation pages for asking permission, UNAuthorizationOptions.provisional and UNNotificationInterruptionLevel",
+   "supports": "The system prompts only the first time an app requests authorization, and later requests do not prompt; ask in a context that explains why; provisional authorization delivers quietly to Notification Center until the person keeps or turns off notifications; interruption levels passive, active, time-sensitive (breaks through notification controls) and critical."
+  },
+  {
+   "id": "android-notification-permission",
+   "title": "Notification runtime permission",
+   "publisher": "Google (Android Developers)",
+   "url": "https://developer.android.com/develop/ui/views/notifications/notification-permission",
+   "status": "primary",
+   "verified_on": "2026-10-10",
+   "verified_against": "The Android Developers page, read directly",
+   "supports": "Android 13 (API 33) adds the POST_NOTIFICATIONS runtime permission and notifications are off by default for new installs; apps targeting 12L or lower get the dialog automatically, usually at startup; request it from a user action or after users know the app, explaining why."
+  },
+  {
+   "id": "rfc8058-one-click",
+   "title": "RFC 8058, Signaling One-Click Functionality for List Email Headers, and the Gmail and Yahoo bulk-sender requirements",
+   "publisher": "IETF; Google; Yahoo",
+   "year": 2017,
+   "url": "https://www.rfc-editor.org/rfc/rfc8058",
+   "status": "secondary",
+   "verified_on": "2026-10-10",
+   "verified_against": "Several email-deliverability references quoting the RFC and the providers' rules (the RFC and provider sites were not reachable)",
+   "supports": "One-click unsubscribe uses a List-Unsubscribe header with an HTTPS URI plus List-Unsubscribe-Post with the value List-Unsubscribe=One-Click, processed without further interaction; Gmail and Yahoo require it from bulk senders (Gmail cites more than 5,000 messages a day); a visible unsubscribe link is still expected in the body."
+  },
+  {
+   "id": "eu-price-indication",
+   "title": "Directive 98/6/EC Article 6a, inserted by Directive (EU) 2019/2161, and CJEU judgment C-330/23 (2024)",
+   "publisher": "European Union",
+   "year": 2019,
+   "url": "https://eur-lex.europa.eu/eli/dir/2019/2161/oj",
+   "status": "secondary",
+   "verified_on": "2026-10-10",
+   "verified_against": "Law-firm summaries of the directive and of the CJEU judgment (EUR-Lex was not reachable)",
+   "supports": "An announced price reduction must state the prior price, the lowest price applied in at least the 30 days before the reduction; percentage reductions and promotional price claims are judged against that prior price (CJEU, 2024)."
   }
  ],
  "scoring": {

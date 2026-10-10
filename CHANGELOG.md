@@ -9,6 +9,11 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Six areas (100 criteria; 28 areas and 565 criteria in total): collaboration
+  (COLLAB), enterprise administration (ADMIN), notification systems (NOTIF),
+  commerce and payments (COMM), in-product help (HELP), aesthetics and delight
+  (AES), with sources for notification permissions, one-click unsubscribe and
+  EU price-reduction rules.
 - Native mobile probes (`criteria/probes.yaml`, generated
   `references/native-probes.md`): 39 code search probes for iOS (SwiftUI,
   UIKit), Android (Compose, Views), Flutter and React Native, with platform
