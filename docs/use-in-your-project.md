@@ -8,9 +8,9 @@ Commit the skill into the repository, so every developer and every agent working
 
 ```sh
 mkdir -p .claude/skills
-git clone --depth 1 --branch v0.1.0 https://github.com/youmssi/ux-expert /tmp/ux-expert
+git clone --depth 1 --branch v1.0.0 https://github.com/youmssi/ux-expert /tmp/ux-expert
 cp -r /tmp/ux-expert/skills/ux-expert .claude/skills/
-git add .claude/skills/ux-expert && git commit -m "chore: add ux-expert skill v0.1.0"
+git add .claude/skills/ux-expert && git commit -m "chore: add ux-expert skill v1.0.0"
 ```
 
 Use the folder your agents read (`.claude/skills/` for Claude Code; see [install.md](install.md) for other clients). To update, repeat with the new tag and review the diff and the [CHANGELOG](../CHANGELOG.md): criterion IDs never change meaning, so stories and reports keep working.

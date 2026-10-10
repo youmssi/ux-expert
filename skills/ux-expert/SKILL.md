@@ -4,7 +4,7 @@ description: Use this skill whenever the task is about how people experience a p
 license: CC-BY-4.0 (content), MIT (code). See LICENSE files.
 metadata:
   author: youmssi
-  version: "0.1.0"
+  version: "1.0.0"
 ---
 
 # UX Expert

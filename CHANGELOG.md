@@ -7,6 +7,12 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-10
+
+First stable release. Criterion, pattern, probe and stack pack IDs, the skill
+layout, `catalogue.json` and the MCP interface are now covered by the
+[stability policy](docs/stability.md).
+
 ### Added
 
 - Stack packs (`criteria/stacks/*.yaml`, generated `references/stacks.md` and

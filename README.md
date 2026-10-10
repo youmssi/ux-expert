@@ -56,10 +56,10 @@ Agents load only what a task needs: the skill's description at startup, `SKILL.m
 
 | Agent | How | Available |
 |---|---|---|
-| Claude Code | `/plugin marketplace add youmssi/ux-expert`, then `/plugin install ux-expert@ux-expert` | v0.1 |
+| Claude Code | `/plugin marketplace add youmssi/ux-expert`, then `/plugin install ux-expert@ux-expert` | v1.0 |
 | Any Agent Skills client (Codex, Gemini CLI, Cursor…) | Copy `skills/ux-expert/` into the client's skills directory | now |
-| MCP clients (Claude Code, Cursor, VS Code, Codex, Gemini CLI…) | `npx -y ux-expert-mcp` — see [`mcp/README.md`](mcp/README.md) for each client | after the first npm release |
-| Chat apps without skills or MCP (ChatGPT web, DeepSeek, Grok…) | Upload a single-file bundle from the GitHub release | from the first release |
+| MCP clients (Claude Code, Cursor, VS Code, Codex, Gemini CLI…) | `npx -y ux-expert-mcp` — see [`mcp/README.md`](mcp/README.md) for each client | v1.0 (`ux-expert-mcp` on npm) |
+| Chat apps without skills or MCP (ChatGPT web, DeepSeek, Grok…) | Upload a single-file bundle from the GitHub release | v1.0 (GitHub release assets) |
 
 Step-by-step instructions for each tool: [`docs/install.md`](docs/install.md). To wire ux-expert into your team's workflow (stories, PRs, releases): [`docs/use-in-your-project.md`](docs/use-in-your-project.md).
 
@@ -90,7 +90,7 @@ The audit writes `ux-audit-report.md` and summarizes the verdict, top issues, qu
 | v0.4 | Evals on real products; calibrated severity |
 | v0.5 | Best-in-class pattern library, runtime checks (contrast, axe, screenshots), native platforms |
 | v0.6 | Collaboration, enterprise admin, notifications, commerce, in-product help, aesthetics |
-| v1.0 | Stable criterion IDs and schema, documentation site |
+| v1.0 | Stable criterion IDs and schema, documentation site, stack packs (Next.js, shadcn/ui, Radix, Playwright) |
 
 The full backlog and the known limitations are in [`docs/backlog/`](docs/backlog/README.md). What stays stable across releases is in the [stability policy](docs/stability.md).
 
