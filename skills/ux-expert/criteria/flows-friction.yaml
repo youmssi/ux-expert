@@ -1,0 +1,127 @@
+area: flows-friction
+prefix: FLOW
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- design
+criteria:
+- id: FLOW-01
+  name: Every critical flow is completable
+  check: Trace end to end
+  fail_signal: Any break, dead end or missing step
+  severity: S4
+- id: FLOW-02
+  name: Minimal steps
+  check: Each step passes the necessity test
+  fail_signal: ≥ 1 removable step on a critical flow
+  severity: S2–S3
+- id: FLOW-03
+  name: Minimal input
+  check: Fields that could be inferred, defaulted or deferred
+  fail_signal: Asking for known or unnecessary data
+  severity: S2
+- id: FLOW-04
+  name: Value before effort
+  check: Time-to-value step count; sign-up or payment placement
+  fail_signal: Heavy commitment before any value
+  severity: S2–S3
+- id: FLOW-05
+  name: Decisions are informed and few
+  check: Decision points have the needed info and sensible defaults
+  fail_signal: Choices the user cannot evaluate yet; more than ~7 equal options
+  severity: S2
+- id: FLOW-06
+  name: No memory burden across steps
+  check: The user needn't remember data between screens
+  fail_signal: Copying codes or IDs between screens; re-entering earlier data (WCAG 3.3.7)
+  severity: S2–S3
+- id: FLOW-07
+  name: Clear progress and orientation
+  check: Multi-step flows show step X of Y or a progress indicator
+  fail_signal: Unknown length; surprise extra steps
+  severity: S2
+- id: FLOW-08
+  name: Feedback after every action
+  check: Each action produces a visible result within 1 s
+  fail_signal: Silent success; silent failure
+  severity: S3
+  severity_note: S4 if silent failure
+  phases: &id001
+  - design
+  - build
+- id: FLOW-09
+  name: Back and edit without data loss
+  check: Back or edit within the flow preserves inputs
+  fail_signal: Inputs cleared; must restart
+  severity: S3
+  phases: *id001
+- id: FLOW-10
+  name: Interruption-safe
+  check: Drafts are saved; resumable after leaving or a session timeout
+  fail_signal: Progress lost on tab close or timeout
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost
+  phases: *id001
+- id: FLOW-11
+  name: Seams preserve intent
+  check: After email, OAuth or payment redirects, the user lands at their goal with context
+  fail_signal: Lands on a generic dashboard; intent lost
+  severity: S3
+  phases: *id001
+- id: FLOW-12
+  name: Edge seams handled
+  check: Expired or used links, declined cards, denied OAuth, double submit
+  fail_signal: Raw errors, or the user is stuck
+  severity: S3–S4
+  phases: *id001
+- id: FLOW-13
+  name: Idempotent critical actions
+  check: Double click or retry doesn't double-charge or double-create
+  fail_signal: Duplicates
+  severity: S3–S4
+  severity_note: S4 for payments
+  phases:
+  - build
+- id: FLOW-14
+  name: Exit flows are as easy as entry flows
+  check: Cancel, downgrade, delete and export are reachable and proportional
+  fail_signal: Cancellation harder than sign-up (also legal risk, → TRUST)
+  severity: S3
+- id: FLOW-15
+  name: Error recovery inside the flow
+  check: Errors are recoverable in place, with inputs kept
+  fail_signal: Error page that discards progress
+  severity: S3
+  phases: *id001
+- id: FLOW-16
+  name: Expert efficiency
+  check: 'Repeated flows have shortcuts: bulk actions, templates, duplicate, keyboard'
+  fail_signal: Experts forced through the novice wizard every time
+  severity: S2
+- id: FLOW-17
+  name: Permission and role dead ends
+  check: Users without permission see why and how to get access
+  fail_signal: Blank screen or a generic 403
+  severity: S2–S3
+  phases: *id001
+- id: FLOW-18
+  name: Consistent flow patterns
+  check: Similar tasks (create X, create Y) follow the same pattern
+  fail_signal: Each creation flow behaves differently
+  severity: S2
+- id: FLOW-19
+  name: Confirmation proportional to risk
+  check: 'Low-risk: no confirmation (use undo); high-risk: explicit confirmation'
+  fail_signal: Confirm dialogs everywhere (users stop reading them) or nowhere
+  severity: S2–S4
+- id: FLOW-20
+  name: Completion is clear
+  check: The end state confirms success and suggests the next step
+  fail_signal: Flow ends on an ambiguous screen
+  severity: S2

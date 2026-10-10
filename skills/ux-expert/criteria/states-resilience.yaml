@@ -1,0 +1,145 @@
+area: states-resilience
+prefix: STATE
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: run
+  sdk-api: run
+  ai-feature: run
+phases:
+- design
+- build
+criteria:
+- id: STATE-01
+  name: State matrix complete for critical screens
+  check: Matrix
+  fail_signal: Any ❌ on a critical screen
+  severity: S2–S4
+  severity_note: by state
+- id: STATE-02
+  name: First-use empty states guide action
+  check: Content of first-use empties
+  fail_signal: Blank area or "No data" only
+  severity: S2–S3
+- id: STATE-03
+  name: No-results states help recovery
+  check: Search/filter empties
+  fail_signal: No query echo, no clear-filters option
+  severity: S2
+- id: STATE-04
+  name: Loading is shown and shaped
+  check: Skeletons, spinners, button loading
+  fail_signal: Blank screens; layout jumps
+  severity: S2
+- id: STATE-05
+  name: No infinite loading
+  check: Timeouts lead to an error
+  fail_signal: Spinner forever on failure
+  severity: S3
+  phases: &id001
+  - build
+- id: STATE-06
+  name: Refresh keeps content
+  check: Stale-while-revalidate
+  fail_signal: Content blanks on refetch
+  severity: S2
+  phases: *id001
+- id: STATE-07
+  name: All errors caught and shown
+  check: Fetch/mutation error branches
+  fail_signal: Empty catch; console-only errors; silent failure
+  severity: S3–S4
+- id: STATE-08
+  name: Errors actionable
+  check: Message + reason + action + retry
+  fail_signal: Generic messages, no retry
+  severity: S2–S3
+- id: STATE-09
+  name: Errors differentiated
+  check: Network/permission/validation/server/rate-limit
+  fail_signal: One generic message for all
+  severity: S2
+- id: STATE-10
+  name: Error boundaries
+  check: Component and route-level boundaries
+  fail_signal: White screen on a component crash
+  severity: S3–S4
+  phases: *id001
+- id: STATE-11
+  name: Offline handling
+  check: Detection, banner, queued or flagged writes
+  fail_signal: Silent failure offline; data lost
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost; at least S3 for mobile and field apps
+- id: STATE-12
+  name: Session expiry is graceful
+  check: Re-auth in place, work preserved, warnings
+  fail_signal: Redirect to login and lose work
+  severity: S3
+  sources:
+  - wcag22
+- id: STATE-13
+  name: Concurrency conflicts handled
+  check: Versioning, conflict UI
+  fail_signal: Last write silently wins over another user's work
+  severity: S3
+- id: STATE-14
+  name: Extreme content safe
+  check: Long, zero, huge, null, special characters, missing media
+  fail_signal: Broken layout; "undefined"/"NaN"/"null" shown
+  severity: S2
+- id: STATE-15
+  name: Large data sets scale
+  check: Pagination, virtualization, limits
+  fail_signal: Freezes or crashes with large data
+  severity: S3
+  related:
+  - PERF
+  - DATA
+  phases: *id001
+- id: STATE-16
+  name: Autosave / unsaved-changes guard
+  check: Autosave or a navigation guard
+  fail_signal: Work lost on navigation
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost
+- id: STATE-17
+  name: Undo / soft delete
+  check: Undo for reversible actions; trash for important objects
+  fail_signal: Irreversible delete with no confirmation
+  severity: S4
+- id: STATE-18
+  name: Destructive scope clarity
+  check: Counts and names in confirmations; type-to-confirm for critical
+  fail_signal: '"Are you sure?" with no specifics'
+  severity: S2–S3
+- id: STATE-19
+  name: Permission-denied states
+  check: Explain why and how to get access
+  fail_signal: Blank, or a raw 403
+  severity: S2
+- id: STATE-20
+  name: Not-found states
+  check: Helpful 404 for objects and routes
+  fail_signal: Crash or blank on a missing object
+  severity: S2
+- id: STATE-21
+  name: Rate limit / quota states
+  check: Clear limit, reset time, upgrade or wait path
+  fail_signal: Raw 429 or generic error
+  severity: S2
+- id: STATE-22
+  name: Third-party failure fallbacks
+  check: Payment, auth, maps, AI provider failures handled
+  fail_signal: Whole page fails when a third party fails
+  severity: S2–S3
+- id: STATE-23
+  name: Error monitoring exists
+  check: Sentry/Datadog/etc. wired to front-end errors
+  fail_signal: Errors invisible to the team
+  severity: S2
+  related:
+  - MEAS
+  phases: *id001

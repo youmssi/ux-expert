@@ -1,0 +1,47 @@
+{
+  "skill_name": "ux-expert",
+  "evals": [
+    {
+      "id": "audit-signup-app",
+      "kind": "audit",
+      "prompt": "This is the front end of our new SaaS (evals/fixtures/signup-app). We launch next month. Can you do a full UX audit of what's there and tell me what to fix first?",
+      "expected_output": "An audit report in the skill's finding format: findings citing files and criterion IDs, scored P0–P3, with the seeded defects found and the decoy patterns not reported.",
+      "files": ["fixtures/signup-app/"],
+      "answer_key": "fixtures/signup-app/answers.yaml",
+      "assertions": [
+        "Recall of seeded defects is at least 0.7",
+        "No decoy is reported as a defect",
+        "Every cited criterion ID exists in the catalogue",
+        "Every finding has severity, priority, recommendation and verification"
+      ]
+    },
+    {
+      "id": "audit-ai-chat",
+      "kind": "audit",
+      "prompt": "review the UX of our AI sales assistant in evals/fixtures/ai-chat — anything risky before we let customers use it?",
+      "expected_output": "Findings on control, approval of agent actions, memory transparency, streaming and errors, citing files and criterion IDs, without flagging the correct citations component.",
+      "files": ["fixtures/ai-chat/"],
+      "answer_key": "fixtures/ai-chat/answers.yaml",
+      "assertions": [
+        "Recall of seeded defects is at least 0.7",
+        "No decoy is reported as a defect",
+        "Every cited criterion ID exists in the catalogue",
+        "Every finding has severity, priority, recommendation and verification"
+      ]
+    },
+    {
+      "id": "design-clinic-brief",
+      "kind": "design",
+      "prompt": "We're about to write the backlog for CareSlot (brief in evals/fixtures/clinic-brief/brief.md). Before we do, write the UX acceptance criteria for each story so the devs know exactly what good looks like.",
+      "expected_output": "One UX requirements block per story with 5–15 specific, testable acceptance criteria tagged with criterion IDs, edge cases (empty, error, accessibility, small screen, Spanish), open decisions as [INTERACTIVE STEP], and a UX Definition of Done.",
+      "files": ["fixtures/clinic-brief/brief.md"],
+      "assertions": [
+        "Each of CARE-1, CARE-2 and CARE-3 has between 5 and 15 tagged acceptance criteria",
+        "Every story covers states and accessibility (at least one STATE- and one A11Y- ID)",
+        "Every cited criterion ID exists in the catalogue",
+        "At least one [INTERACTIVE STEP] is raised (for example the no-show fee)",
+        "A UX Definition of Done section is present"
+      ]
+    }
+  ]
+}

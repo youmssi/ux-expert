@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+env:
+  # Reference validator for the Agent Skills spec (not published to PyPI).
+  SKILLS_REF: "skills-ref @ git+https://github.com/agentskills/agentskills@69ef37e9424c0a7ea9dd2293b559e43ec8176379#subdirectory=skills-ref"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install script dependencies
+        run: pip install -r scripts/requirements.txt
+      - name: Test the scripts
+        run: python -m unittest discover -s scripts -p "test_*.py"
+      - name: Test the eval grader and answer keys
+        run: python -m unittest discover -s evals -p "test_*.py"
+      - name: Repository rules
+        run: python scripts/validate.py
+      - name: Criteria catalogue and generated tables
+        run: python scripts/generate.py --check
+      - name: Agent Skills spec
+        run: |
+          pip install "$SKILLS_REF"
+          for skill in skills/*/; do skills-ref validate "$skill"; done
+
+  runtime:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/runtime-check
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install script dependencies (the site builder)
+        run: pip install -r ../../scripts/requirements.txt
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: tools/runtime-check/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Runtime checks on a fixture with known problems, and on the documentation site
+        run: npm test
+
+  mcp:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mcp/package-lock.json
+      - run: npm ci
+      - name: Build and test (unit, in-process protocol, stdio)
+        run: npm test
+      - name: Package contains the skill
+        run: |
+          npm pack --dry-run --json > pack.json
+          node -e "const f=require('./pack.json')[0].files.map(x=>x.path); for (const p of ['skill/SKILL.md','skill/criteria/catalogue.json','dist/index.js','LICENSE-CONTENT']) if (!f.includes(p)) { console.error('missing from package: '+p); process.exit(1) }"

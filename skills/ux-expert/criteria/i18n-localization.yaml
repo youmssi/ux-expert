@@ -1,0 +1,126 @@
+area: i18n-localization
+prefix: I18N
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: light
+  ai-feature: run
+phases:
+- build
+criteria:
+- id: I18N-01
+  name: Strings externalized
+  fail_signal: Hard-coded UI strings (in multi-locale products)
+  severity: S2–S3
+- id: I18N-02
+  name: Non-UI strings localized
+  fail_signal: Emails, notifications, server errors, meta, alt text only in English
+  severity: S2
+- id: I18N-03
+  name: No concatenation
+  fail_signal: Sentences built from fragments
+  severity: S2
+- id: I18N-04
+  name: Correct plural/gender handling
+  fail_signal: Binary `n === 1` logic; no ICU
+  severity: S2
+- id: I18N-05
+  name: Translator context
+  fail_signal: Ambiguous keys without descriptions
+  severity: S1
+- id: I18N-06
+  name: No text in images
+  fail_signal: Text baked into images
+  severity: S2
+  phases: &id001
+  - design
+  - build
+- id: I18N-07
+  name: Expansion-resilient layout
+  fail_signal: Fixed-width labels clip under pseudo-localization
+  severity: S2
+  phases: *id001
+  sources:
+  - w3c-text-size
+- id: I18N-08
+  name: '`lang` and `dir` set correctly'
+  fail_signal: Missing or not updated per locale
+  severity: S2–S3
+  severity_note: S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
+  related:
+  - A11Y-28
+  sources:
+  - wcag22
+- id: I18N-09
+  name: Logical CSS properties (RTL)
+  fail_signal: Physical left/right properties throughout
+  severity: S2–S3
+  severity_note: if RTL targeted
+- id: I18N-10
+  name: Icon mirroring rules
+  fail_signal: Arrows not mirrored, or logos mirrored
+  severity: S1–S2
+- id: I18N-11
+  name: Bidi isolation for user content
+  fail_signal: Garbled mixed-direction text
+  severity: S2
+- id: I18N-12
+  name: Locale-aware dates and times
+  fail_signal: Hard-coded formats; ambiguous numeric dates
+  severity: S2–S3
+- id: I18N-13
+  name: Time zones correct and explicit
+  fail_signal: Wrong times; zone not shown in scheduling
+  severity: S3
+  phases: *id001
+- id: I18N-14
+  name: Locale-aware numbers and currencies
+  fail_signal: Hard-coded symbols or separators; currency inferred from language
+  severity: S2–S3
+- id: I18N-15
+  name: Units and measurement systems
+  fail_signal: Imperial/metric not adapted where it matters
+  severity: S1–S2
+  phases: *id001
+- id: I18N-16
+  name: Locale-aware sorting and search
+  fail_signal: ASCII sort for names; accent-sensitive search
+  severity: S1–S2
+- id: I18N-17
+  name: Flexible names, addresses, phones
+  fail_signal: Forced first/last; US-only address form; rigid phone format
+  severity: S2–S3
+  phases: *id001
+- id: I18N-18
+  name: Locale switching and persistence
+  fail_signal: No override; flags for languages; preference lost
+  severity: S2
+  phases: *id001
+- id: I18N-19
+  name: Graceful fallback
+  fail_signal: Raw keys (`checkout.title`) shown
+  severity: S2
+- id: I18N-20
+  name: Localized URLs and hreflang (marketing)
+  fail_signal: Missing for multi-locale sites
+  severity: S1–S2
+  applies_to:
+  - marketing-site
+- id: I18N-21
+  name: Script/font coverage
+  fail_signal: Tofu boxes (□); poor rendering for target scripts
+  severity: S2–S3
+- id: I18N-22
+  name: Cultural appropriateness
+  fail_signal: Culturally confusing or offensive imagery, icons or examples
+  severity: S1–S3
+  phases: *id001
+- id: I18N-23
+  name: Local payment and legal norms (commerce)
+  fail_signal: Only card payments where local methods dominate; missing local legal info
+  severity: S2–S3
+  severity_note: S3 where local legal information is required
+  phases: *id001

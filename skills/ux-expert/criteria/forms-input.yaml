@@ -1,0 +1,176 @@
+area: forms-input
+prefix: FORM
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: light
+phases:
+- design
+- build
+criteria:
+- id: FORM-01
+  name: Only necessary fields, asked when needed
+  check: Necessity table
+  fail_signal: Removable or deferrable fields on critical forms
+  severity: S2–S3
+  phases: &id002
+  - design
+- id: FORM-02
+  name: Visible persistent labels
+  check: Every input has a label
+  fail_signal: Placeholder-only labels
+  severity: S3
+  related:
+  - A11Y
+  sources:
+  - wcag22
+- id: FORM-03
+  name: Label/help association
+  check: '`for`/`id`, `aria-describedby`'
+  fail_signal: Unassociated labels or help
+  severity: S2–S3
+  phases: &id001
+  - build
+  sources:
+  - wcag22
+- id: FORM-04
+  name: Single-column logical layout
+  check: Layout of critical forms
+  fail_signal: 'Multi-column forms causing skipped fields (exception: short related pairs such as city/postal)'
+  severity: S2
+- id: FORM-05
+  name: Correct input types and keyboards
+  check: '`type`, `inputmode`'
+  fail_signal: Wrong keyboards on mobile; `type=number` for codes
+  severity: S2
+  phases: *id001
+- id: FORM-06
+  name: Autocomplete tokens
+  check: '`autocomplete` attributes'
+  fail_signal: Missing on personal, address, payment or credential fields
+  severity: S2–S3
+  severity_note: WCAG 1.3.5; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
+  phases: *id001
+  sources:
+  - wcag22
+- id: FORM-07
+  name: Format tolerance
+  check: Accept spaces, dashes, parentheses; trim whitespace; case-insensitive emails
+  fail_signal: Rejects valid input over formatting
+  severity: S2–S3
+- id: FORM-08
+  name: Smart, safe defaults
+  check: Defaults present and in the user's interest
+  fail_signal: No defaults; or defaults against the user (pre-checked consent)
+  severity: S2
+  severity_note: S3+ if it is a dark pattern
+  related:
+  - TRUST
+  phases: *id002
+- id: FORM-09
+  name: Validation timing
+  check: Errors shown on submit; live re-validation while correcting; positive feedback may be live
+  fail_signal: Errors appear while typing or as soon as a field is left; errors only after a server round
+    trip; fixed errors stay visible
+  severity: S2
+  sources:
+  - govuk-validation
+  - cms-validation
+- id: FORM-10
+  name: Error placement and clarity
+  check: Inline, specific, with fix guidance
+  fail_signal: Generic "Invalid" or "Error"; errors only at the top
+  severity: S2–S3
+  sources:
+  - wcag22
+- id: FORM-11
+  name: Error focus management
+  check: Focus to first error or summary on submit
+  fail_signal: Errors appear off-screen with no focus change
+  severity: S2–S3
+  phases: *id001
+  sources:
+  - govuk-validation
+- id: FORM-12
+  name: Input preserved on error
+  check: Data retained after server or validation errors
+  fail_signal: Form cleared
+  severity: S3
+- id: FORM-13
+  name: Required/optional clear
+  check: Consistent marking with a legend
+  fail_signal: Ambiguous or color-only asterisk
+  severity: S2
+  phases: *id002
+- id: FORM-14
+  name: Submit labeled by outcome
+  check: Button copy
+  fail_signal: '"Submit", "OK", "Continue" where the outcome matters (payments)'
+  severity: S1–S2
+  phases: *id002
+- id: FORM-15
+  name: Double-submit prevention
+  check: Loading/disabled during submit; idempotency
+  fail_signal: Multiple records or charges
+  severity: S3–S4
+  phases: *id001
+- id: FORM-16
+  name: Password field usability
+  check: Show/hide, rules upfront, paste, manager support, sane max length
+  fail_signal: Paste blocked; rules revealed only after failure
+  severity: S2–S3
+  sources:
+  - nist-800-63b-4
+- id: FORM-17
+  name: OTP/verification usability
+  check: Paste whole code, `one-time-code`, resend with timer
+  fail_signal: Six boxes that break paste; no resend
+  severity: S2–S3
+- id: FORM-18
+  name: Accessible authentication
+  check: No cognitive tests without alternatives; CAPTCHA alternatives
+  fail_signal: Inaccessible CAPTCHA blocks sign-up
+  severity: S3–S4
+  severity_note: WCAG 3.3.8
+  sources:
+  - wcag22
+- id: FORM-19
+  name: File upload clarity
+  check: Limits upfront, progress, per-file errors, alternatives to drag
+  fail_signal: Silent failures on large or invalid files
+  severity: S2–S3
+- id: FORM-20
+  name: Date/time input usability
+  check: Typed + picker; locale; time zone
+  fail_signal: Picker-only with tedious year navigation; ambiguous formats (03/04)
+  severity: S2
+- id: FORM-21
+  name: Long-form resilience
+  check: Autosave and resume
+  fail_signal: Long form lost on timeout or navigation
+  severity: S3–S4
+  severity_note: S4 when user-created content is lost
+- id: FORM-22
+  name: No redundant entry
+  check: Previously given info isn't asked again; billing = shipping option
+  fail_signal: Re-asking known data
+  severity: S2–S3
+  severity_note: WCAG 3.3.7; S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
+  phases: *id002
+  sources:
+  - wcag22
+- id: FORM-23
+  name: Client/server rule parity
+  check: Shared schema or matching rules
+  fail_signal: Client passes, server rejects with a different message
+  severity: S2
+  phases: *id001
+- id: FORM-24
+  name: Enter-key behavior
+  check: Submits single-line forms; documented in chat or multi-line inputs
+  fail_signal: Enter does nothing, or unexpectedly submits a multi-line field
+  severity: S1–S2

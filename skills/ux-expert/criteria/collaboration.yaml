@@ -1,0 +1,112 @@
+area: collaboration
+prefix: COLLAB
+applicability:
+  web-app: conditional
+  marketing-site: n/a
+  mobile: conditional
+  desktop: conditional
+  cli: n/a
+  sdk-api: n/a
+  ai-feature: conditional
+applicability_note: 'Only when several people work on shared objects: documents, projects, boards, records, conversations'
+phases:
+- design
+- build
+criteria:
+- id: COLLAB-01
+  name: Access visible on the object
+  fail_signal: Users cannot tell who can see or edit what they are looking at
+  severity: S2–S3
+  severity_note: S3 when private content is exposed
+  related:
+  - TRUST-13
+- id: COLLAB-02
+  name: Roles explained in plain words
+  fail_signal: Role names with no statement of what each allows
+  severity: S2
+  related:
+  - ADMIN-05
+- id: COLLAB-03
+  name: Invite and request-access paths
+  fail_signal: '"You don''t have access" with no way to request it; invitee lands on a generic home page'
+  severity: S2–S3
+  related:
+  - ONB-14
+  - STATE-19
+- id: COLLAB-04
+  name: Link-sharing scope stated before sharing
+  fail_signal: Public link created by default, or its scope hidden behind the copy button
+  severity: S3
+  severity_note: S4 when private data becomes public
+  related:
+  - TRUST-13
+- id: COLLAB-05
+  name: Presence of others shown
+  fail_signal: Two people edit the same object without knowing it
+  severity: S2
+- id: COLLAB-06
+  name: Concurrent edits never lose work
+  fail_signal: Last write wins silently and work is lost
+  severity: S3–S4
+  severity_note: S4 when work is lost
+  related:
+  - STATE-13
+  phases: &id001
+  - build
+- id: COLLAB-07
+  name: Change history with attribution and restore
+  fail_signal: No way to see who changed what, or to restore a previous version
+  severity: S2–S3
+- id: COLLAB-08
+  name: Comments anchored to content
+  fail_signal: Comments detach or disappear when the content they point to is edited
+  severity: S2
+- id: COLLAB-09
+  name: Mentions reach people who can see the content
+  fail_signal: Mentioning someone without access fails silently
+  severity: S2
+- id: COLLAB-10
+  name: Collaboration notifications batched
+  fail_signal: One notification per edit or keystroke; no digest
+  severity: S2
+  related:
+  - NOTIF-08
+- id: COLLAB-11
+  name: Content survives member removal
+  fail_signal: Content orphaned or data lost when a member leaves or is removed
+  severity: S3–S4
+  severity_note: S4 when data is lost
+  related:
+  - ADMIN-09
+- id: COLLAB-12
+  name: Activity feed filterable
+  fail_signal: Every event in one unfiltered stream
+  severity: S1–S2
+- id: COLLAB-13
+  name: Handoffs explicit
+  fail_signal: No assignee or status where work passes between people; unclear whose turn it is
+  severity: S2
+- id: COLLAB-14
+  name: Offline edits sync or conflict visibly
+  fail_signal: Offline work lost silently on reconnect
+  severity: S3–S4
+  severity_note: S4 when work is lost
+  related:
+  - STATE-11
+  phases: *id001
+- id: COLLAB-15
+  name: Access removal takes effect at once
+  fail_signal: A removed member keeps viewing or editing in an open session or through a token
+  severity: S3
+  related:
+  - TRUST-17
+  phases: *id001
+- id: COLLAB-16
+  name: Awareness indicators do not obstruct
+  fail_signal: Other people's cursors or selections cover content and cannot be hidden
+  severity: S1
+- id: COLLAB-17
+  name: External collaborators marked
+  fail_signal: No sign that a participant is outside the organization
+  severity: S2–S3
+  severity_note: S3 in regulated or confidential work

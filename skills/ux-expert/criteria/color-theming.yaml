@@ -1,0 +1,130 @@
+area: color-theming
+prefix: COL
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
+- build
+criteria:
+- id: COL-01
+  name: Tokenized palette with semantic roles
+  check: Token structure
+  fail_signal: No semantic tokens; components use primitives or hex directly
+  severity: S2
+  related:
+  - DS
+- id: COL-02
+  name: Body text contrast
+  check: Computed ratio
+  fail_signal: < 4.5:1
+  severity: S3
+  severity_note: WCAG AA
+  sources:
+  - wcag22
+- id: COL-03
+  name: Secondary/muted/placeholder text contrast
+  check: Computed ratio
+  fail_signal: < 4.5:1 for meaningful muted text; placeholder carrying instructions < 4.5:1
+  severity: S2–S3
+  sources:
+  - wcag22
+- id: COL-04
+  name: Large text and headings contrast
+  check: Computed ratio
+  fail_signal: < 3:1
+  severity: S3
+  sources:
+  - wcag22
+- id: COL-05
+  name: Non-text contrast (inputs, focus, icons, chart marks)
+  check: Computed ratio
+  fail_signal: < 3:1 against adjacent colors
+  severity: S2–S3
+  sources:
+  - wcag22
+- id: COL-06
+  name: Text on brand/colored fills
+  check: Button labels, badges, banners
+  fail_signal: < 4.5:1 (common with white on mid-brand colors such as orange or light green)
+  severity: S2–S3
+  sources:
+  - wcag22
+- id: COL-07
+  name: No color-only meaning
+  check: Status, errors, required fields, links, charts
+  fail_signal: Meaning lost in greyscale
+  severity: S3
+  severity_note: WCAG 1.4.1
+  sources:
+  - wcag22
+- id: COL-08
+  name: Consistent semantic colors
+  check: Usage mapping across components
+  fail_signal: The same color with conflicting meanings
+  severity: S2
+- id: COL-09
+  name: Restraint (color as signal)
+  check: Share of saturated color on screens
+  fail_signal: Many competing saturated colors; primary action not the most salient
+  severity: S2
+- id: COL-10
+  name: Distinct interaction states
+  check: Hover, active, focus, selected, disabled
+  fail_signal: Missing or indistinguishable states
+  severity: S2
+  related:
+  - INT
+- id: COL-11
+  name: Color-vision-deficiency safe
+  check: Simulation on critical screens and charts
+  fail_signal: Indistinguishable critical pairs
+  severity: S2–S3
+  sources:
+  - medlineplus-cvd
+- id: COL-12
+  name: Dark mode quality (if present or expected)
+  check: Contrast, elevation, un-themed islands
+  fail_signal: Pure inversion; white islands; failing contrast in dark
+  severity: S2–S3
+- id: COL-13
+  name: Theme preference respected
+  check: '`prefers-color-scheme`, persisted override, no flash'
+  fail_signal: Theme flashes on load; preference ignored
+  severity: S2
+  phases: &id001
+  - build
+- id: COL-14
+  name: Forced-colors / high-contrast support
+  check: '`forced-colors` media query testing'
+  fail_signal: Controls or focus disappear
+  severity: S2–S3
+  phases: *id001
+- id: COL-15
+  name: Text over images is legible
+  check: Scrim or overlay present
+  fail_signal: Contrast depends on image content
+  severity: S2
+- id: COL-16
+  name: Brand applied consistently
+  check: Brand colors across product, emails, marketing
+  fail_signal: Several slightly different brand blues
+  severity: S1
+- id: COL-17
+  name: Disabled vs. enabled distinguishable
+  check: Disabled styling
+  fail_signal: Disabled looks enabled (or vice versa)
+  severity: S2
+- id: COL-18
+  name: Theming architecture scalable
+  check: Themes switch via tokens, not duplicated CSS
+  fail_signal: '`dark:` overrides scattered per component with gaps'
+  severity: S1–S2
+  related:
+  - DS
+  phases: *id001

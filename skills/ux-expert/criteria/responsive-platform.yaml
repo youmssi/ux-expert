@@ -1,0 +1,120 @@
+area: responsive-platform
+prefix: RESP
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: light
+  cli: n/a
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
+- build
+criteria:
+- id: RESP-01
+  name: Device/platform matrix defined and tested
+  fail_signal: No defined matrix; untested on iOS Safari
+  severity: S2
+- id: RESP-02
+  name: No horizontal overflow at supported widths
+  fail_signal: Horizontal scroll or cut-off content
+  severity: S2–S3
+  phases: &id001
+  - build
+- id: RESP-03
+  name: Content-driven breakpoints without gaps
+  fail_signal: Broken layouts between breakpoints
+  severity: S2
+  phases: *id001
+- id: RESP-04
+  name: Content re-prioritized on small screens
+  fail_signal: Desktop layout squeezed; primary task below secondary content
+  severity: S2–S3
+- id: RESP-05
+  name: Mobile navigation pattern appropriate
+  fail_signal: Core destinations hidden in a hamburger; too many tabs
+  severity: S2
+- id: RESP-06
+  name: Thumb-reachable primary actions
+  fail_signal: Primary actions only in the top corners
+  severity: S2
+- id: RESP-07
+  name: Touch target size and spacing
+  fail_signal: < 44 pt / 48 dp; cramped adjacent targets
+  severity: S2–S3
+  sources:
+  - wcag22
+  - apple-hig-targets
+  - material-targets
+- id: RESP-08
+  name: No hover dependence
+  fail_signal: Hover-only menus, actions or info on touch devices
+  severity: S3
+- id: RESP-09
+  name: Virtual keyboard handled
+  fail_signal: Inputs hidden under the keyboard; wrong keyboard; no `enterkeyhint`
+  severity: S2–S3
+  phases: *id001
+- id: RESP-10
+  name: Viewport units and safe areas correct
+  fail_signal: '`100vh` cut-offs; content under the notch or home indicator'
+  severity: S2
+  phases: *id001
+- id: RESP-11
+  name: Orientation support
+  fail_signal: Locked or broken in landscape
+  severity: S2–S3
+  severity_note: S3 where accessibility law applies, e.g. EU EAA, ADA, Section 508
+  sources:
+  - wcag22
+- id: RESP-12
+  name: Platform conventions followed (iOS)
+  fail_signal: Blocked back swipe; non-standard nav; no Dynamic Type
+  severity: S2
+  applies_to:
+  - mobile
+- id: RESP-13
+  name: Platform conventions followed (Android)
+  fail_signal: System back exits or misbehaves; no edge-to-edge insets
+  severity: S2–S3
+  applies_to:
+  - mobile
+- id: RESP-14
+  name: Desktop conventions followed
+  fail_signal: Wrong modifier keys; no context menus where expected; unusable at small window sizes
+  severity: S2
+  applies_to:
+  - desktop
+  - web-app
+- id: RESP-15
+  name: Tables and data usable on small screens
+  fail_signal: Unreadable or unusable data views on mobile
+  severity: S2
+  related:
+  - DATA
+- id: RESP-16
+  name: Modals and overlays adapt
+  fail_signal: Desktop modals cut off on mobile; should be full-screen sheets
+  severity: S2
+- id: RESP-17
+  name: PWA quality (if PWA)
+  fail_signal: Not installable when intended; no offline fallback; stale updates
+  severity: S2
+  applies_to:
+  - web-app
+  - marketing-site
+- id: RESP-18
+  name: Cross-browser support
+  fail_signal: Broken features in a supported browser; no graceful degradation
+  severity: S2–S3
+  phases: *id001
+- id: RESP-19
+  name: High-DPI and asset quality
+  fail_signal: Blurry images and icons on retina/high-DPI screens
+  severity: S1
+  phases: *id001
+- id: RESP-20
+  name: 'Print styles (if users print: invoices, reports, tickets)'
+  fail_signal: Printing produces broken or unusable output
+  severity: S1–S2

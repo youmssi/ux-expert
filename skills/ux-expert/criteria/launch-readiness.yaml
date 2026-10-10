@@ -1,0 +1,115 @@
+area: launch-readiness
+prefix: LAUNCH
+applicability:
+  web-app: conditional
+  marketing-site: run
+  mobile: conditional
+  desktop: conditional
+  cli: conditional
+  sdk-api: conditional
+  ai-feature: conditional
+applicability_note: run in pre-launch gate mode
+phases:
+- design
+- build
+criteria:
+- id: LAUNCH-01
+  name: Value proposition clear in 5 seconds
+  fail_signal: Visitor can't tell what, who or next step
+  severity: S3
+- id: LAUNCH-02
+  name: Single, specific primary CTA
+  fail_signal: Competing CTAs; vague "Learn more" as the primary
+  severity: S2
+- id: LAUNCH-03
+  name: Real product shown
+  fail_signal: Only abstract illustrations; misleading visuals
+  severity: S2
+- id: LAUNCH-04
+  name: Credible, real social proof
+  fail_signal: Unattributed or fabricated proof
+  severity: S2–S3
+- id: LAUNCH-05
+  name: Pricing clear and comparable
+  fail_signal: Hidden totals; confusing plan differences
+  severity: S3
+- id: LAUNCH-06
+  name: Plan intent preserved into sign-up
+  fail_signal: Plan selection lost
+  severity: S2
+- id: LAUNCH-07
+  name: Message consistency across the funnel
+  fail_signal: Promise mismatch between ad, landing and onboarding
+  severity: S2
+- id: LAUNCH-08
+  name: SEO and indexing basics
+  fail_signal: '`noindex` in production; missing titles, sitemap or canonical'
+  severity: S2–S3
+  applies_to:
+  - marketing-site
+  - web-app
+- id: LAUNCH-09
+  name: Social previews
+  fail_signal: Missing or broken OG images and titles
+  severity: S1–S2
+  applies_to:
+  - marketing-site
+  - web-app
+- id: LAUNCH-10
+  name: App store listing accurate and compliant
+  fail_signal: Misleading screenshots; data labels inconsistent; no in-app deletion
+  severity: S2–S3
+  applies_to:
+  - mobile
+- id: LAUNCH-11
+  name: Help content for top tasks and problems
+  fail_signal: No help, or help that doesn't cover critical flows
+  severity: S2
+- id: LAUNCH-12
+  name: Support channels and expectations
+  fail_signal: No visible contact or response expectations
+  severity: S2
+- id: LAUNCH-13
+  name: Status page
+  fail_signal: None linked
+  severity: S1–S2
+- id: LAUNCH-14
+  name: Legal pages present and linked
+  fail_signal: Missing terms, privacy, cookies or imprint where required
+  severity: S3
+  severity_note: legal review
+- id: LAUNCH-15
+  name: Transactional emails complete and deliverable
+  fail_signal: Missing lifecycle emails; SPF/DKIM/DMARC not set; broken rendering
+  severity: S3
+- id: LAUNCH-16
+  name: Brand consistency across touchpoints
+  fail_signal: Different names, logos or tone across site, app and emails
+  severity: S1–S2
+- id: LAUNCH-17
+  name: Critical flows verified in a production-like environment
+  fail_signal: Not verified end to end
+  severity: S4
+  severity_note: gate
+  phases: &id001
+  - build
+- id: LAUNCH-18
+  name: Analytics and monitoring live
+  fail_signal: Not firing in production; no alerts
+  severity: S2–S3
+  phases: *id001
+- id: LAUNCH-19
+  name: Rollback and feature-flag plan
+  fail_signal: No rollback path
+  severity: S2–S3
+  phases: *id001
+- id: LAUNCH-20
+  name: Launch-day runbook and owners
+  fail_signal: No owners or monitoring plan
+  severity: S2
+  phases: *id001
+- id: LAUNCH-21
+  name: Gate verdict produced with conditions
+  fail_signal: No explicit Go/No-Go with reasons
+  severity: S2
+  phases: *id001

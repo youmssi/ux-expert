@@ -1,0 +1,128 @@
+area: ai-interfaces
+prefix: AI
+applicability:
+  web-app: conditional
+  marketing-site: n/a
+  mobile: conditional
+  desktop: conditional
+  cli: conditional
+  sdk-api: conditional
+  ai-feature: run
+applicability_note: run when the product contains an AI or LLM feature
+phases:
+- design
+- build
+criteria:
+- id: AI-01
+  name: Capabilities discoverable
+  fail_signal: Blank prompt box with no guidance; AI hidden from the moment of need
+  severity: S2
+- id: AI-02
+  name: Limitations communicated in context
+  fail_signal: No limitation messaging; or only legal boilerplate
+  severity: S2
+- id: AI-03
+  name: AI content labeled
+  fail_signal: Users can't tell AI-generated from human or system content
+  severity: S2–S3
+- id: AI-04
+  name: Input usability
+  fail_signal: No multi-line; input lost on error; unclear send behavior
+  severity: S2
+- id: AI-05
+  name: Prompt assistance / structured inputs
+  fail_signal: Core jobs need prompt-engineering skill
+  severity: S2
+- id: AI-06
+  name: Fast first feedback and streaming
+  fail_signal: Long blank waits; no streaming for long outputs
+  severity: S2–S3
+- id: AI-07
+  name: Progress for multi-step/agentic work
+  fail_signal: Opaque long runs
+  severity: S2
+- id: AI-08
+  name: Stop / interrupt
+  fail_signal: Cannot stop generation or agent runs
+  severity: S2–S3
+- id: AI-09
+  name: Output rendering quality
+  fail_signal: Raw Markdown; code without copy; broken tables
+  severity: S1–S2
+- id: AI-10
+  name: Grounding and citations
+  fail_signal: Claims from data or the web without sources
+  severity: S2–S3
+  severity_note: S3 high-stakes
+- id: AI-11
+  name: Uncertainty and verification aids
+  fail_signal: No diffs or previews; low-confidence fields not flagged
+  severity: S2–S3
+- id: AI-12
+  name: Edit, regenerate and versions
+  fail_signal: No way to correct or compare
+  severity: S2
+- id: AI-13
+  name: Easy dismissal of suggestions
+  fail_signal: Intrusive proactive AI that is hard to ignore
+  severity: S2
+- id: AI-14
+  name: Context transparency and control
+  fail_signal: Users can't see or choose what context was used
+  severity: S2
+- id: AI-15
+  name: Preview and approval before consequential actions
+  fail_signal: Agents act without confirmation
+  severity: S4
+- id: AI-16
+  name: Scoped permissions and audit log
+  fail_signal: Broad permissions; no log of actions
+  severity: S3
+- id: AI-17
+  name: Undo/rollback for AI actions
+  fail_signal: Irreversible AI changes
+  severity: S3–S4
+- id: AI-18
+  name: Differentiated AI errors
+  fail_signal: One generic error for timeout, limit, refusal and outage
+  severity: S2
+- id: AI-19
+  name: Graceful refusals
+  fail_signal: Refusals that are unexplained or preachy, with no alternative path
+  severity: S2
+- id: AI-20
+  name: Provider-failure fallback
+  fail_signal: Whole feature or page breaks when the provider fails
+  severity: S2–S3
+- id: AI-21
+  name: Feedback loop
+  fail_signal: No way to rate or report outputs
+  severity: S1–S2
+- id: AI-22
+  name: Memory transparency and control
+  fail_signal: Hidden memory; no view, edit or delete
+  severity: S3
+- id: AI-23
+  name: Data-use disclosure and controls
+  fail_signal: Training/storage use undisclosed; no admin controls for B2B
+  severity: S3
+  related:
+  - TRUST
+- id: AI-24
+  name: Limits and cost visibility
+  fail_signal: Users hit limits without warning
+  severity: S2
+- id: AI-25
+  name: High-stakes domain safeguards
+  fail_signal: Health/legal/finance outputs auto-applied, without sources or verification
+  severity: S3–S4
+- id: AI-26
+  name: Accessible AI output
+  fail_signal: Streaming spams screen readers; no keyboard access to actions
+  severity: S2–S3
+- id: AI-27
+  name: Evaluation and monitoring hooks
+  fail_signal: No logging of failures, feedback or quality signals
+  severity: S2
+  related:
+  - MEAS

@@ -1,0 +1,100 @@
+area: design-system
+prefix: DS
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: light
+phases:
+- build
+criteria:
+- id: DS-01
+  name: Tokens exist for all core categories
+  fail_signal: Missing color/spacing/type/radius/shadow/motion/z-index tokens
+  severity: S2
+  phases: &id001
+  - design
+  - build
+- id: DS-02
+  name: Semantic token layer
+  fail_signal: Components use primitives (`blue-500`) instead of roles (`--color-action-primary`)
+  severity: S2
+  phases: *id001
+- id: DS-03
+  name: Token adoption
+  fail_signal: < ~90% adoption in a category; many hard-coded values
+  severity: S2
+  severity_note: systemic
+- id: DS-04
+  name: No near-duplicate values
+  fail_signal: Many near-identical colors, sizes and radii
+  severity: S1–S2
+- id: DS-05
+  name: Canonical components for core primitives
+  fail_signal: Missing core components; each team builds its own
+  severity: S2
+  phases: *id001
+- id: DS-06
+  name: No forks/duplicates
+  fail_signal: ≥ 2 implementations of the same primitive
+  severity: S2
+- id: DS-07
+  name: Controlled variants
+  fail_signal: Variant explosion; boolean style props
+  severity: S1–S2
+- id: DS-08
+  name: Consistent component APIs
+  fail_signal: Inconsistent prop names and size scales
+  severity: S1
+- id: DS-09
+  name: Complete states in components
+  fail_signal: Components missing focus/disabled/loading/error states
+  severity: S2–S3
+  related:
+  - INT
+- id: DS-10
+  name: Accessibility built into components
+  fail_signal: Primitives without keyboard/ARIA support, so every usage is broken
+  severity: S3
+  related:
+  - A11Y
+- id: DS-11
+  name: Consistent patterns across screens
+  fail_signal: Same pattern implemented differently
+  severity: S2
+  phases: *id001
+- id: DS-12
+  name: Iconography consistent
+  fail_signal: Mixed sets, styles, sizes; inconsistent meanings
+  severity: S1–S2
+  phases: *id001
+- id: DS-13
+  name: Documentation
+  fail_signal: No Storybook or usage docs
+  severity: S1–S2
+- id: DS-14
+  name: Visual regression and a11y tests
+  fail_signal: None
+  severity: S1–S2
+- id: DS-15
+  name: Drift prevention lint
+  fail_signal: No rules preventing hard-coded values or deprecated components
+  severity: S1
+- id: DS-16
+  name: Theming via tokens
+  fail_signal: Themes require per-component overrides
+  severity: S1–S2
+  related:
+  - COL
+- id: DS-17
+  name: Governance and versioning
+  fail_signal: No owner, changelog or deprecation path
+  severity: S1
+- id: DS-18
+  name: Design–code parity (if design files available)
+  fail_signal: Figma components differ from code; naming mismatch
+  severity: S1–S2
+  phases: *id001

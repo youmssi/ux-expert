@@ -1,0 +1,17 @@
+# Answer key for the ai-chat fixture. Not shown to the agent under test.
+fixture: ai-chat
+product_type: ai-feature
+defects:
+  - {id: D01, file: agent.ts, criteria: [AI-15, AI-16, TRUST-14], note: The agent sends emails and updates deals without preview or approval}
+  - {id: D02, file: agent.ts, criteria: [AI-17], note: No undo or audit log for agent actions}
+  - {id: D03, file: agent.ts, criteria: [AI-22, TRUST-12], note: Memory is stored silently; users cannot see, edit or turn it off}
+  - {id: D04, file: agent.ts, criteria: [AI-06, PERF-05], note: "stream: false, so the user waits for the whole answer"}
+  - {id: D05, file: Chat.tsx, criteria: [AI-08], note: No way to stop a running answer}
+  - {id: D06, file: Chat.tsx, criteria: [AI-18, STATE-08, CONT-06], note: Every failure shows "Error." with no reason or retry}
+  - {id: D07, file: Chat.tsx, criteria: [AI-04, FORM-12, STATE-08], note: The question is cleared before the call and lost on failure}
+  - {id: D08, file: Chat.tsx, criteria: [AI-01, ONB-09, STATE-02], note: Empty state "Ask me anything" shows no capabilities or examples}
+  - {id: D09, file: Chat.tsx, criteria: [AI-07, INT-05, AI-26], note: Only an ellipsis while busy; nothing announced to screen readers}
+  - {id: D10, file: Chat.tsx, criteria: [AI-09, AI-03], note: Model output injected as raw HTML; no AI labelling or Markdown rendering}
+  - {id: D11, file: Chat.tsx, criteria: [A11Y-10, FORM-02], note: The message input has no label}
+decoys:
+  - {id: N01, file: Sources.tsx, criteria: [AI-10], note: Citations with titles, links and quotes are correct grounding}

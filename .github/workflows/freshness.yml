@@ -1,0 +1,22 @@
+name: freshness
+
+# Monthly: fails when a stack pack was verified more than ~6 months ago, so its
+# gotchas are re-read against the framework's current docs (scripts/check_freshness.py).
+on:
+  schedule:
+    - cron: "17 6 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stack-packs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r scripts/requirements.txt
+      - run: python scripts/check_freshness.py

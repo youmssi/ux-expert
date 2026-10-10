@@ -1,0 +1,39 @@
+{
+  "name": "ux-expert-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for ux-expert: principal-level UX design, refactor and audit expertise (565 criteria, sources, scoring) for any MCP client.",
+  "license": "MIT",
+  "author": "youmssi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youmssi/ux-expert.git",
+    "directory": "mcp"
+  },
+  "homepage": "https://github.com/youmssi/ux-expert#readme",
+  "bugs": "https://github.com/youmssi/ux-expert/issues",
+  "keywords": ["mcp", "model-context-protocol", "ux", "usability", "accessibility", "wcag", "design", "audit", "agent-skills"],
+  "type": "module",
+  "bin": {
+    "ux-expert-mcp": "dist/index.js"
+  },
+  "files": ["dist", "skill", "LICENSE", "LICENSE-CONTENT", "README.md"],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "copy-skill": "node scripts/copy-skill.mjs",
+    "build": "npm run copy-skill && tsc -p tsconfig.json",
+    "test": "npm run build && tsx --test test/*.test.ts",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.3.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "^2.3.1",
+    "@types/node": "^22.19.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

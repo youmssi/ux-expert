@@ -1,0 +1,121 @@
+area: data-display-search
+prefix: DATA
+applicability:
+  web-app: conditional
+  marketing-site: n/a
+  mobile: conditional
+  desktop: conditional
+  cli: light
+  sdk-api: n/a
+  ai-feature: light
+applicability_note: run when the product is data-heavy (tables, dashboards, search)
+phases:
+- design
+- build
+criteria:
+- id: DATA-01
+  name: Each data surface answers a clear question
+  fail_signal: Dashboards or tables with no clear purpose
+  severity: S2
+  phases: &id001
+  - design
+- id: DATA-02
+  name: Column priority and defaults
+  fail_signal: Identifier not first; irrelevant columns dominate
+  severity: S2
+- id: DATA-03
+  name: Numeric alignment and formatting
+  fail_signal: Numbers left-aligned; inconsistent decimals; no units
+  severity: S2
+- id: DATA-04
+  name: Sticky headers and first column for large tables
+  fail_signal: Context lost when scrolling
+  severity: S2
+- id: DATA-05
+  name: Explicit empty cells
+  fail_signal: Blank cells with ambiguous meaning
+  severity: S1–S2
+- id: DATA-06
+  name: Accessible row actions
+  fail_signal: Hover-only; unclear clickable rows
+  severity: S2
+- id: DATA-07
+  name: Bulk selection scope clarity
+  fail_signal: '"Select all" ambiguous; selection silently lost'
+  severity: S2–S3
+- id: DATA-08
+  name: Search findability and tolerance
+  fail_signal: No typo tolerance; wrong fields searched; scope unclear
+  severity: S2–S3
+- id: DATA-09
+  name: Search results usable
+  fail_signal: No highlighting, count or grouping
+  severity: S2
+- id: DATA-10
+  name: Helpful zero results
+  fail_signal: Bare "No results"
+  severity: S2
+- id: DATA-11
+  name: Filters visible and applied state clear
+  fail_signal: Hidden filters; no chips or clear-all
+  severity: S2
+- id: DATA-12
+  name: Sort clarity and sensible default
+  fail_signal: No sort indicator; default order irrelevant to the task
+  severity: S2
+- id: DATA-13
+  name: State in URL / saved views
+  fail_signal: Filters, sort and search lost on refresh or share
+  severity: S2
+- id: DATA-14
+  name: Appropriate pagination strategy
+  fail_signal: Infinite scroll in admin tables; no position restoration
+  severity: S2
+- id: DATA-15
+  name: Scales to large data
+  fail_signal: Unbounded rendering; missing totals; freezing
+  severity: S2–S3
+  related:
+  - PERF
+- id: DATA-16
+  name: KPIs have context
+  fail_signal: Numbers with no comparison, period or definition
+  severity: S2
+  phases: *id001
+- id: DATA-17
+  name: Drill-down and details on demand
+  fail_signal: Dead-end charts and KPIs
+  severity: S2
+- id: DATA-18
+  name: Data freshness shown
+  fail_signal: Unknown staleness on operational dashboards
+  severity: S2
+- id: DATA-19
+  name: Correct chart type and honest axes
+  fail_signal: Misleading charts (truncated bars, 3D, dual axes, overloaded pies)
+  severity: S2–S3
+  phases: *id001
+- id: DATA-20
+  name: Chart labeling and legends
+  fail_signal: Missing units and axis labels; legend far from the data
+  severity: S2
+- id: DATA-21
+  name: Chart accessibility
+  fail_signal: No text alternative; color-only series; mouse-only tooltips
+  severity: S2–S3
+- id: DATA-22
+  name: Inline editing safety
+  fail_signal: Unclear edit mode; no cancel; silent failures
+  severity: S2
+- id: DATA-23
+  name: Import validation and recovery
+  fail_signal: All-or-nothing imports with vague errors
+  severity: S2–S3
+- id: DATA-24
+  name: Export clarity
+  fail_signal: Unclear export scope; huge exports block the UI
+  severity: S2
+- id: DATA-25
+  name: Real-time updates non-disruptive
+  fail_signal: Rows jump while the user is reading or selecting
+  severity: S2

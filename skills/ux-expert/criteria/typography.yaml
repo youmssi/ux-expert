@@ -1,0 +1,126 @@
+area: typography
+prefix: TYP
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
+- build
+criteria:
+- id: TYP-01
+  name: Defined type scale
+  check: Tokens/variants exist and are used
+  fail_signal: No scale; > 8 distinct sizes in use
+  severity: S2
+  severity_note: systemic
+  related:
+  - DS
+- id: TYP-02
+  name: Off-scale sizes
+  check: Count sizes not in the scale
+  fail_signal: Any frequent off-scale size
+  severity: S1–S2
+  phases: &id001
+  - build
+- id: TYP-03
+  name: Body text size
+  check: Computed body size
+  fail_signal: < 16 px for a general audience; < 12 px anywhere meaningful
+  severity: S2–S3
+- id: TYP-04
+  name: Line height
+  check: Body and heading line heights
+  fail_signal: Body < 1.4 or > 1.8
+  severity: S2
+- id: TYP-05
+  name: Line length
+  check: Container width for paragraphs
+  fail_signal: '> ~80–90 characters, or < ~35 for body text'
+  severity: S2
+  sources:
+  - bringhurst-line-length
+- id: TYP-06
+  name: Distinct hierarchy levels
+  check: Size and weight steps between levels
+  fail_signal: Adjacent levels nearly identical; level order inverted
+  severity: S2
+- id: TYP-07
+  name: Weight discipline
+  check: Weights in use
+  fail_signal: '> 3–4 weights; bold used for emphasis everywhere'
+  severity: S1
+- id: TYP-08
+  name: Case usage
+  check: ALL CAPS and title-case patterns
+  fail_signal: Long uppercase text; inconsistent casing across UI
+  severity: S1–S2
+- id: TYP-09
+  name: Alignment
+  check: '`text-align: justify`, centered paragraphs'
+  fail_signal: Justified or centered multi-line body text
+  severity: S1–S2
+- id: TYP-10
+  name: Relative units / scalable text
+  check: rem/em/sp/Dynamic Type
+  fail_signal: Fixed px everywhere; font scaling disabled
+  severity: S2–S3
+  phases: *id001
+  sources:
+  - wcag22
+- id: TYP-11
+  name: Survives 200% zoom and text spacing
+  check: Runtime zoom; fixed-height text containers
+  fail_signal: Clipped or overlapping text
+  severity: S3
+  severity_note: WCAG AA
+  phases: *id001
+  sources:
+  - wcag22
+- id: TYP-12
+  name: Safe truncation
+  check: Ellipsis usage on critical data
+  fail_signal: Truncated values with no way to see them in full
+  severity: S2–S3
+- id: TYP-13
+  name: Long-string wrapping
+  check: overflow-wrap on user content, URLs, emails
+  fail_signal: Horizontal overflow or broken layout
+  severity: S2
+  phases: *id001
+- id: TYP-14
+  name: Tabular numerals where numbers align or change
+  check: '`tabular-nums` in tables, counters, prices'
+  fail_signal: Jittering counters; misaligned numeric columns
+  severity: S1–S2
+  phases: *id001
+- id: TYP-15
+  name: Font loading strategy
+  check: '`font-display`, preload, fallback stack'
+  fail_signal: Invisible text during load; large layout shift from font swap
+  severity: S2
+  phases: *id001
+- id: TYP-16
+  name: Font family count
+  check: Families loaded
+  fail_signal: '> 2 families (excluding monospace) without reason; heavy font payload'
+  severity: S1–S2
+  related:
+  - PERF
+  phases: *id001
+- id: TYP-17
+  name: Monospace for code and IDs
+  check: Code, keys, IDs in monospace
+  fail_signal: Code in a proportional font; ambiguous characters (0/O, 1/l/I) in IDs
+  severity: S1–S2
+- id: TYP-18
+  name: Readable on all backgrounds
+  check: Text over images or gradients has a scrim or overlay
+  fail_signal: Text over busy imagery
+  severity: S2
+  related:
+  - COL

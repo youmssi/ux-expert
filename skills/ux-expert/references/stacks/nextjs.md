@@ -1,0 +1,52 @@
+# Next.js (App Router)
+
+<!-- Generated from criteria/stacks/nextjs.yaml by scripts/generate.py. Edit the YAML, then run the script. -->
+
+Read when the project uses Next.js with the `app/` directory. It says where loading, error, not-found and navigation behaviour is defined, which Next.js defaults already satisfy a criterion, and which conventions silently leave a gap.
+
+Verified against Next.js (App Router) 16.x on 2026-10-10, reading https://github.com/vercel/next.js@`d8bfc3c`. Detected by dependency `next` or file `next.config.js`, `next.config.mjs`, `next.config.ts`. If the project uses another major version, check the gotchas against its docs.
+
+## Where the evidence is
+
+| What | Where |
+|---|---|
+| Routes and screens | `app/**/page.tsx`; route groups `(name)` do not appear in the URL; `@slot` folders are parallel routes, `(.)` folders intercepting routes (often modals) |
+| Loading states | `loading.tsx` per segment; `<Suspense fallback>` in pages and layouts; `useLinkStatus` inside a `<Link>` for pending navigation |
+| Error and missing states | `error.tsx` per segment, `global-error.tsx` for the root layout, `not-found.tsx`, `global-not-found.tsx`; `forbidden.tsx` and `unauthorized.tsx` (experimental) |
+| Page titles, language, viewport | `metadata` or `generateMetadata` in layouts and pages (`title.template` in a layout); `<html lang>` in `app/layout.tsx`; `viewport` export |
+| Forms and mutations | Server Actions (`"use server"`), `useActionState` (pending, state), `useFormStatus` in a child of the form, `redirect`, `revalidatePath`, `updateTag` |
+| Images and fonts | `next/image` (`alt`, `sizes`, `preload`), `next/font` in the root layout |
+
+## Gotchas
+
+- `loading.tsx` wraps the page and nested layouts of its segment, not the layout, template or error boundary of the same segment. Slow data fetched in a layout shows no fallback; look for `<Suspense>` there before reporting STATE-04 as covered. (STATE-04) Source: [docs/01-app/03-api-reference/03-file-conventions/loading.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/03-file-conventions/loading.mdx).
+- `error.tsx` must be a Client Component and does not catch errors thrown by the layout above it in the same segment; errors in the root layout reach only `global-error.tsx`. A segment with `error.tsx` can still crash to a blank page. (STATE-10, STATE-07) Source: [docs/01-app/03-api-reference/03-file-conventions/error.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/03-file-conventions/error.mdx).
+- `global-error.tsx` renders its own `<html>` and `<body>` without the global styles or theme, so it often looks broken and unbranded. Check it renders a usable page. (STATE-08, AES-09) Source: [docs/01-app/03-api-reference/03-file-conventions/error.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/03-file-conventions/error.mdx).
+- In Next.js 16 the error boundary receives `retry` (re-fetch and re-render) as well as `reset` (re-render only). A retry button wired to `reset` does not refetch data, so the same error usually returns. (STATE-08) Source: [docs/01-app/03-api-reference/03-file-conventions/error.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/03-file-conventions/error.mdx).
+- Next.js announces client-side route changes to screen readers from `document.title`, then the first `<h1>`, then the path. Missing or duplicate titles make every navigation announce the same thing. The docs do not describe moving focus on navigation. (A11Y-08, A11Y-06) Source: [docs/03-architecture/accessibility.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/03-architecture/accessibility.mdx).
+- A `title.template` in a layout does not apply to a `title` set in a `page` of the same segment, and needs a `title.default`. Check rendered titles, not the template. (A11Y-08) Source: [docs/01-app/03-api-reference/04-functions/generate-metadata.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/04-functions/generate-metadata.mdx).
+- Next.js adds `width=device-width, initial-scale=1` by default. A `viewport` export with `maximumScale` 1 or `userScalable` false (it appears in the docs' own example) blocks zoom. (A11Y-31) Source: [docs/01-app/03-api-reference/04-functions/generate-viewport.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/04-functions/generate-viewport.mdx).
+- `<html lang>` is whatever the root layout writes; Next.js does not set it from the locale. Check it changes with the language in i18n routes. (A11Y-28, I18N-08) Source: [docs/01-app/03-api-reference/03-file-conventions/layout.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/03-file-conventions/layout.mdx).
+- `<Link>` prefetching runs only in production. Judging navigation speed or missing loading states on `next dev` overstates the problem; measure a production build. (PERF-15, STATE-04) Source: [docs/01-app/03-api-reference/02-components/link.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/02-components/link.mdx).
+- `useLinkStatus` skips its pending state when the route was already prefetched, so a missing spinner in tests is expected. On slow networks the `loading.tsx` fallback may also appear late because it was not prefetched yet. (INT-04, STATE-04) Source: [docs/01-app/03-api-reference/04-functions/use-link-status.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/04-functions/use-link-status.mdx).
+- Navigation keeps scroll position unless the new page is out of view, and skips sticky or fixed elements when choosing where to scroll. Content hidden under a sticky header needs `scroll-padding-top`. (INT-22, LAY-16) Source: [docs/01-app/03-api-reference/02-components/link.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/02-components/link.mdx).
+- With `cacheComponents`, routes left by navigation are hidden, not unmounted, so form values, dialogs and messages are still there on Back. That is by design; reset state explicitly where stale state would mislead. (FORM-12, IA-11) Source: [docs/01-app/02-guides/preserving-ui-state.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/02-guides/preserving-ui-state.mdx).
+- Forms that call Server Actions submit before JavaScript loads (queued in Client Components), and `redirect` answers with a 303. Pending UI needs `useActionState` or `useFormStatus` in a child of the form; without it double submits and silent waits are likely. (FORM-15, INT-04) Source: [docs/01-app/01-getting-started/07-mutating-data.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/01-getting-started/07-mutating-data.mdx).
+- `revalidateTag` serves stale content while it revalidates; only `updateTag` (in a Server Action) shows the user's own write immediately. Stale data right after saving is then a code choice, not a bug in Next.js. (INT-06, STATE-13) Source: [docs/01-app/01-getting-started/09-revalidating.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/01-getting-started/09-revalidating.mdx).
+- `next/image` requires `alt` (empty for decoration) and `width` and `height` unless `fill` or a static import; lazy loading is the default. In Next.js 16 `priority` is deprecated: the LCP image uses `preload`, or `loading="eager"` / `fetchPriority="high"`. (A11Y-14, PERF-01, PERF-03) Source: [docs/01-app/03-api-reference/02-components/image.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/02-components/image.mdx).
+- `next/font` self-hosts, defaults to `display: swap` and adds a size-adjusted fallback, so font CLS findings rarely apply when it is used. Fonts loaded by `<link>` or CSS `@import` do not get this. (PERF-08, PERF-03) Source: [docs/01-app/03-api-reference/02-components/font.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/02-components/font.mdx).
+- `not-found` returns 404 only before streaming starts; after that the status stays 200 with the not-found UI. Check status codes in a production build before reporting STATE-20 or SEO issues. (STATE-20) Source: [docs/01-app/03-api-reference/03-file-conventions/not-found.mdx](https://github.com/vercel/next.js/blob/d8bfc3c994670c367e6e31853b78f42e8b7fba85/docs/01-app/03-api-reference/03-file-conventions/not-found.mdx).
+
+## Probes
+
+Files: `.tsx`, `.ts`, `.jsx`, `.js`. Run with `python3 scripts/probe.py <project root>`; a hit is a place to look, not a finding.
+
+| Probe | Kind | Pattern | Look for | Criteria |
+|---|---|---|---|---|
+| `nextjs-loading-boundaries` | inventory | `export default function Loading\|<Suspense` | Loading boundaries; compare with segments that fetch data in layouts or pages. | STATE-04 |
+| `nextjs-error-boundary-reset-only` | review | `reset\(\)` | A retry button wired to `reset`, which re-renders without refetching. In Next.js 16 use `retry`. | STATE-08 |
+| `nextjs-viewport-zoom-blocked` | smell | `maximumScale:\s*1\b\|userScalable:\s*false` | A `viewport` export that blocks zoom. | A11Y-31 |
+| `nextjs-image-priority` | review | `<Image\b[^>]*\bpriority\b` | `priority` is deprecated in Next.js 16; use `preload` for the LCP image, or `loading="eager"` / `fetchPriority="high"`. | PERF-01 |
+| `nextjs-pending-state` | inventory | `useActionState\|useFormStatus\|useLinkStatus\|useTransition` | Pending states for forms and navigation. Zero hits with Server Actions present means no feedback while saving. | INT-04, FORM-15 |
+| `nextjs-raw-img` | review | `<img\s` | Plain `<img>` instead of `next/image`; check dimensions (CLS), lazy loading and `alt`. | PERF-07, PERF-03, A11Y-14 |
+| `nextjs-revalidate-tag` | review | `revalidateTag\(` | Stale-while-revalidate after a mutation; if users must see their own write at once, `updateTag` is needed. | INT-06 |
