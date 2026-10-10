@@ -1,0 +1,119 @@
+area: notifications
+prefix: NOTIF
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: n/a
+  sdk-api: n/a
+  ai-feature: light
+phases:
+- design
+- build
+criteria:
+- id: NOTIF-01
+  name: Notification inventory
+  fail_signal: No list of notification types with trigger, audience, channel and owner
+  severity: S2
+  phases:
+  - design
+- id: NOTIF-02
+  name: Channel matches urgency
+  fail_signal: Security alerts only in-app; promotions sent as push or SMS
+  severity: S2–S3
+- id: NOTIF-03
+  name: Push permission asked in context
+  fail_signal: OS permission prompt on first launch, before any value is shown
+  severity: S2–S3
+  related:
+  - ONB-16
+  sources:
+  - apple-user-notifications
+  - android-notification-permission
+- id: NOTIF-04
+  name: Denied permission recoverable
+  fail_signal: After a denial the feature fails silently; no path to system settings
+  severity: S2
+  sources:
+  - apple-user-notifications
+- id: NOTIF-05
+  name: Preferences per type and channel
+  fail_signal: Notifications are all on or all off
+  severity: S2
+- id: NOTIF-06
+  name: Transactional and marketing messages separated
+  fail_signal: Unsubscribing from marketing stops receipts or security alerts, or marketing is sent without consent
+    as "transactional"
+  severity: S2–S3
+  related:
+  - TRUST-21
+- id: NOTIF-07
+  name: One-click unsubscribe for bulk email
+  fail_signal: Unsubscribing needs a sign-in or several steps; no List-Unsubscribe header pair
+  severity: S3
+  related:
+  - TRUST-21
+  phases: &id001
+  - build
+  sources:
+  - rfc8058-one-click
+- id: NOTIF-08
+  name: Batching and digests
+  fail_signal: A burst of separate notifications for one chain of events
+  severity: S2
+- id: NOTIF-09
+  name: Timing respects the recipient
+  fail_signal: Non-urgent messages sent at night in the recipient's time zone
+  severity: S2
+  related:
+  - I18N-13
+- id: NOTIF-10
+  name: Deep links land on the subject
+  fail_signal: Tapping a notification opens the home screen instead of the item
+  severity: S2
+- id: NOTIF-11
+  name: Read state consistent across channels
+  fail_signal: Badges and unread counts stay after the item is read elsewhere
+  severity: S1–S2
+  phases: *id001
+- id: NOTIF-12
+  name: Interruption level honest
+  fail_signal: Promotions marked time-sensitive or high importance
+  severity: S2–S3
+  sources:
+  - apple-user-notifications
+- id: NOTIF-13
+  name: Android channels per notification type
+  fail_signal: One channel for everything; users cannot mute one type
+  severity: S2
+  phases: *id001
+  applies_to:
+  - mobile
+- id: NOTIF-14
+  name: In-app notification center
+  fail_signal: Important notices appear only as toasts that disappear
+  severity: S2
+  related:
+  - INT-14
+- id: NOTIF-15
+  name: Notification actions safe
+  fail_signal: Destructive or paying actions available from a notification without confirmation
+  severity: S3
+- id: NOTIF-16
+  name: Sensitive content hidden on lock screens
+  fail_signal: Health, financial or private message content shown on the lock screen by default
+  severity: S3
+- id: NOTIF-17
+  name: Delivery monitored
+  fail_signal: No tracking of bounces, failures or opt-outs for critical messages
+  severity: S2
+  related:
+  - LAUNCH-15
+  phases: *id001
+- id: NOTIF-18
+  name: Content says what happened and what to do
+  fail_signal: Generic "You have a new notification"
+  severity: S1–S2
+  related:
+  - CONT-17

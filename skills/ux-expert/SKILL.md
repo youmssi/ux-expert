@@ -1,6 +1,6 @@
 ---
 name: ux-expert
-description: Use this skill whenever the task is about how people experience a product (designing it, reviewing it, or getting it ready to ship), even if the user never says "UX". Use it to write UX requirements and acceptance criteria for user stories before building; to review or audit an app, screen, flow, form, onboarding, a pull request's UI changes, an AI or chat feature, or a CLI or SDK's developer experience; to check accessibility (WCAG 2.2), usability, empty, loading and error states, copy, performance, mobile and responsive behaviour, design-system consistency, dark patterns, privacy and i18n; to plan a safe UX refactor; or to decide if a product is ready to launch. Gives principal-level procedures, 465 sourced criteria, consistent severity and a Go/No-Go verdict.
+description: Use this skill whenever the task is about how people experience a product (designing it, reviewing it, or getting it ready to ship), even if the user never says "UX". Use it to write UX requirements and acceptance criteria for user stories before building; to review or audit an app, screen, flow, form, onboarding, a pull request's UI changes, an AI or chat feature, or a CLI or SDK's developer experience; to check accessibility (WCAG 2.2), usability, empty, loading and error states, copy, performance, mobile and responsive behaviour, design-system consistency, dark patterns, privacy, i18n, checkout and payments, notifications, collaboration and admin consoles; to plan a safe UX refactor; or to decide if a product is ready to launch. Gives principal-level procedures, 565 sourced criteria, consistent severity and a Go/No-Go verdict.
 license: CC-BY-4.0 (content), MIT (code). See LICENSE files.
 metadata:
   author: youmssi
@@ -86,6 +86,12 @@ Read when needed:
 | `ai-interfaces.md` | AI | Chat, copilots, generation, agents, any LLM feature |
 | `measurement-validation.md` | MEAS | Analytics, UX metrics, usability tests, experiments |
 | `launch-readiness.md` | LAUNCH | Landing, pricing, app stores, support, legal, Go/No-Go |
+| `collaboration.md` | COLLAB | Sharing, permissions on objects, presence, comments, concurrent editing |
+| `enterprise-admin.md` | ADMIN | Admin console, SSO, provisioning, roles, audit logs, seats |
+| `notifications.md` | NOTIF | Push, email and in-app notifications, permissions, preferences, unsubscribe |
+| `commerce.md` | COMM | Cart, checkout, payments, receipts, upgrades, billing, refunds |
+| `in-product-help.md` | HELP | Help entry points, contextual help, support contact, AI help, what's new |
+| `aesthetics-delight.md` | AES | Visual polish and consistency, imagery, brand expression, celebrations |
 
 ## Procedure
 
@@ -125,21 +131,27 @@ product, with a reason, using this matrix:
 | Area (`references/areas/…`) | Web app | Marketing site | Mobile | Desktop | CLI | SDK/API | AI feature |
 |---|---|---|---|---|---|---|---|
 | `accessibility.md` (A11Y) | Run | Run | Run | Run | Light | N/A | Run |
+| `aesthetics-delight.md` (AES) | Run | Run | Run | Run | Light | N/A | Light |
 | `ai-interfaces.md` (AI) | Conditional | N/A | Conditional | Conditional | Conditional | Conditional | Run |
+| `collaboration.md` (COLLAB) | Conditional | N/A | Conditional | Conditional | N/A | N/A | Conditional |
 | `color-theming.md` (COL) | Run | Run | Run | Run | Light | N/A | Run |
+| `commerce.md` (COMM) | Conditional | Conditional | Conditional | Conditional | N/A | N/A | Conditional |
 | `content-writing.md` (CONT) | Run | Run | Run | Run | Run | Run | Run |
 | `context-discovery.md` (CTX) | Run | Run | Run | Run | Run | Run | Run |
 | `data-display-search.md` (DATA) | Conditional | N/A | Conditional | Conditional | Light | N/A | Light |
 | `design-system.md` (DS) | Run | Run | Run | Run | Light | N/A | Light |
 | `developer-experience.md` (DX) | Light | N/A | N/A | N/A | Run | Run | Light |
+| `enterprise-admin.md` (ADMIN) | Conditional | N/A | Conditional | Conditional | N/A | Conditional | Conditional |
 | `flows-friction.md` (FLOW) | Run | Light | Run | Run | Run | Run | Run |
 | `forms-input.md` (FORM) | Run | Light | Run | Run | Light | N/A | Light |
 | `i18n-localization.md` (I18N) | Run | Run | Run | Run | Light | Light | Run |
+| `in-product-help.md` (HELP) | Run | Light | Run | Run | Light | N/A | Run |
 | `information-architecture.md` (IA) | Run | Run | Run | Run | Light | Light | Light |
 | `interaction-feedback.md` (INT) | Run | Light | Run | Run | Run | N/A | Run |
 | `launch-readiness.md` (LAUNCH) | Conditional | Run | Conditional | Conditional | Conditional | Conditional | Conditional |
 | `layout-hierarchy.md` (LAY) | Run | Run | Run | Run | Light | N/A | Run |
 | `measurement-validation.md` (MEAS) | Run | Run | Run | Run | Light | Light | Run |
+| `notifications.md` (NOTIF) | Run | Light | Run | Run | N/A | N/A | Light |
 | `onboarding-activation.md` (ONB) | Run | Run | Run | Run | Run | Run | Run |
 | `performance-perceived.md` (PERF) | Run | Run | Run | Run | Run | Run | Run |
 | `responsive-platform.md` (RESP) | Run | Run | Run | Light | N/A | N/A | Run |
@@ -148,8 +160,11 @@ product, with a reason, using this matrix:
 | `typography.md` (TYP) | Run | Run | Run | Run | Light | N/A | Run |
 
 - **AI**: run when the product contains an AI or LLM feature.
+- **COLLAB**: Only when several people work on shared objects: documents, projects, boards, records, conversations.
+- **COMM**: Only when users buy, subscribe, upgrade or pay in the product.
 - **DATA**: run when the product is data-heavy (tables, dashboards, search).
 - **DX**: light on web apps and AI features only when they expose a public API.
+- **ADMIN**: Only for products sold to organizations: admin consoles, SSO, provisioning, roles, audit, seats.
 - **LAUNCH**: run in pre-launch gate mode.
 <!-- END GENERATED applicability -->
 

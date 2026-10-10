@@ -14,7 +14,7 @@ const INSTRUCTIONS = `ux-expert gives you a principal UX engineer's method.
 - Design (before building): use the "ux-design" prompt, or read ${SKILL_URI}references/design-mode.md.
 - Audit or review: use the "ux-audit" prompt; read ${SKILL_URI}SKILL.md first.
 - Refactor plan from audit findings: use the "ux-refactor" prompt.
-Tools: list_criteria and get_criterion query the 465 criteria; read_area returns an area's procedure;
+Tools: list_criteria and get_criterion query the 565 criteria; read_area returns an area's procedure;
 find_patterns returns proven patterns from public design systems to cite in recommendations;
 score_finding and launch_gate apply the scoring rules; contrast_ratio computes WCAG contrast.
 Every finding cites evidence; never state numbers from an "unconfirmed" source as fact.`;

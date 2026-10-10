@@ -1,0 +1,91 @@
+area: aesthetics-delight
+prefix: AES
+applicability:
+  web-app: run
+  marketing-site: run
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: light
+phases:
+- design
+- build
+criteria:
+- id: AES-01
+  name: Craft details consistent
+  fail_signal: Mixed corner radii, shadows, borders or icon styles for the same kind of element
+  severity: S1–S2
+  related:
+  - DS-04
+  - DS-12
+- id: AES-02
+  name: Pixel polish on key screens
+  fail_signal: Misalignments, clipped text or uneven gaps on critical screens at supported widths
+  severity: S1–S2
+  related:
+  - LAY-07
+- id: AES-03
+  name: Imagery coherent
+  fail_signal: Mixed illustration styles; blurry, stretched or off-brand images; no dark-mode variants
+  severity: S1–S2
+- id: AES-04
+  name: Expression placed where it helps
+  fail_signal: Decoration competes with task content on dense work screens
+  severity: S2
+  related:
+  - LAY-01
+  - COL-09
+- id: AES-05
+  name: Delightful motion never delays the task
+  fail_signal: A celebratory or decorative animation blocks the next action or ignores reduced motion
+  severity: S2
+  related:
+  - INT-08
+  - INT-09
+- id: AES-06
+  name: Celebrations proportional
+  fail_signal: Confetti on routine actions; real milestones pass unnoticed
+  severity: S0–S1
+- id: AES-07
+  name: Personality fits the moment
+  fail_signal: Jokes or playful tone in errors, billing, security or bad news
+  severity: S2
+  related:
+  - CONT-07
+  - CONT-13
+- id: AES-08
+  name: No placeholder content in production
+  fail_signal: Lorem ipsum, broken images, default avatars or test data visible to users
+  severity: S2–S3
+  related:
+  - LAUNCH-03
+- id: AES-09
+  name: Edge states designed with the same care
+  fail_signal: Polished happy path; raw, unstyled empty, error or loading screens
+  severity: S2
+  related:
+  - STATE-01
+- id: AES-10
+  name: Brand details complete
+  fail_signal: Default framework favicon, app icon, splash or social image; unstyled emails
+  severity: S1–S2
+  related:
+  - LAUNCH-09
+  - LAUNCH-16
+- id: AES-11
+  name: Sound and haptics optional and meaningful
+  fail_signal: Sounds or vibrations by default with no setting to turn them off
+  severity: S1–S2
+- id: AES-12
+  name: Easter eggs harmless
+  fail_signal: Hidden features that obstruct tasks, trap focus or break assistive technology
+  severity: S1
+- id: AES-13
+  name: Perceived quality checked with users
+  fail_signal: Brand-led or consumer product with no evidence of how users perceive its look
+  severity: S0–S1
+  related:
+  - MEAS
+  phases:
+  - design

@@ -1,0 +1,104 @@
+area: in-product-help
+prefix: HELP
+applicability:
+  web-app: run
+  marketing-site: light
+  mobile: run
+  desktop: run
+  cli: light
+  sdk-api: n/a
+  ai-feature: run
+phases:
+- design
+- build
+criteria:
+- id: HELP-01
+  name: Help in a consistent place (3.2.6)
+  fail_signal: Help, contact or chat in different places across pages, or missing on some
+  severity: S2–S3
+  severity_note: S3 where accessibility law applies
+  related:
+  - A11Y-26
+  sources:
+  - wcag22
+- id: HELP-02
+  name: Help at the point of difficulty
+  fail_signal: Users must leave the task to understand a complex field or step
+  severity: S2
+- id: HELP-03
+  name: Help searchable in the product
+  fail_signal: Only a link to the documentation home page
+  severity: S2
+- id: HELP-04
+  name: Help links land on the right answer
+  fail_signal: Links open a generic help center instead of the relevant article
+  severity: S1–S2
+- id: HELP-05
+  name: Essential instructions not hidden in tooltips
+  fail_signal: Information needed to complete the task only in a tooltip
+  severity: S2
+  related:
+  - INT-13
+- id: HELP-06
+  name: Error and empty states link to help
+  fail_signal: Dead-end states with no help or next step
+  severity: S2
+  related:
+  - STATE-08
+  - STATE-02
+- id: HELP-07
+  name: Human support reachable
+  fail_signal: Paying users cannot find a contact path or expected response time
+  severity: S2–S3
+  related:
+  - LAUNCH-12
+- id: HELP-08
+  name: Support handoff carries context
+  fail_signal: Users must repeat the page, account and error to support
+  severity: S2
+  phases: &id001
+  - build
+- id: HELP-09
+  name: Errors carry a reference users can quote
+  fail_signal: Errors with no ID that support can trace
+  severity: S2
+  phases: *id001
+- id: HELP-10
+  name: Changes announced in the product
+  fail_signal: Interface changes with no what's-new note or changelog
+  severity: S1–S2
+  related:
+  - ONB-18
+- id: HELP-11
+  name: Shortcuts and commands discoverable
+  fail_signal: Shortcuts exist but are listed nowhere in the product
+  severity: S1
+  related:
+  - INT-16
+- id: HELP-12
+  name: Help matches the current interface
+  fail_signal: Articles name buttons, menus or screens that no longer exist
+  severity: S2
+- id: HELP-13
+  name: AI help grounded and escalates
+  fail_signal: Assistant answers without sources, invents features or cannot hand over to a person
+  severity: S2–S3
+  related:
+  - AI
+- id: HELP-14
+  name: Help usage measured
+  fail_signal: No data on help searches without results or the most used articles
+  severity: S1–S2
+  related:
+  - MEAS
+  phases: *id001
+- id: HELP-15
+  name: Incidents surfaced in the product
+  fail_signal: During an outage the product shows nothing; users learn from errors
+  severity: S2
+  related:
+  - LAUNCH-13
+- id: HELP-16
+  name: Self-serve paths for top support reasons
+  fail_signal: The most common support requests have no self-serve path
+  severity: S2

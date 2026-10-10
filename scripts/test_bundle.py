@@ -4,6 +4,7 @@ import zipfile
 from pathlib import Path
 
 from bundle import AREAS, BUNDLES, SKILL, build
+from generate import NOT_AREAS
 
 
 class BundleTest(unittest.TestCase):
@@ -36,7 +37,7 @@ class BundleTest(unittest.TestCase):
 
     def test_the_audit_bundle_has_every_area(self):
         text = self.read("audit")
-        self.assertEqual(len(AREAS), 22)
+        self.assertEqual(len(AREAS), len([p for p in (SKILL / "criteria").glob("*.yaml") if p.name not in NOT_AREAS]))
         self.assertTrue(all(f"FILE: {area}" in text for area in AREAS))
 
     def test_design_bundles_carry_the_design_criteria_table(self):
