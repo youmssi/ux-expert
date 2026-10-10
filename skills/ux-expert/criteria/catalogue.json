@@ -13061,6 +13061,277 @@
    ]
   },
   {
+   "id": "playwright",
+   "name": "Playwright Test",
+   "kind": "testing",
+   "summary": "Read when the project uses Playwright, or when a finding or refactor step needs a regression guard. It maps criteria to Playwright checks that keep a fix fixed, and lists Playwright behaviour that makes tests pass while users still fail.",
+   "detect": {
+    "dependencies": [
+     "@playwright/test",
+     "playwright"
+    ],
+    "files": [
+     "playwright.config.ts",
+     "playwright.config.js",
+     "playwright.config.mjs"
+    ]
+   },
+   "verified": {
+    "version": "1.64",
+    "repository": "https://github.com/microsoft/playwright",
+    "commit": "d9f2fd3e2232ace8e317a84eda6cb86e25bcf49c",
+    "verified_on": "2026-10-10"
+   },
+   "evidence": [
+    {
+     "what": "Existing UX guards",
+     "where": "`toMatchAriaSnapshot`, `AxeBuilder` (`@axe-core/playwright`), `toHaveScreenshot`, `toHaveAccessibleName`, `toHaveAccessibleErrorMessage`, `toBeFocused` in `*.spec.ts`"
+    },
+    {
+     "what": "Preferences and devices covered",
+     "where": "`use` blocks and projects in `playwright.config.*`: `colorScheme`, `reducedMotion`, `forcedColors`, `contrast`, `locale`, `timezoneId`, `devices[...]`"
+    },
+    {
+     "what": "States covered",
+     "where": "`page.route` with `route.fulfill({ status })` or `route.abort()`, `context.setOffline`, `page.clock` in tests"
+    },
+    {
+     "what": "Baselines",
+     "where": "`*-snapshots/` folders next to specs; file names carry the browser and platform (`-chromium-linux.png`)"
+    }
+   ],
+   "gotchas": [
+    {
+     "text": "Role-based locators (`getByRole` with a name) give early feedback on roles and accessible names, but Playwright states they do not replace accessibility audits. A suite of `getByRole` tests is not evidence for A11Y-01.",
+     "criteria": [
+      "A11Y-01",
+      "A11Y-10"
+     ],
+     "source": "docs/src/locators.md"
+    },
+    {
+     "text": "axe scans the page in its current state. Menus, dialogs and error messages are only checked if the test opens them first; `.include()` can then scope the scan to the revealed part.",
+     "criteria": [
+      "A11Y-01"
+     ],
+     "source": "docs/src/accessibility-testing-js.md"
+    },
+    {
+     "text": "`.exclude()` skips every axe rule on the element and all its descendants, not just the known issue, so it can hide new violations. Prefer `.disableRules()` for a specific rule, or a snapshot of known violations.",
+     "criteria": [
+      "A11Y-01",
+      "A11Y-33"
+     ],
+     "source": "docs/src/accessibility-testing-js.md"
+    },
+    {
+     "text": "`toBeVisible` treats `opacity: 0` elements as visible. A test can pass on a control users cannot see; check opacity or a screenshot for visibility findings.",
+     "criteria": [
+      "INT-01",
+      "A11Y-04"
+     ],
+     "source": "docs/src/actionability.md"
+    },
+    {
+     "text": "`force: true` skips actionability checks, so a click succeeds on a control covered by another element or disabled for users. Tests that need it usually hide an overlay or layering defect.",
+     "criteria": [
+      "LAY-16",
+      "LAY-17"
+     ],
+     "source": "docs/src/actionability.md"
+    },
+    {
+     "text": "Screenshot baselines are per browser and platform (fonts and rendering differ). Baselines made on a laptop fail on Linux CI; generate and update them in the CI environment.",
+     "criteria": [
+      "DS-14"
+     ],
+     "source": "docs/src/test-snapshots-js.md"
+    },
+    {
+     "text": "`toHaveScreenshot` disables animations by default and hides the caret; `page.screenshot` leaves animations running. Evidence screenshots can catch a mid-transition frame that the visual test never sees.",
+     "criteria": [
+      "DS-14",
+      "INT-08"
+     ],
+     "source": "docs/src/api/params.md"
+    },
+    {
+     "text": "`locale` and `timezoneId` change the browser only, not the test runner, so dates formatted in the test code use the runner's settings. Compare against fixed strings, not values computed in the test.",
+     "criteria": [
+      "I18N-12",
+      "I18N-13"
+     ],
+     "source": "docs/src/emulation.md"
+    },
+    {
+     "text": "Requests made by a service worker (including Mock Service Worker) are invisible to `page.route`, so error-state tests silently test nothing. Set `serviceWorkers` to `'block'` for those tests.",
+     "criteria": [
+      "STATE-07",
+      "STATE-22"
+     ],
+     "source": "docs/src/network.md"
+    },
+    {
+     "text": "`page.clock.install()` must run before any other clock call; then `fastForward` fires due timers at once. This is how session-expiry and inactivity warnings are tested without waiting.",
+     "criteria": [
+      "STATE-12",
+      "A11Y-23"
+     ],
+     "source": "docs/src/clock.md"
+    },
+    {
+     "text": "Since 1.64, device descriptors forward `screen`, so media queries see the emulated screen size. Responsive tests written before may change results after the upgrade.",
+     "criteria": [
+      "RESP-02",
+      "RESP-04"
+     ],
+     "source": "docs/src/release-notes-js.md"
+    }
+   ],
+   "extensions": [
+    ".ts",
+    ".js",
+    ".mjs"
+   ],
+   "probes": [
+    {
+     "id": "playwright-css-locator",
+     "kind": "review",
+     "pattern": "locator\\(\\s*['\"`][.#\\[]",
+     "look_for": "CSS selectors where `getByRole` or `getByLabel` would also check roles and names; often the element has none.",
+     "criteria": [
+      "A11Y-10",
+      "A11Y-11"
+     ],
+     "example": "await page.locator(\".btn-primary\").click()",
+     "counter_example": "await page.getByRole(\"button\", { name: \"Save\" }).click()"
+    },
+    {
+     "id": "playwright-force-click",
+     "kind": "smell",
+     "pattern": "force:\\s*true",
+     "look_for": "A click forced past actionability checks; the real control may be covered or disabled for users.",
+     "criteria": [
+      "LAY-17",
+      "INT-03"
+     ],
+     "example": "await menu.click({ force: true })",
+     "counter_example": "await menu.click()"
+    },
+    {
+     "id": "playwright-axe-exclude",
+     "kind": "review",
+     "pattern": "\\.exclude\\(",
+     "look_for": "Elements removed from every axe rule; check the exclusion is still needed and as narrow as possible.",
+     "criteria": [
+      "A11Y-01"
+     ],
+     "example": "new AxeBuilder({ page }).exclude(\"#legacy-widget\")",
+     "counter_example": "new AxeBuilder({ page }).disableRules([\"duplicate-id\"])"
+    },
+    {
+     "id": "playwright-a11y-guards",
+     "kind": "inventory",
+     "pattern": "AxeBuilder|toMatchAriaSnapshot|toHaveAccessibleName|toHaveAccessibleErrorMessage|toBeFocused",
+     "look_for": "Accessibility guards in the suite. Zero hits means no regression protection for A11Y fixes.",
+     "criteria": [
+      "A11Y-33",
+      "DS-14"
+     ],
+     "example": "const results = await new AxeBuilder({ page }).withTags([\"wcag2a\", \"wcag2aa\"]).analyze()"
+    },
+    {
+     "id": "playwright-preference-emulation",
+     "kind": "inventory",
+     "pattern": "reducedMotion|colorScheme|forcedColors|contrast:|locale:|timezoneId",
+     "look_for": "User preferences and locales the suite covers; compare with the product's themes and markets.",
+     "criteria": [
+      "INT-09",
+      "COL-12",
+      "COL-14",
+      "I18N-12"
+     ],
+     "example": "test.use({ colorScheme: \"dark\", reducedMotion: \"reduce\" })"
+    }
+   ],
+   "recipes": [
+    {
+     "title": "Name and structure of a dialog, as users of assistive technology get them",
+     "criteria": [
+      "A11Y-10",
+      "A11Y-11",
+      "INT-11"
+     ],
+     "language": "ts",
+     "code": "test('delete dialog is named and offers both choices', async ({ page }) => {\n  await page.goto('/projects/42');\n  await page.getByRole('button', { name: 'Delete project' }).click();\n  await expect(page.getByRole('alertdialog')).toMatchAriaSnapshot(`\n    - alertdialog \"Delete this project?\":\n      - button \"Cancel\"\n      - button \"Delete project\"\n  `);\n});\n"
+    },
+    {
+     "title": "Escape closes the dialog and focus returns to its trigger",
+     "criteria": [
+      "A11Y-06",
+      "INT-11"
+     ],
+     "language": "ts",
+     "code": "test('focus returns to the trigger', async ({ page }) => {\n  await page.goto('/settings');\n  const trigger = page.getByRole('button', { name: 'Edit profile' });\n  await trigger.click();\n  await expect(page.getByRole('dialog')).toBeVisible();\n  await page.keyboard.press('Escape');\n  await expect(page.getByRole('dialog')).toBeHidden();\n  await expect(trigger).toBeFocused();\n});\n"
+    },
+    {
+     "title": "Automated WCAG A/AA scan of a critical screen, including revealed UI",
+     "criteria": [
+      "A11Y-01"
+     ],
+     "language": "ts",
+     "code": "import AxeBuilder from '@axe-core/playwright';\n\ntest('checkout has no detectable WCAG A/AA violations', async ({ page }) => {\n  await page.goto('/checkout');\n  await page.getByRole('button', { name: 'Choose delivery' }).click();\n  const results = await new AxeBuilder({ page })\n    .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])\n    .analyze();\n  expect(results.violations).toEqual([]);\n});\n"
+    },
+    {
+     "title": "Field errors are announced, not only shown",
+     "criteria": [
+      "FORM-10",
+      "A11Y-24"
+     ],
+     "language": "ts",
+     "code": "test(\"email error is the field's accessible error message\", async ({ page }) => {\n  await page.goto('/signup');\n  await page.getByLabel('Email').fill('ana@');\n  await page.getByRole('button', { name: 'Create account' }).click();\n  await expect(page.getByLabel('Email')).toHaveAccessibleErrorMessage(/valid email/i);\n});\n"
+    },
+    {
+     "title": "A server error shows an actionable message, and offline is handled",
+     "criteria": [
+      "STATE-07",
+      "STATE-08",
+      "STATE-11"
+     ],
+     "language": "ts",
+     "code": "test('failed save keeps input and explains', async ({ page, context }) => {\n  await page.route('**/api/projects', route => route.fulfill({ status: 500, body: '{}' }));\n  await page.goto('/projects/new');\n  await page.getByLabel('Name').fill('Roadmap');\n  await page.getByRole('button', { name: 'Create' }).click();\n  await expect(page.getByRole('alert')).toContainText(/try again/i);\n  await expect(page.getByLabel('Name')).toHaveValue('Roadmap');\n\n  await context.setOffline(true);\n  await page.getByRole('button', { name: 'Create' }).click();\n  await expect(page.getByRole('alert')).toContainText(/offline/i);\n});\n"
+    },
+    {
+     "title": "Session expiry warns before signing out",
+     "criteria": [
+      "STATE-12",
+      "A11Y-23"
+     ],
+     "language": "ts",
+     "code": "test('inactivity warning appears before logout', async ({ page }) => {\n  await page.clock.install();\n  await page.goto('/dashboard');\n  await page.clock.fastForward('25:00');\n  await expect(page.getByRole('alertdialog', { name: /still there/i })).toBeVisible();\n});\n"
+    },
+    {
+     "title": "Dark mode and reduced motion, as a screenshot guard",
+     "criteria": [
+      "COL-12",
+      "INT-09",
+      "DS-14"
+     ],
+     "language": "ts",
+     "code": "test.use({ colorScheme: 'dark', reducedMotion: 'reduce' });\n\ntest('dashboard in dark mode', async ({ page }) => {\n  await page.goto('/dashboard');\n  await expect(page).toHaveScreenshot('dashboard-dark.png', {\n    mask: [page.getByTestId('live-clock')],\n  });\n});\n"
+    },
+    {
+     "title": "No horizontal scrolling at 320 CSS px",
+     "criteria": [
+      "A11Y-17",
+      "RESP-02"
+     ],
+     "language": "ts",
+     "code": "test('pricing reflows at 320 px', async ({ page }) => {\n  await page.setViewportSize({ width: 320, height: 800 });\n  await page.goto('/pricing');\n  const overflow = await page.evaluate(\n    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,\n  );\n  expect(overflow).toBe(false);\n});\n"
+    }
+   ]
+  },
+  {
    "id": "radix-ui",
    "name": "Radix Primitives",
    "kind": "component-library",

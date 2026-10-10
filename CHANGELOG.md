@@ -10,8 +10,9 @@ the skill layout, criterion schema or MCP interface is a major version.
 ### Added
 
 - Stack packs (`criteria/stacks/*.yaml`, generated `references/stacks.md` and
-  `references/stacks/<id>.md`, ADR-007): Next.js 16 (App Router), shadcn/ui and
-  Radix Primitives, each verified against the project's repository at a recorded
+  `references/stacks/<id>.md`, ADR-007): Next.js 16 (App Router), shadcn/ui,
+  Radix Primitives and Playwright Test 1.64 (with eight regression-guard recipes,
+  type-checked in CI), each verified against the project's repository at a recorded
   commit, with gotchas traced to source files and probes. `scripts/probe.py`
   detects the stacks and runs their probes; `scripts/check_freshness.py` and a
   monthly workflow flag packs older than six months.

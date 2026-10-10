@@ -91,7 +91,10 @@ Every story must be:
   screens one by one, then delete the old one in its own story.
 - **Behind a flag** when it changes a critical flow, with a rollback path.
 - **Guarded**: name the test that fails if it regresses (visual snapshot, axe,
-  end-to-end flow, unit test on the shared component).
+  end-to-end flow, unit test on the shared component). With Playwright, start from
+  the recipes in `references/stacks/playwright.md` (ARIA snapshot, focus return,
+  axe scan, accessible error message, error and offline states, session expiry,
+  dark mode, reflow); they compile against the version the pack was verified with.
 - **Verified**: how to confirm the findings are closed (the audit criterion check,
   a measurement, a before/after screenshot).
 

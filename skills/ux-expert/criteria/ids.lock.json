@@ -569,6 +569,7 @@
  },
  "stacks": [
   "nextjs",
+  "playwright",
   "radix-ui",
   "shadcn-ui"
  ],
@@ -631,6 +632,11 @@
   "nextjs-raw-img",
   "nextjs-revalidate-tag",
   "nextjs-viewport-zoom-blocked",
+  "playwright-a11y-guards",
+  "playwright-axe-exclude",
+  "playwright-css-locator",
+  "playwright-force-click",
+  "playwright-preference-emulation",
   "radix-as-child",
   "radix-escape-prevented",
   "radix-non-modal",
