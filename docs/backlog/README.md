@@ -57,7 +57,9 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| [UXE-16](UXE-16-stability-and-docs-site.md) | Stability guarantees (criterion ID and schema policy), docs site, 1.0 release | M | in progress |
+| [UXE-16](UXE-16-stability-and-docs-site.md) | Stability guarantees (criterion ID and schema policy), docs site, 1.0 release | M | done |
+| [UXE-18](UXE-18-stack-packs.md) | Stack packs: versioned framework knowledge read from upstream repositories (Next.js, shadcn/ui, Radix) | M | in progress |
+| UXE-19 | Playwright pack: turn criteria into regression guards (ARIA snapshots, axe, emulation, screenshots) | S | to refine |
 
 ## Known limitations (tracked by the stories above)
 

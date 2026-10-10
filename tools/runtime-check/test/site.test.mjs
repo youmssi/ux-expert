@@ -12,7 +12,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
 const repo = join(root, '..', '..');
 const script = join(repo, 'skills', 'ux-expert', 'scripts', 'ux_check.mjs');
-const PAGES = ['index', 'criteria', 'sources', 'areas/forms-input', 'install'];
+const PAGES = ['index', 'criteria', 'sources', 'areas/forms-input', 'install', 'stacks/nextjs'];
 
 describe('documentation site passes ux_check', () => {
     const work = mkdtempSync(join(tmpdir(), 'ux-site-'));

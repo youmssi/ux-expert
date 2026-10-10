@@ -32,7 +32,7 @@ class GenerateTest(unittest.TestCase):
         (self.skill / "references" / "areas").mkdir(parents=True)
         shutil.copy(SCHEMA, self.skill / "criteria" / "schema.json")
         shutil.copy(SOURCES_SCHEMA, self.skill / "criteria" / "sources.schema.json")
-        for name in ("scoring.yaml", "scoring.schema.json", "patterns.schema.json", "probes.schema.json"):
+        for name in ("scoring.yaml", "scoring.schema.json", "patterns.schema.json", "probes.schema.json", "stack.schema.json"):
             shutil.copy(CRITERIA / name, self.skill / "criteria" / name)
         (self.skill / "references" / "severity-and-scoring.md").write_text(SCORING_MD)
         self.write_sources([SOURCE])
@@ -60,6 +60,20 @@ class GenerateTest(unittest.TestCase):
         probes = {"platforms": [{"id": "demo", "name": "Demo OS", "extensions": [".swift"], "detect": "any .swift file",
                                  "sources": ["spec"], "notes": ["A note."]}], "probes": [probe]}
         (self.skill / "criteria" / "probes.yaml").write_text(yaml.safe_dump(probes))
+
+    def write_stack(self, **overrides):
+        sha = "b" * 40
+        stack = {"id": "demo-fw", "name": "Demo FW", "kind": "framework", "summary": "Read when the project uses Demo FW.",
+                 "detect": {"dependencies": ["demo-fw"]},
+                 "verified": {"version": "2.x", "repository": "https://github.com/o/demo-fw", "commit": sha, "verified_on": "2026-10-10"},
+                 "evidence": [{"what": "Routes", "where": "`app/**/page.tsx`"}],
+                 "gotchas": [{"text": f"Gotcha {i}.", "criteria": ["DEMO-01"], "source": "docs/a.md"} for i in range(3)],
+                 "extensions": [".tsx"],
+                 "probes": [{"id": "demo-fw-reset", "kind": "review", "pattern": r"reset\(\)", "look_for": "Reset only.",
+                             "criteria": ["DEMO-01"], "example": "reset()", "counter_example": "retry()"}],
+                 "recipes": [{"title": "Guard", "criteria": ["DEMO-01"], "language": "ts", "code": "expect(1).toBe(1)\n"}]} | overrides
+        (self.skill / "criteria" / "stacks").mkdir(exist_ok=True)
+        (self.skill / "criteria" / "stacks" / f"{stack['id']}.yaml").write_text(yaml.safe_dump(stack))
 
     def write_sources(self, sources):
         (self.skill / "criteria" / "sources.yaml").write_text(yaml.safe_dump({"sources": sources}, allow_unicode=True))
@@ -283,6 +297,32 @@ class GenerateTest(unittest.TestCase):
     def test_the_catalogue_carries_its_schema_version(self):
         self.assertEqual(run(self.skill, check=False), [])
         self.assertEqual(json.loads((self.skill / "criteria" / "catalogue.json").read_text())["schema_version"], 1)
+
+    def test_stack_packs_render_with_sources_at_the_verified_commit(self):
+        self.write_stack()
+        self.assertEqual(run(self.skill, check=False), [])
+        text = (self.skill / "references" / "stacks" / "demo-fw.md").read_text()
+        self.assertIn("Verified against Demo FW 2.x on 2026-10-10", text)
+        self.assertIn(f"Source: [docs/a.md](https://github.com/o/demo-fw/blob/{'b' * 40}/docs/a.md).", text)
+        self.assertIn("| `demo-fw-reset` | review |", text)
+        self.assertIn("```ts\nexpect(1).toBe(1)\n```", text)
+        self.assertIn("[Demo FW](stacks/demo-fw.md)", (self.skill / "references" / "stacks.md").read_text())
+        catalogue = json.loads((self.skill / "criteria" / "catalogue.json").read_text())
+        self.assertEqual(catalogue["stacks"][0]["id"], "demo-fw")
+        self.assertIn("demo-fw-reset", json.loads((self.skill / "criteria" / "ids.lock.json").read_text())["probes"])
+
+    def test_a_stack_citing_an_unknown_criterion_or_reusing_a_probe_id_is_rejected(self):
+        self.write_stack(gotchas=[{"text": "G.", "criteria": ["DEMO-77"], "source": "a.md"}] * 3)
+        self.assertTrue(any("cites DEMO-77" in p for p in run(self.skill, check=True)))
+        self.write_stack(probes=[{"id": "demo-fixed-font", "kind": "inventory", "pattern": "x", "look_for": "x", "criteria": [], "example": "x"}])
+        self.assertTrue(any("demo-fixed-font: duplicate probe ID" in p for p in run(self.skill, check=True)))
+
+    def test_a_stack_with_too_few_gotchas_or_a_mismatched_id_is_rejected(self):
+        self.write_stack(gotchas=[{"text": "G.", "criteria": [], "source": "a.md"}])
+        self.assertTrue(any("gotchas: " in p and "is too short" in p for p in run(self.skill, check=True)))
+        self.write_stack()
+        (self.skill / "criteria" / "stacks" / "demo-fw.yaml").rename(self.skill / "criteria" / "stacks" / "other.yaml")
+        self.assertTrue(any("must match the file name 'other'" in p for p in run(self.skill, check=True)))
 
     def test_an_area_file_without_criteria_is_reported(self):
         run(self.skill, check=False)

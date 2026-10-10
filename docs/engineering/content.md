@@ -94,3 +94,16 @@ and its authoring guidance (agentskills.io, `docs/skill-creation/` in
 - When an agent makes a mistake in a run (false positive, missed issue, wasted
   step), add a one-line correction to the relevant gotchas list. That is the
   fastest way to improve the skill.
+
+## 8. Stack packs
+
+- A pack (`criteria/stacks/<id>.yaml`, schema `criteria/stack.schema.json`) adds what a framework, component library
+  or test tool changes about findings. It never restates a criterion; it cites criteria by ID.
+- Read the stack's own repository at a recorded commit (clone it; docs sites are often unreachable or newer than the
+  release the project uses). Record the version and commit in `verified`, and summarize in your own words.
+- Every gotcha names its source file in that repository. A gotcha is behaviour that defies a reasonable assumption:
+  a default that makes a generic finding a false positive, or a convention that silently leaves a gap.
+- Probes follow the native-probe rules: portable regular expressions, an example, a counter-example for review
+  and smell probes.
+- Re-verify a pack when `scripts/check_freshness.py` flags it (monthly, older than about six months) or when the
+  stack ships a major version.

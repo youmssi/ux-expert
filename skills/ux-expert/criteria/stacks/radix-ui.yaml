@@ -1,0 +1,81 @@
+id: radix-ui
+name: Radix Primitives
+kind: component-library
+summary: Read when the project imports Radix Primitives (`radix-ui` or `@radix-ui/react-*`), directly or through
+  shadcn/ui. Radix already implements focus management and keyboard support for its widgets, so many generic
+  findings are false positives; the real defects come from labels the team must supply and defaults it overrides.
+detect:
+  dependencies: [radix-ui, '@radix-ui/react-dialog', '@radix-ui/react-alert-dialog', '@radix-ui/react-dropdown-menu',
+    '@radix-ui/react-popover', '@radix-ui/react-select', '@radix-ui/react-tooltip', '@radix-ui/react-toast']
+verified:
+  version: 'Primitives 1.x (radix-ui 1.4), releases to 2026-07-20'
+  repository: https://github.com/radix-ui/website
+  commit: 402e749613ab2e7ab7139c65b0029842b0360f07
+  verified_on: '2026-10-10'
+evidence:
+- what: Overlays and menus
+  where: '`Dialog`, `AlertDialog`, `Popover`, `DropdownMenu`, `Select`, `Tooltip` imports from `radix-ui` or `@radix-ui/react-*`, often wrapped in `components/ui/*.tsx`'
+- what: Overridden defaults
+  where: 'Handlers that call `event.preventDefault()`: `onOpenAutoFocus`, `onCloseAutoFocus`, `onEscapeKeyDown`, `onPointerDownOutside`, `onInteractOutside`; `modal={false}`'
+- what: Composition
+  where: '`asChild` on triggers and items; the child element must be focusable, spread props and forward its ref'
+- what: Labels
+  where: '`Dialog.Title`, `Dialog.Description`, `VisuallyHidden`, `AccessibleIcon`, `Label`, `aria-label` on `Tooltip.Content`'
+gotchas:
+- text: A modal `Dialog` traps focus, closes on Escape, returns focus to the trigger on close and hides outside content from screen readers. Do not report a missing focus trap or focus return unless the code prevents the default in `onOpenAutoFocus`, `onCloseAutoFocus` or `onEscapeKeyDown`, or sets `modal={false}`.
+  criteria: [INT-11, A11Y-06]
+  source: data/primitives/docs/components/dialog.mdx
+- text: Radix leaves accessible names to you. A dialog without a rendered `Dialog.Title` has no name; hide the title with `VisuallyHidden` rather than omitting it. Remove the description with `aria-describedby={undefined}` on `Dialog.Content`, not by deleting it.
+  criteria: [A11Y-10]
+  source: data/primitives/docs/components/dialog.mdx
+- text: '`AlertDialog` does not close on an outside click, by design. On open, focus goes to Cancel (accessibility overview) while the component page says the destructive action; check the rendered behaviour. The action should look clearly different from Cancel.'
+  criteria: [CONT-10, LAY-04]
+  source: data/primitives/docs/overview/accessibility.mdx
+- text: '`asChild` passes behaviour to the child element. If the child is a `div` or a component that does not spread props and forward its ref, the trigger loses keyboard access and ARIA wiring.'
+  criteria: [A11Y-02, A11Y-11]
+  source: data/primitives/docs/guides/composition.mdx
+- text: '`DropdownMenu` is modal by default (outside content is inert while it is open); `Popover` is not. Typeahead and full keyboard navigation are built in; a menu `Label` is not focusable with arrow keys.'
+  criteria: [INT-11, A11Y-02]
+  source: data/primitives/docs/components/dropdown-menu.mdx
+- text: '`Tooltip` opens on hover or focus and closes on activation or Escape. It is a description, not a label: an icon button still needs its own `aria-label`. Setting `disableHoverableContent` (content closes when the pointer leaves the trigger) has accessibility consequences, as the docs warn.'
+  criteria: [INT-13, A11Y-10]
+  source: data/primitives/docs/components/tooltip.mdx
+- text: '`Toast` pauses its timer on hover, focus and window blur, and the viewport is reachable with F8 by default. The hotkey is invisible unless the product mentions it. Foreground toasts (the default) are announced at once and may clear queued announcements, so stacked toasts get lost; background tasks should use `type="background"`.'
+  criteria: [INT-14, A11Y-13]
+  source: data/primitives/docs/components/toast.mdx
+- text: '`Select` follows the select-only combobox pattern with typeahead; grouping with `Select.Group` and `Select.Label` gives options their group name automatically.'
+  criteria: [A11Y-11, FORM-02]
+  source: data/primitives/docs/components/select.mdx
+- text: Radix ships behaviour, not styles. Focus indicators, contrast and target size are the project's CSS; check them on the rendered component.
+  criteria: [A11Y-04, A11Y-20]
+  source: data/primitives/docs/overview/introduction.mdx
+extensions: [.tsx, .jsx]
+probes:
+- id: radix-prevented-focus-default
+  kind: review
+  pattern: 'on(Open|Close)AutoFocus=\{[^}]*preventDefault'
+  look_for: Overridden focus placement on open or close; check focus lands somewhere sensible and returns to the trigger.
+  criteria: [A11Y-06, INT-11]
+  example: '<Dialog.Content onCloseAutoFocus={(e) => e.preventDefault()}>'
+  counter_example: '<Dialog.Content onOpenAutoFocus={focusFirstField}>'
+- id: radix-escape-prevented
+  kind: smell
+  pattern: 'onEscapeKeyDown=\{[^}]*preventDefault'
+  look_for: Escape no longer closes the overlay; acceptable only with unsaved-changes protection that says so.
+  criteria: [INT-11, A11Y-03]
+  example: '<Dialog.Content onEscapeKeyDown={(e) => e.preventDefault()}>'
+  counter_example: '<Dialog.Content onEscapeKeyDown={confirmDiscard}>'
+- id: radix-as-child
+  kind: review
+  pattern: '\basChild\b'
+  look_for: Composition; the child must be a focusable element or a component that spreads props and forwards its ref.
+  criteria: [A11Y-02, A11Y-11]
+  example: '<Dialog.Trigger asChild><div onClick={open}>Edit</div></Dialog.Trigger>'
+  counter_example: '<Dialog.Trigger>Edit</Dialog.Trigger>'
+- id: radix-non-modal
+  kind: review
+  pattern: 'modal=\{false\}'
+  look_for: Non-modal overlay; outside content stays interactive and focus is not trapped.
+  criteria: [INT-11]
+  example: '<DropdownMenu.Root modal={false}>'
+  counter_example: '<DropdownMenu.Root>'

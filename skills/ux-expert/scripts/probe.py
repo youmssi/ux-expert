@@ -1,8 +1,10 @@
-"""Run the native mobile probes (references/native-probes.md) over a project.
+"""Run the native mobile probes (references/native-probes.md) and stack pack probes
+(references/stacks.md) over a project.
 
 Standard library only. Reads the probes from criteria/catalogue.json.
-Usage: python3 scripts/probe.py <project root> [--platform ios,android,flutter,react-native] [--max-hits 20]
-Prints JSON: the platforms detected, then per probe its kind, criteria, hit count and first hits.
+Usage: python3 scripts/probe.py <project root> [--platform ios,android,flutter,react-native] [--stack nextjs,shadcn-ui] [--max-hits 20]
+Prints JSON: the platforms and stack packs detected (with the pack to read), then per probe its kind, criteria,
+hit count and first hits.
 A hit is a place to look, not a finding: open the code and check it before reporting.
 Comment lines are skipped.
 """
@@ -51,56 +53,97 @@ def detect(root: Path, files: list[Path]) -> list[str]:
     return found
 
 
-def run(root: Path, platforms: list[str] | None, max_hits: int) -> dict:
+def read_manifest(root: Path) -> dict:
+    try:
+        return json.loads((root / "package.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def detect_stacks(root: Path, stacks: list[dict]) -> list[str]:
+    """Stacks whose dependency is in package.json or whose marker file is at the project root."""
+    manifest = read_manifest(root)
+    deps = {**manifest.get("dependencies", {}), **manifest.get("devDependencies", {})}
+    return [s["id"] for s in stacks
+            if any(d in deps for d in s["detect"].get("dependencies", []))
+            or any((root / f).exists() for f in s["detect"].get("files", []))]
+
+
+def scan(root: Path, files: list[Path], extensions: set[str], probes: list[dict], max_hits: int) -> dict[str, tuple[int, list[dict]]]:
+    compiled = [(p, re.compile(p["pattern"])) for p in probes]
+    hits: dict[str, list[dict]] = {p["id"]: [] for p in probes}
+    counts = dict.fromkeys(hits, 0)
+    for path in files:
+        if path.suffix not in extensions or path.stat().st_size > MAX_FILE_BYTES:
+            continue
+        try:
+            lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+        except OSError:
+            continue
+        for number, line in enumerate(lines, 1):
+            if COMMENT.match(line):
+                continue
+            for probe, pattern in compiled:
+                if pattern.search(line):
+                    counts[probe["id"]] += 1
+                    if len(hits[probe["id"]]) < max_hits:
+                        hits[probe["id"]].append({"file": str(path.relative_to(root)), "line": number, "text": line.strip()[:160]})
+    return {i: (counts[i], hits[i]) for i in hits}
+
+
+def result(probe: dict, key: str, target: str, found: tuple[int, list[dict]]) -> dict:
+    return {"probe": probe["id"], key: target, "kind": probe["kind"], "criteria": probe["criteria"],
+            "look_for": probe["look_for"], "count": found[0], "hits": found[1]}
+
+
+def run(root: Path, platforms: list[str] | None, max_hits: int, stacks: list[str] | None = None) -> dict:
     catalogue = json.loads(CATALOGUE.read_text(encoding="utf-8"))
     files = list(source_files(root))
-    selected = platforms if platforms else detect(root, files)
     known = {p["id"]: p for p in catalogue["platforms"]}
-    unknown = [p for p in selected if p not in known]
-    if unknown:
-        raise ValueError(f"unknown platform(s) {', '.join(unknown)}; known: {', '.join(known)}")
+    known_stacks = {s["id"]: s for s in catalogue.get("stacks", [])}
+    # A flag limits the run to what it names; with no flag, everything detected runs.
+    selected = platforms if platforms is not None else ([] if stacks is not None else detect(root, files))
+    selected_stacks = stacks if stacks is not None else ([] if platforms else detect_stacks(root, list(known_stacks.values())))
+    for kind, chosen, valid in (("platform", selected, known), ("stack", selected_stacks, known_stacks)):
+        unknown = [i for i in chosen if i not in valid]
+        if unknown:
+            raise ValueError(f"unknown {kind}(s) {', '.join(unknown)}; known: {', '.join(valid)}")
     results = []
     for platform_id in selected:
-        extensions = set(known[platform_id]["extensions"])
         probes = [p for p in catalogue["probes"] if p["platform"] == platform_id]
-        compiled = [(p, re.compile(p["pattern"])) for p in probes]
-        hits: dict[str, list[dict]] = {p["id"]: [] for p in probes}
-        counts = dict.fromkeys(hits, 0)
-        for path in files:
-            if path.suffix not in extensions or path.stat().st_size > MAX_FILE_BYTES:
-                continue
-            try:
-                lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
-            except OSError:
-                continue
-            for number, line in enumerate(lines, 1):
-                if COMMENT.match(line):
-                    continue
-                for probe, pattern in compiled:
-                    if pattern.search(line):
-                        counts[probe["id"]] += 1
-                        if len(hits[probe["id"]]) < max_hits:
-                            hits[probe["id"]].append({"file": str(path.relative_to(root)), "line": number, "text": line.strip()[:160]})
-        for probe in probes:
-            results.append({"probe": probe["id"], "platform": platform_id, "kind": probe["kind"], "criteria": probe["criteria"],
-                            "look_for": probe["look_for"], "count": counts[probe["id"]], "hits": hits[probe["id"]]})
-    return {"root": str(root), "platforms": selected, "results": results}
+        found = scan(root, files, set(known[platform_id]["extensions"]), probes, max_hits)
+        results += [result(p, "platform", platform_id, found[p["id"]]) for p in probes]
+    for stack_id in selected_stacks:
+        stack = known_stacks[stack_id]
+        probes = stack.get("probes", [])
+        found = scan(root, files, set(stack.get("extensions", [])), probes, max_hits)
+        results += [result(p, "stack", stack_id, found[p["id"]]) for p in probes]
+    return {
+        "root": str(root),
+        "platforms": selected,
+        "stacks": [{"id": i, "name": known_stacks[i]["name"], "read": f"references/stacks/{i}.md"} for i in selected_stacks],
+        "results": results,
+    }
 
 
 def main(argv: list[str]) -> int:
-    parser = argparse.ArgumentParser(description="Run the native mobile probes over a project.")
+    parser = argparse.ArgumentParser(description="Run the native mobile and stack pack probes over a project.")
     parser.add_argument("root", type=Path)
     parser.add_argument("--platform", help="comma-separated platform IDs; default: detected from the project")
+    parser.add_argument("--stack", help="comma-separated stack pack IDs (e.g. nextjs,shadcn-ui); default: detected from the project")
     parser.add_argument("--max-hits", type=int, default=20, help="hits listed per probe (all are counted)")
     args = parser.parse_args(argv)
     if not args.root.is_dir():
         parser.error(f"{args.root} is not a directory")
     try:
-        report = run(args.root.resolve(), args.platform.split(",") if args.platform else None, args.max_hits)
+        report = run(args.root.resolve(), args.platform.split(",") if args.platform else None, args.max_hits,
+                     args.stack.split(",") if args.stack else None)
     except ValueError as error:
         parser.error(str(error))
-    if not report["platforms"]:
-        print("probe: no native platform detected (no .swift, .kt, pubspec.yaml or react-native/expo dependency)", file=sys.stderr)
+    if not report["platforms"] and not report["stacks"]:
+        print("probe: no native platform or stack pack detected", file=sys.stderr)
+    for stack in report["stacks"]:
+        print(f"probe: {stack['name']} detected; read {stack['read']}", file=sys.stderr)
     print(json.dumps(report, indent=1))
     return 0
 

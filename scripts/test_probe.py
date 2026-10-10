@@ -69,6 +69,25 @@ class ProbeTest(unittest.TestCase):
         result = self.result(run(self.root, ["ios"], 2), "ios-fixed-font-size")
         self.assertEqual((result["count"], len(result["hits"])), (6, 2))
 
+    def test_detects_stack_packs_from_dependencies_and_root_files(self):
+        (self.root / "package.json").write_text(json.dumps({"dependencies": {"next": "16.0.0", "react": "19.2.0"}}))
+        (self.root / "components.json").write_text("{}")
+        report = run(self.root, None, 20)
+        self.assertEqual([s["id"] for s in report["stacks"]], ["nextjs", "shadcn-ui"])
+        self.assertEqual(report["stacks"][0]["read"], "references/stacks/nextjs.md")
+
+    def test_runs_stack_probes_and_the_stack_flag_limits_the_run(self):
+        (self.root / "app").mkdir()
+        (self.root / "app" / "error.tsx").write_text("<button onClick={() => reset()}>Try again</button>\n")
+        (self.root / "app" / "layout.tsx").write_text("export const viewport = {\n  maximumScale: 1,\n}\n")
+        report = run(self.root, None, 20, ["nextjs"])
+        self.assertEqual(report["platforms"], [])
+        self.assertEqual({r["stack"] for r in report["results"]}, {"nextjs"})
+        self.assertEqual(self.result(report, "nextjs-error-boundary-reset-only")["hits"][0]["file"], "app/error.tsx")
+        self.assertEqual(self.result(report, "nextjs-viewport-zoom-blocked")["hits"][0]["line"], 2)
+        with self.assertRaisesRegex(ValueError, "unknown stack"):
+            run(self.root, None, 20, ["angular-material"])
+
     def test_a_web_project_has_no_native_platform(self):
         (self.root / "package.json").write_text(json.dumps({"dependencies": {"react": "19.2.0"}}))
         for name in ("ios", "android", "lib"):

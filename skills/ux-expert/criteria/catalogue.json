@@ -12790,5 +12790,622 @@
    ],
    "example": "<FlatList ListEmptyComponent={<Empty />} />"
   }
+ ],
+ "stacks": [
+  {
+   "id": "nextjs",
+   "name": "Next.js (App Router)",
+   "kind": "framework",
+   "summary": "Read when the project uses Next.js with the `app/` directory. It says where loading, error, not-found and navigation behaviour is defined, which Next.js defaults already satisfy a criterion, and which conventions silently leave a gap.",
+   "detect": {
+    "dependencies": [
+     "next"
+    ],
+    "files": [
+     "next.config.js",
+     "next.config.mjs",
+     "next.config.ts"
+    ]
+   },
+   "verified": {
+    "version": "16.x",
+    "repository": "https://github.com/vercel/next.js",
+    "commit": "d8bfc3c994670c367e6e31853b78f42e8b7fba85",
+    "verified_on": "2026-10-10"
+   },
+   "evidence": [
+    {
+     "what": "Routes and screens",
+     "where": "`app/**/page.tsx`; route groups `(name)` do not appear in the URL; `@slot` folders are parallel routes, `(.)` folders intercepting routes (often modals)"
+    },
+    {
+     "what": "Loading states",
+     "where": "`loading.tsx` per segment; `<Suspense fallback>` in pages and layouts; `useLinkStatus` inside a `<Link>` for pending navigation"
+    },
+    {
+     "what": "Error and missing states",
+     "where": "`error.tsx` per segment, `global-error.tsx` for the root layout, `not-found.tsx`, `global-not-found.tsx`; `forbidden.tsx` and `unauthorized.tsx` (experimental)"
+    },
+    {
+     "what": "Page titles, language, viewport",
+     "where": "`metadata` or `generateMetadata` in layouts and pages (`title.template` in a layout); `<html lang>` in `app/layout.tsx`; `viewport` export"
+    },
+    {
+     "what": "Forms and mutations",
+     "where": "Server Actions (`\"use server\"`), `useActionState` (pending, state), `useFormStatus` in a child of the form, `redirect`, `revalidatePath`, `updateTag`"
+    },
+    {
+     "what": "Images and fonts",
+     "where": "`next/image` (`alt`, `sizes`, `preload`), `next/font` in the root layout"
+    }
+   ],
+   "gotchas": [
+    {
+     "text": "`loading.tsx` wraps the page and nested layouts of its segment, not the layout, template or error boundary of the same segment. Slow data fetched in a layout shows no fallback; look for `<Suspense>` there before reporting STATE-04 as covered.",
+     "criteria": [
+      "STATE-04"
+     ],
+     "source": "docs/01-app/03-api-reference/03-file-conventions/loading.mdx"
+    },
+    {
+     "text": "`error.tsx` must be a Client Component and does not catch errors thrown by the layout above it in the same segment; errors in the root layout reach only `global-error.tsx`. A segment with `error.tsx` can still crash to a blank page.",
+     "criteria": [
+      "STATE-10",
+      "STATE-07"
+     ],
+     "source": "docs/01-app/03-api-reference/03-file-conventions/error.mdx"
+    },
+    {
+     "text": "`global-error.tsx` renders its own `<html>` and `<body>` without the global styles or theme, so it often looks broken and unbranded. Check it renders a usable page.",
+     "criteria": [
+      "STATE-08",
+      "AES-09"
+     ],
+     "source": "docs/01-app/03-api-reference/03-file-conventions/error.mdx"
+    },
+    {
+     "text": "In Next.js 16 the error boundary receives `retry` (re-fetch and re-render) as well as `reset` (re-render only). A retry button wired to `reset` does not refetch data, so the same error usually returns.",
+     "criteria": [
+      "STATE-08"
+     ],
+     "source": "docs/01-app/03-api-reference/03-file-conventions/error.mdx"
+    },
+    {
+     "text": "Next.js announces client-side route changes to screen readers from `document.title`, then the first `<h1>`, then the path. Missing or duplicate titles make every navigation announce the same thing. The docs do not describe moving focus on navigation.",
+     "criteria": [
+      "A11Y-08",
+      "A11Y-06"
+     ],
+     "source": "docs/03-architecture/accessibility.mdx"
+    },
+    {
+     "text": "A `title.template` in a layout does not apply to a `title` set in a `page` of the same segment, and needs a `title.default`. Check rendered titles, not the template.",
+     "criteria": [
+      "A11Y-08"
+     ],
+     "source": "docs/01-app/03-api-reference/04-functions/generate-metadata.mdx"
+    },
+    {
+     "text": "Next.js adds `width=device-width, initial-scale=1` by default. A `viewport` export with `maximumScale` 1 or `userScalable` false (it appears in the docs' own example) blocks zoom.",
+     "criteria": [
+      "A11Y-31"
+     ],
+     "source": "docs/01-app/03-api-reference/04-functions/generate-viewport.mdx"
+    },
+    {
+     "text": "`<html lang>` is whatever the root layout writes; Next.js does not set it from the locale. Check it changes with the language in i18n routes.",
+     "criteria": [
+      "A11Y-28",
+      "I18N-08"
+     ],
+     "source": "docs/01-app/03-api-reference/03-file-conventions/layout.mdx"
+    },
+    {
+     "text": "`<Link>` prefetching runs only in production. Judging navigation speed or missing loading states on `next dev` overstates the problem; measure a production build.",
+     "criteria": [
+      "PERF-15",
+      "STATE-04"
+     ],
+     "source": "docs/01-app/03-api-reference/02-components/link.mdx"
+    },
+    {
+     "text": "`useLinkStatus` skips its pending state when the route was already prefetched, so a missing spinner in tests is expected. On slow networks the `loading.tsx` fallback may also appear late because it was not prefetched yet.",
+     "criteria": [
+      "INT-04",
+      "STATE-04"
+     ],
+     "source": "docs/01-app/03-api-reference/04-functions/use-link-status.mdx"
+    },
+    {
+     "text": "Navigation keeps scroll position unless the new page is out of view, and skips sticky or fixed elements when choosing where to scroll. Content hidden under a sticky header needs `scroll-padding-top`.",
+     "criteria": [
+      "INT-22",
+      "LAY-16"
+     ],
+     "source": "docs/01-app/03-api-reference/02-components/link.mdx"
+    },
+    {
+     "text": "With `cacheComponents`, routes left by navigation are hidden, not unmounted, so form values, dialogs and messages are still there on Back. That is by design; reset state explicitly where stale state would mislead.",
+     "criteria": [
+      "FORM-12",
+      "IA-11"
+     ],
+     "source": "docs/01-app/02-guides/preserving-ui-state.mdx"
+    },
+    {
+     "text": "Forms that call Server Actions submit before JavaScript loads (queued in Client Components), and `redirect` answers with a 303. Pending UI needs `useActionState` or `useFormStatus` in a child of the form; without it double submits and silent waits are likely.",
+     "criteria": [
+      "FORM-15",
+      "INT-04"
+     ],
+     "source": "docs/01-app/01-getting-started/07-mutating-data.mdx"
+    },
+    {
+     "text": "`revalidateTag` serves stale content while it revalidates; only `updateTag` (in a Server Action) shows the user's own write immediately. Stale data right after saving is then a code choice, not a bug in Next.js.",
+     "criteria": [
+      "INT-06",
+      "STATE-13"
+     ],
+     "source": "docs/01-app/01-getting-started/09-revalidating.mdx"
+    },
+    {
+     "text": "`next/image` requires `alt` (empty for decoration) and `width` and `height` unless `fill` or a static import; lazy loading is the default. In Next.js 16 `priority` is deprecated: the LCP image uses `preload`, or `loading=\"eager\"` / `fetchPriority=\"high\"`.",
+     "criteria": [
+      "A11Y-14",
+      "PERF-01",
+      "PERF-03"
+     ],
+     "source": "docs/01-app/03-api-reference/02-components/image.mdx"
+    },
+    {
+     "text": "`next/font` self-hosts, defaults to `display: swap` and adds a size-adjusted fallback, so font CLS findings rarely apply when it is used. Fonts loaded by `<link>` or CSS `@import` do not get this.",
+     "criteria": [
+      "PERF-08",
+      "PERF-03"
+     ],
+     "source": "docs/01-app/03-api-reference/02-components/font.mdx"
+    },
+    {
+     "text": "`not-found` returns 404 only before streaming starts; after that the status stays 200 with the not-found UI. Check status codes in a production build before reporting STATE-20 or SEO issues.",
+     "criteria": [
+      "STATE-20"
+     ],
+     "source": "docs/01-app/03-api-reference/03-file-conventions/not-found.mdx"
+    }
+   ],
+   "extensions": [
+    ".tsx",
+    ".ts",
+    ".jsx",
+    ".js"
+   ],
+   "probes": [
+    {
+     "id": "nextjs-loading-boundaries",
+     "kind": "inventory",
+     "pattern": "export default function Loading|<Suspense",
+     "look_for": "Loading boundaries; compare with segments that fetch data in layouts or pages.",
+     "criteria": [
+      "STATE-04"
+     ],
+     "example": "export default function Loading() {"
+    },
+    {
+     "id": "nextjs-error-boundary-reset-only",
+     "kind": "review",
+     "pattern": "reset\\(\\)",
+     "look_for": "A retry button wired to `reset`, which re-renders without refetching. In Next.js 16 use `retry`.",
+     "criteria": [
+      "STATE-08"
+     ],
+     "example": "<button onClick={() => reset()}>Try again</button>",
+     "counter_example": "<button onClick={() => retry()}>Try again</button>"
+    },
+    {
+     "id": "nextjs-viewport-zoom-blocked",
+     "kind": "smell",
+     "pattern": "maximumScale:\\s*1\\b|userScalable:\\s*false",
+     "look_for": "A `viewport` export that blocks zoom.",
+     "criteria": [
+      "A11Y-31"
+     ],
+     "example": "  maximumScale: 1,",
+     "counter_example": "  initialScale: 1,"
+    },
+    {
+     "id": "nextjs-image-priority",
+     "kind": "review",
+     "pattern": "<Image\\b[^>]*\\bpriority\\b",
+     "look_for": "`priority` is deprecated in Next.js 16; use `preload` for the LCP image, or `loading=\"eager\"` / `fetchPriority=\"high\"`.",
+     "criteria": [
+      "PERF-01"
+     ],
+     "example": "<Image src={hero} alt=\"\" priority />",
+     "counter_example": "<Image src={hero} alt=\"\" preload />"
+    },
+    {
+     "id": "nextjs-pending-state",
+     "kind": "inventory",
+     "pattern": "useActionState|useFormStatus|useLinkStatus|useTransition",
+     "look_for": "Pending states for forms and navigation. Zero hits with Server Actions present means no feedback while saving.",
+     "criteria": [
+      "INT-04",
+      "FORM-15"
+     ],
+     "example": "const [state, action, pending] = useActionState(createPost, initialState)"
+    },
+    {
+     "id": "nextjs-raw-img",
+     "kind": "review",
+     "pattern": "<img\\s",
+     "look_for": "Plain `<img>` instead of `next/image`; check dimensions (CLS), lazy loading and `alt`.",
+     "criteria": [
+      "PERF-07",
+      "PERF-03",
+      "A11Y-14"
+     ],
+     "example": "<img src=\"/hero.png\" alt=\"Dashboard\">",
+     "counter_example": "<Image src={hero} alt=\"Dashboard\" />"
+    },
+    {
+     "id": "nextjs-revalidate-tag",
+     "kind": "review",
+     "pattern": "revalidateTag\\(",
+     "look_for": "Stale-while-revalidate after a mutation; if users must see their own write at once, `updateTag` is needed.",
+     "criteria": [
+      "INT-06"
+     ],
+     "example": "revalidateTag(\"posts\")",
+     "counter_example": "updateTag(\"posts\")"
+    }
+   ]
+  },
+  {
+   "id": "radix-ui",
+   "name": "Radix Primitives",
+   "kind": "component-library",
+   "summary": "Read when the project imports Radix Primitives (`radix-ui` or `@radix-ui/react-*`), directly or through shadcn/ui. Radix already implements focus management and keyboard support for its widgets, so many generic findings are false positives; the real defects come from labels the team must supply and defaults it overrides.",
+   "detect": {
+    "dependencies": [
+     "radix-ui",
+     "@radix-ui/react-dialog",
+     "@radix-ui/react-alert-dialog",
+     "@radix-ui/react-dropdown-menu",
+     "@radix-ui/react-popover",
+     "@radix-ui/react-select",
+     "@radix-ui/react-tooltip",
+     "@radix-ui/react-toast"
+    ]
+   },
+   "verified": {
+    "version": "Primitives 1.x (radix-ui 1.4), releases to 2026-07-20",
+    "repository": "https://github.com/radix-ui/website",
+    "commit": "402e749613ab2e7ab7139c65b0029842b0360f07",
+    "verified_on": "2026-10-10"
+   },
+   "evidence": [
+    {
+     "what": "Overlays and menus",
+     "where": "`Dialog`, `AlertDialog`, `Popover`, `DropdownMenu`, `Select`, `Tooltip` imports from `radix-ui` or `@radix-ui/react-*`, often wrapped in `components/ui/*.tsx`"
+    },
+    {
+     "what": "Overridden defaults",
+     "where": "Handlers that call `event.preventDefault()`: `onOpenAutoFocus`, `onCloseAutoFocus`, `onEscapeKeyDown`, `onPointerDownOutside`, `onInteractOutside`; `modal={false}`"
+    },
+    {
+     "what": "Composition",
+     "where": "`asChild` on triggers and items; the child element must be focusable, spread props and forward its ref"
+    },
+    {
+     "what": "Labels",
+     "where": "`Dialog.Title`, `Dialog.Description`, `VisuallyHidden`, `AccessibleIcon`, `Label`, `aria-label` on `Tooltip.Content`"
+    }
+   ],
+   "gotchas": [
+    {
+     "text": "A modal `Dialog` traps focus, closes on Escape, returns focus to the trigger on close and hides outside content from screen readers. Do not report a missing focus trap or focus return unless the code prevents the default in `onOpenAutoFocus`, `onCloseAutoFocus` or `onEscapeKeyDown`, or sets `modal={false}`.",
+     "criteria": [
+      "INT-11",
+      "A11Y-06"
+     ],
+     "source": "data/primitives/docs/components/dialog.mdx"
+    },
+    {
+     "text": "Radix leaves accessible names to you. A dialog without a rendered `Dialog.Title` has no name; hide the title with `VisuallyHidden` rather than omitting it. Remove the description with `aria-describedby={undefined}` on `Dialog.Content`, not by deleting it.",
+     "criteria": [
+      "A11Y-10"
+     ],
+     "source": "data/primitives/docs/components/dialog.mdx"
+    },
+    {
+     "text": "`AlertDialog` does not close on an outside click, by design. On open, focus goes to Cancel (accessibility overview) while the component page says the destructive action; check the rendered behaviour. The action should look clearly different from Cancel.",
+     "criteria": [
+      "CONT-10",
+      "LAY-04"
+     ],
+     "source": "data/primitives/docs/overview/accessibility.mdx"
+    },
+    {
+     "text": "`asChild` passes behaviour to the child element. If the child is a `div` or a component that does not spread props and forward its ref, the trigger loses keyboard access and ARIA wiring.",
+     "criteria": [
+      "A11Y-02",
+      "A11Y-11"
+     ],
+     "source": "data/primitives/docs/guides/composition.mdx"
+    },
+    {
+     "text": "`DropdownMenu` is modal by default (outside content is inert while it is open); `Popover` is not. Typeahead and full keyboard navigation are built in; a menu `Label` is not focusable with arrow keys.",
+     "criteria": [
+      "INT-11",
+      "A11Y-02"
+     ],
+     "source": "data/primitives/docs/components/dropdown-menu.mdx"
+    },
+    {
+     "text": "`Tooltip` opens on hover or focus and closes on activation or Escape. It is a description, not a label: an icon button still needs its own `aria-label`. Setting `disableHoverableContent` (content closes when the pointer leaves the trigger) has accessibility consequences, as the docs warn.",
+     "criteria": [
+      "INT-13",
+      "A11Y-10"
+     ],
+     "source": "data/primitives/docs/components/tooltip.mdx"
+    },
+    {
+     "text": "`Toast` pauses its timer on hover, focus and window blur, and the viewport is reachable with F8 by default. The hotkey is invisible unless the product mentions it. Foreground toasts (the default) are announced at once and may clear queued announcements, so stacked toasts get lost; background tasks should use `type=\"background\"`.",
+     "criteria": [
+      "INT-14",
+      "A11Y-13"
+     ],
+     "source": "data/primitives/docs/components/toast.mdx"
+    },
+    {
+     "text": "`Select` follows the select-only combobox pattern with typeahead; grouping with `Select.Group` and `Select.Label` gives options their group name automatically.",
+     "criteria": [
+      "A11Y-11",
+      "FORM-02"
+     ],
+     "source": "data/primitives/docs/components/select.mdx"
+    },
+    {
+     "text": "Radix ships behaviour, not styles. Focus indicators, contrast and target size are the project's CSS; check them on the rendered component.",
+     "criteria": [
+      "A11Y-04",
+      "A11Y-20"
+     ],
+     "source": "data/primitives/docs/overview/introduction.mdx"
+    }
+   ],
+   "extensions": [
+    ".tsx",
+    ".jsx"
+   ],
+   "probes": [
+    {
+     "id": "radix-prevented-focus-default",
+     "kind": "review",
+     "pattern": "on(Open|Close)AutoFocus=\\{[^}]*preventDefault",
+     "look_for": "Overridden focus placement on open or close; check focus lands somewhere sensible and returns to the trigger.",
+     "criteria": [
+      "A11Y-06",
+      "INT-11"
+     ],
+     "example": "<Dialog.Content onCloseAutoFocus={(e) => e.preventDefault()}>",
+     "counter_example": "<Dialog.Content onOpenAutoFocus={focusFirstField}>"
+    },
+    {
+     "id": "radix-escape-prevented",
+     "kind": "smell",
+     "pattern": "onEscapeKeyDown=\\{[^}]*preventDefault",
+     "look_for": "Escape no longer closes the overlay; acceptable only with unsaved-changes protection that says so.",
+     "criteria": [
+      "INT-11",
+      "A11Y-03"
+     ],
+     "example": "<Dialog.Content onEscapeKeyDown={(e) => e.preventDefault()}>",
+     "counter_example": "<Dialog.Content onEscapeKeyDown={confirmDiscard}>"
+    },
+    {
+     "id": "radix-as-child",
+     "kind": "review",
+     "pattern": "\\basChild\\b",
+     "look_for": "Composition; the child must be a focusable element or a component that spreads props and forwards its ref.",
+     "criteria": [
+      "A11Y-02",
+      "A11Y-11"
+     ],
+     "example": "<Dialog.Trigger asChild><div onClick={open}>Edit</div></Dialog.Trigger>",
+     "counter_example": "<Dialog.Trigger>Edit</Dialog.Trigger>"
+    },
+    {
+     "id": "radix-non-modal",
+     "kind": "review",
+     "pattern": "modal=\\{false\\}",
+     "look_for": "Non-modal overlay; outside content stays interactive and focus is not trapped.",
+     "criteria": [
+      "INT-11"
+     ],
+     "example": "<DropdownMenu.Root modal={false}>",
+     "counter_example": "<DropdownMenu.Root>"
+    }
+   ]
+  },
+  {
+   "id": "shadcn-ui",
+   "name": "shadcn/ui",
+   "kind": "component-library",
+   "summary": "Read when the project has a `components.json` at its root. shadcn/ui components are copied into the project, so audit them as the team's own code, starting from what the upstream versions already get right.",
+   "detect": {
+    "files": [
+     "components.json"
+    ]
+   },
+   "verified": {
+    "version": "new-york-v4 registry (Tailwind CSS 4, React 19)",
+    "repository": "https://github.com/shadcn-ui/ui",
+    "commit": "2d3f1cd436b18ea12f24130de4df781355925b08",
+    "verified_on": "2026-10-10"
+   },
+   "evidence": [
+    {
+     "what": "The components actually in use",
+     "where": "`components/ui/*.tsx` (path set by the `ui` alias in `components.json`); each file may differ from upstream"
+    },
+    {
+     "what": "Underlying primitives",
+     "where": "Imports in `components/ui/*.tsx`: `radix-ui` or `@radix-ui/react-*` (Radix), `@base-ui/react` (Base UI), `react-aria-components` (React Aria)"
+    },
+    {
+     "what": "Theme tokens and dark mode",
+     "where": "The global CSS file named in `components.json`: tokens under `:root` and `.dark`, exposed with `@theme inline`; colors in OKLCH"
+    },
+    {
+     "what": "Toasts, forms, sidebar",
+     "where": "`components/ui/sonner.tsx` (toasts), `field.tsx` or `form.tsx` (form fields), `sidebar.tsx` (navigation shell)"
+    }
+   ],
+   "gotchas": [
+    {
+     "text": "shadcn/ui is not a dependency but code copied into the project, open for modification. Compare a suspicious component with the upstream file before attributing a defect to shadcn/ui, and report it against the project's file.",
+     "criteria": [
+      "DS-06",
+      "DS-10"
+     ],
+     "source": "apps/v4/content/docs/(root)/index.mdx"
+    },
+    {
+     "text": "New projects default to Base UI primitives; Radix and React Aria are still supported. Check the imports in `components/ui` before applying Radix behaviour (the Radix pack) to a project.",
+     "criteria": [
+      "DS-10"
+     ],
+     "source": "apps/v4/content/docs/changelog/2026-07-base-ui-default.mdx"
+    },
+    {
+     "text": "Buttons, inputs, selects, checkboxes and tabs replace the outline with a 3 px `focus-visible` ring, so `outline-none` in these files is not an A11Y-04 defect. Menu and select items show focus only as a background change (`focus:bg-accent`); check its contrast against the menu background.",
+     "criteria": [
+      "A11Y-04",
+      "COL-10"
+     ],
+     "source": "apps/v4/registry/new-york-v4/ui/button.tsx"
+    },
+    {
+     "text": "Default button and icon-button sizes are 36 px (`h-9`, `size-9`) and the smallest sizes 24 px, which meets WCAG 2.5.8. The checkbox is 16 px (`size-4`) and the switch about 18 px high; check spacing or a clickable label before reporting a target-size failure.",
+     "criteria": [
+      "A11Y-20",
+      "RESP-07"
+     ],
+     "source": "apps/v4/registry/new-york-v4/ui/button.tsx"
+    },
+    {
+     "text": "Inputs style `aria-invalid`, but only if the code sets it. The current form docs wire `aria-invalid` and `data-invalid` by hand on each `Field`; a missing attribute leaves errors invisible to screen readers.",
+     "criteria": [
+      "FORM-10",
+      "A11Y-24"
+     ],
+     "source": "apps/v4/content/docs/forms/react-hook-form.mdx"
+    },
+    {
+     "text": "The older `Form` component wires `aria-invalid` and `aria-describedby` (description plus message) automatically through `FormControl`. A custom field that skips `FormControl` loses both.",
+     "criteria": [
+      "FORM-03",
+      "A11Y-24"
+     ],
+     "source": "apps/v4/registry/new-york-v4/ui/form.tsx"
+    },
+    {
+     "text": "Upstream icon controls carry `sr-only` text or `aria-label` (dialog close, carousel, pagination). Icon-only `Button`s written by the team do not get one automatically; each needs a label.",
+     "criteria": [
+      "A11Y-10"
+     ],
+     "source": "apps/v4/registry/new-york-v4/ui/dialog.tsx"
+    },
+    {
+     "text": "`TooltipProvider` defaults to `delayDuration = 0`, so tooltips open instantly on hover. Information only in a tooltip is still hover- or focus-only (INT-13).",
+     "criteria": [
+      "INT-13"
+     ],
+     "source": "apps/v4/registry/new-york-v4/ui/tooltip.tsx"
+    },
+    {
+     "text": "The `toast` component is deprecated in favour of Sonner (`sonner.tsx`), which follows the theme from `next-themes`. Check toasts for INT-14 in the Sonner usage, not in a leftover `toast.tsx`.",
+     "criteria": [
+      "INT-14"
+     ],
+     "source": "apps/v4/content/docs/(root)/tailwind-v4.mdx"
+    },
+    {
+     "text": "The sidebar toggles with Ctrl/Cmd+B, persists its state in a cookie and becomes a sheet on mobile with a visually hidden header. Check the shortcut does not clash with text editing in the app (B for bold).",
+     "criteria": [
+      "INT-16"
+     ],
+     "source": "apps/v4/registry/new-york-v4/ui/sidebar.tsx"
+    },
+    {
+     "text": "Projects on Tailwind 3 keep receiving Tailwind 3 and React 18 versions of components until they upgrade, and files added before an upgrade keep their old styles. Mixed focus rings or radii between files are often this, not design drift.",
+     "criteria": [
+      "AES-01",
+      "DS-04"
+     ],
+     "source": "apps/v4/content/docs/(root)/tailwind-v4.mdx"
+    },
+    {
+     "text": "The CLI can rewrite physical positioning classes to logical ones for right-to-left layouts. Components added before RTL was enabled keep `left`/`right` classes.",
+     "criteria": [
+      "I18N-09"
+     ],
+     "source": "apps/v4/content/docs/rtl/index.mdx"
+    }
+   ],
+   "extensions": [
+    ".tsx",
+    ".jsx"
+   ],
+   "probes": [
+    {
+     "id": "shadcn-icon-button-unlabeled",
+     "kind": "review",
+     "pattern": "size=\"icon(-xs|-sm|-lg)?\"",
+     "look_for": "Icon-only buttons; each needs `aria-label` or `sr-only` text.",
+     "criteria": [
+      "A11Y-10"
+     ],
+     "example": "<Button variant=\"ghost\" size=\"icon\"><Trash2 /></Button>",
+     "counter_example": "<Button variant=\"ghost\" size=\"sm\">Delete</Button>"
+    },
+    {
+     "id": "shadcn-aria-invalid",
+     "kind": "inventory",
+     "pattern": "aria-invalid=|data-invalid",
+     "look_for": "Fields that expose their error state. Compare with the number of validated fields.",
+     "criteria": [
+      "FORM-10",
+      "A11Y-24"
+     ],
+     "example": "<Input aria-invalid={fieldState.invalid} />"
+    },
+    {
+     "id": "shadcn-dialog-without-title",
+     "kind": "review",
+     "pattern": "<DialogContent|<SheetContent|<AlertDialogContent",
+     "look_for": "Each dialog or sheet needs a `DialogTitle` (visually hidden if needed) so it has an accessible name.",
+     "criteria": [
+      "A11Y-10",
+      "INT-11"
+     ],
+     "example": "<DialogContent className=\"sm:max-w-md\">",
+     "counter_example": "<DialogTitle>Edit profile</DialogTitle>"
+    },
+    {
+     "id": "shadcn-hardcoded-color-class",
+     "kind": "smell",
+     "pattern": "\\b(bg|text|border|ring)-(red|blue|green|gray|slate|zinc|neutral|yellow|orange|purple)-\\d{2,3}\\b",
+     "look_for": "Palette classes that bypass the theme tokens (`bg-primary`, `text-muted-foreground`) and dark mode.",
+     "criteria": [
+      "DS-03",
+      "COL-12"
+     ],
+     "example": "<span className=\"text-gray-500\">Saved</span>",
+     "counter_example": "<span className=\"text-muted-foreground\">Saved</span>"
+    }
+   ]
+  }
  ]
 }

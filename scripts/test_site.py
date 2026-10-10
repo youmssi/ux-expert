@@ -25,7 +25,8 @@ class SiteTest(unittest.TestCase):
 
     def test_one_page_per_area_plus_the_fixed_pages(self):
         self.assertEqual(sum(p.startswith("areas/") for p in self.pages), len(CATALOGUE["areas"]))
-        for page in ("index.html", "criteria.html", "sources.html", "stability.html", "changelog.html", "areas.html"):
+        self.assertEqual(sum(p.startswith("stacks/") for p in self.pages), len(CATALOGUE["stacks"]))
+        for page in ("index.html", "criteria.html", "sources.html", "stability.html", "changelog.html", "areas.html", "stacks.html"):
             self.assertIn(page, self.pages)
 
     def test_every_criterion_is_listed_with_its_id_as_anchor(self):

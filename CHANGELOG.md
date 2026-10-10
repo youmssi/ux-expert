@@ -9,6 +9,13 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Stack packs (`criteria/stacks/*.yaml`, generated `references/stacks.md` and
+  `references/stacks/<id>.md`, ADR-007): Next.js 16 (App Router), shadcn/ui and
+  Radix Primitives, each verified against the project's repository at a recorded
+  commit, with gotchas traced to source files and probes. `scripts/probe.py`
+  detects the stacks and runs their probes; `scripts/check_freshness.py` and a
+  monthly workflow flag packs older than six months.
+
 - Stability policy (`docs/stability.md`, ADR-006): criterion, pattern and probe
   IDs, the skill layout, `catalogue.json` (now with `schema_version`) and the
   MCP interface are public and stable within a major version. Enforced by

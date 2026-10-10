@@ -64,6 +64,8 @@ Record the result as a table: `area | route/screen | file | purpose | in critica
 
 `outline:\s*none|outline:\s*0`, `<div[^>]*onClick`, `<img(?![^>]*alt=)`, `tabIndex=\{?["']?[1-9]`, `aria-hidden="true"` on focusable elements, `role="button"` without key handlers, `autoFocus`, `user-scalable=no`, `maximum-scale=1`.
 
+**Stack packs:** `python3 scripts/probe.py <project root>` also lists the detected stacks that have a pack in `references/stacks.md` (for example Next.js, shadcn/ui, Radix) and runs their probes. Read each detected pack before Phase 4: it says where the evidence is and which defaults already satisfy a criterion.
+
 **Native mobile:** run `python3 scripts/probe.py <project root>`. It detects iOS, Android, Flutter and React Native and runs the probes in `references/native-probes.md` (text scaling, accessibility labels and roles, custom tap targets, hard-coded colors and strings, safe areas, Reduce Motion, states). Read the platform notes there first: they say what is *not* a defect on that platform.
 
 ## 7. Runtime ability

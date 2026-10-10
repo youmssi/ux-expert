@@ -38,7 +38,11 @@ def pages() -> dict[str, tuple[Path, str]]:
         "changelog.html": (ROOT / "CHANGELOG.md", "Changelog"),
         "patterns.html": (SKILL / "references" / "patterns.md", "Proven patterns"),
         "native-probes.html": (SKILL / "references" / "native-probes.md", "Native mobile probes"),
+        "stacks.html": (SKILL / "references" / "stacks.md", "Stack packs"),
     }
+    for pack in sorted((SKILL / "references" / "stacks").glob("*.md")):
+        title = pack.read_text(encoding="utf-8").splitlines()[0].lstrip("# ").strip()
+        result[f"stacks/{pack.stem}.html"] = (pack, title)
     for area in sorted((SKILL / "references" / "areas").glob("*.md")):
         title = area.read_text(encoding="utf-8").splitlines()[0].lstrip("# ").strip()
         result[f"areas/{area.stem}.html"] = (area, title)
@@ -183,8 +187,9 @@ def build(out: Path) -> list[str]:
     if out.exists():
         shutil.rmtree(out)
     (out / "areas").mkdir(parents=True)
+    (out / "stacks").mkdir()
     catalogue = json.loads((SKILL / "criteria" / "catalogue.json").read_text(encoding="utf-8"))
-    nav = [("areas.html", "Areas"), ("criteria.html", "Criteria"), ("patterns.html", "Patterns"),
+    nav = [("areas.html", "Areas"), ("criteria.html", "Criteria"), ("stacks.html", "Stacks"), ("patterns.html", "Patterns"),
            ("install.html", "Install"), ("use-in-your-project.html", "Use it"), ("stability.html", "Stability"),
            ("changelog.html", "Changelog")]
     all_pages = pages()

@@ -15,6 +15,8 @@ them this script writes:
 - ``references/patterns.md``: proven patterns, from ``criteria/patterns.yaml``;
 - ``references/native-probes.md``: code search probes for native mobile stacks,
   from ``criteria/probes.yaml`` (also in ``catalogue.json`` for ``scripts/probe.py``);
+- ``references/stacks.md`` and ``references/stacks/<id>.md``: stack packs for
+  frameworks, component libraries and test tools, from ``criteria/stacks/*.yaml``;
 - ``criteria/ids.lock.json``: every published criterion, pattern and probe ID. It
   only grows: an ID in the lock that disappears from the YAML is an error, because
   published IDs are permanent (retire a criterion instead; see docs/stability.md).
@@ -138,19 +140,50 @@ def load_probes(criteria_dir: Path, documents: dict[str, dict], sources: list[di
         if probe["platform"] not in platforms:
             problems.append(f"{where}: unknown platform '{probe['platform']}'")
         problems += [f"{where}: cites {c}, which is not an active criterion" for c in probe["criteria"] if c not in ids]
-        if NOT_PORTABLE.search(probe["pattern"]):
-            problems.append(f"{where}: pattern uses lookaround or a backreference, which ripgrep does not support")
-            continue
-        try:
-            pattern = re.compile(probe["pattern"])
-        except re.error as error:
-            problems.append(f"{where}: pattern does not compile: {error}")
-            continue
-        if not pattern.search(probe["example"]):
-            problems.append(f"{where}: pattern does not match its example")
-        if "counter_example" in probe and pattern.search(probe["counter_example"]):
-            problems.append(f"{where}: pattern matches its counter-example")
+        problems += pattern_problems(where, probe)
     return data, problems
+
+
+def pattern_problems(where: str, probe: dict) -> list[str]:
+    """A probe pattern must run in Python and ripgrep, match its example and miss its counter-example."""
+    if NOT_PORTABLE.search(probe["pattern"]):
+        return [f"{where}: pattern uses lookaround or a backreference, which ripgrep does not support"]
+    try:
+        pattern = re.compile(probe["pattern"])
+    except re.error as error:
+        return [f"{where}: pattern does not compile: {error}"]
+    problems = []
+    if not pattern.search(probe["example"]):
+        problems.append(f"{where}: pattern does not match its example")
+    if "counter_example" in probe and pattern.search(probe["counter_example"]):
+        problems.append(f"{where}: pattern matches its counter-example")
+    return problems
+
+
+def load_stacks(criteria_dir: Path, documents: dict[str, dict], probe_ids: set[str]) -> tuple[list[dict], list[str]]:
+    """Load criteria/stacks/*.yaml; probe IDs must be unique across native probes and every stack."""
+    ids = {c["id"] for doc in documents.values() for c in active(doc)}
+    stacks, problems, seen = [], [], set(probe_ids)
+    for path in sorted((criteria_dir / "stacks").glob("*.yaml")):
+        stack = yaml.safe_load(path.read_text(encoding="utf-8"))
+        errors = schema_errors(criteria_dir / "stack.schema.json", stack, path)
+        problems += errors
+        if errors:
+            continue
+        if stack["id"] != path.stem:
+            problems.append(f"{path}: id '{stack['id']}' must match the file name '{path.stem}'")
+        cited = [c for g in stack["gotchas"] for c in g["criteria"]]
+        cited += [c for p in stack.get("probes", []) for c in p["criteria"]]
+        cited += [c for r in stack.get("recipes", []) for c in r["criteria"]]
+        problems += [f"{path}: cites {c}, which is not an active criterion" for c in sorted(set(cited)) if c not in ids]
+        for probe in stack.get("probes", []):
+            where = f"{path}: {probe['id']}"
+            if probe["id"] in seen:
+                problems.append(f"{where}: duplicate probe ID")
+            seen.add(probe["id"])
+            problems += pattern_problems(where, probe)
+        stacks.append(stack)
+    return stacks, problems
 
 
 def load_catalogue(skill_dir: Path) -> tuple[dict[str, dict], list[dict], list[str]]:
@@ -366,30 +399,105 @@ LOCK_FILE = "ids.lock.json"
 CATALOGUE_SCHEMA_VERSION = 1
 
 
-def lock_problems_and_content(criteria_dir: Path, documents: dict[str, dict], patterns: dict, probes: dict) -> tuple[list[str], str]:
+def lock_problems_and_content(criteria_dir: Path, documents: dict[str, dict], patterns: dict, probes: dict, stacks: list[dict]) -> tuple[list[str], str]:
     """Return the problems with published IDs and the updated lock (the old lock plus new IDs)."""
     path = criteria_dir / LOCK_FILE
     old = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"criteria": {}, "patterns": [], "probes": []}
     criteria = {c["id"]: area for area, doc in documents.items() for c in doc["criteria"]}
-    current = {"patterns": {p["id"] for p in patterns["patterns"]}, "probes": {p["id"] for p in probes["probes"]}}
+    current = {"stacks": {s["id"] for s in stacks}, "patterns": {p["id"] for p in patterns["patterns"]}, "probes": {p["id"] for p in probes["probes"]} | {p["id"] for s in stacks for p in s.get("probes", [])}}
     problems = []
     for criterion_id, area in old["criteria"].items():
         if criterion_id not in criteria:
             problems.append(f"{path}: published criterion {criterion_id} was removed; set status: retired instead")
         elif criteria[criterion_id] != area:
             problems.append(f"{path}: published criterion {criterion_id} moved from {area} to {criteria[criterion_id]}")
-    for kind in ("patterns", "probes"):
+    old.setdefault("stacks", [])
+    for kind in ("stacks", "patterns", "probes"):
         problems += [f"{path}: published {kind[:-1]} {i} was removed; published IDs are permanent" for i in old[kind] if i not in current[kind]]
     lock = {
         "about": "Published IDs. Maintained by scripts/generate.py: it adds new IDs and rejects removed ones. Do not edit.",
         "criteria": dict(sorted((old["criteria"] | criteria).items())),
+        "stacks": sorted(set(old["stacks"]) | current["stacks"]),
         "patterns": sorted(set(old["patterns"]) | current["patterns"]),
         "probes": sorted(set(old["probes"]) | current["probes"]),
     }
     return problems, json.dumps(lock, indent=1) + "\n"
 
 
-def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict, probes: dict) -> str:
+STACK_KINDS = {"framework": "Frameworks", "component-library": "Component libraries", "testing": "Test tools"}
+
+
+def source_link(stack: dict, source: str) -> str:
+    """Link a gotcha's source file at the verified commit; 'owner/repo:path' points into a repository in 'also'."""
+    repository, commit, path = stack["verified"]["repository"], stack["verified"]["commit"], source
+    if ":" in source:
+        name, path = source.split(":", 1)
+        other = next(a for a in stack["verified"].get("also", []) if a["repository"].endswith("/" + name))
+        repository, commit = other["repository"], other["commit"]
+    return f"[{path}]({repository}/blob/{commit}/{path})"
+
+
+def render_stack(stack: dict) -> str:
+    v = stack["verified"]
+    repos = [f"{v['repository']}@`{v['commit'][:7]}`"] + [f"{a['repository']}@`{a['commit'][:7]}`" for a in v.get("also", [])]
+    detect = [f"dependency {', '.join(f'`{d}`' for d in stack['detect'].get('dependencies', []))}"] if "dependencies" in stack["detect"] else []
+    detect += [f"file {', '.join(f'`{f}`' for f in stack['detect']['files'])}"] if "files" in stack["detect"] else []
+    lines = [
+        f"# {stack['name']}",
+        "",
+        f"<!-- Generated from criteria/stacks/{stack['id']}.yaml by scripts/generate.py. Edit the YAML, then run the script. -->",
+        "",
+        stack["summary"],
+        "",
+        f"Verified against {stack['name']} {v['version']} on {v['verified_on']}, reading {', '.join(repos)}. "
+        f"Detected by {' or '.join(detect)}. If the project uses another major version, check the gotchas against its docs.",
+        "",
+        "## Where the evidence is",
+        "",
+        "| What | Where |",
+        "|---|---|",
+    ]
+    lines += [f"| {e['what']} | {e['where']} |" for e in stack["evidence"]]
+    lines += ["", "## Gotchas", ""]
+    for g in stack["gotchas"]:
+        criteria = f" ({', '.join(g['criteria'])})" if g["criteria"] else ""
+        lines.append(f"- {g['text']}{criteria} Source: {source_link(stack, g['source'])}.")
+    if stack.get("probes"):
+        lines += ["", "## Probes", "",
+                  f"Files: {', '.join(f'`{e}`' for e in stack['extensions'])}. Run with `python3 scripts/probe.py <project root>`; "
+                  "a hit is a place to look, not a finding.", "",
+                  "| Probe | Kind | Pattern | Look for | Criteria |", "|---|---|---|---|---|"]
+        for p in stack["probes"]:
+            pattern = p["pattern"].replace("|", "\\|")
+            lines.append(f"| `{p['id']}` | {p['kind']} | `{pattern}` | {p['look_for']} | {', '.join(p['criteria']) or '—'} |")
+    if stack.get("recipes"):
+        lines += ["", "## Recipes"]
+        for r in stack["recipes"]:
+            lines += ["", f"### {r['title']} ({', '.join(r['criteria'])})", "", f"```{r['language']}", r["code"].rstrip("\n"), "```"]
+    return "\n".join(lines) + "\n"
+
+
+def render_stack_index(stacks: list[dict]) -> str:
+    lines = [
+        "# Stack packs",
+        "",
+        "<!-- Generated from criteria/stacks/*.yaml by scripts/generate.py. Edit the YAML, then run the script. -->",
+        "",
+        "What a framework, component library or test tool changes about UX findings: where the evidence is, defaults",
+        "that turn generic findings into false positives, common ways teams break built-in behaviour, and probes.",
+        "Read a pack only when recon detects its stack (`python3 scripts/probe.py <project root>` lists them).",
+        "Each pack records the version and commit it was verified against.",
+        "",
+        "| Pack | Kind | Detected by | Verified against |",
+        "|---|---|---|---|",
+    ]
+    for s in sorted(stacks, key=lambda s: (list(STACK_KINDS).index(s["kind"]), s["id"])):
+        detect = ", ".join(f"`{d}`" for d in s["detect"].get("dependencies", []) + s["detect"].get("files", []))
+        lines.append(f"| [{s['name']}](stacks/{s['id']}.md) | {STACK_KINDS[s['kind']]} | {detect} | {s['verified']['version']}, {s['verified']['verified_on']} |")
+    return "\n".join(lines) + "\n"
+
+
+def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict, probes: dict, stacks: list[dict]) -> str:
     areas, criteria, retired = [], [], []
     for area, document in documents.items():
         entry = {"area": area, "prefix": document["prefix"], "file": f"references/areas/{area}.md",
@@ -420,6 +528,7 @@ def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: d
         "patterns": patterns["patterns"],
         "platforms": probes["platforms"],
         "probes": probes["probes"],
+        "stacks": stacks,
     }
     return json.dumps(catalogue, ensure_ascii=False, indent=1) + "\n"
 
@@ -432,7 +541,7 @@ def replace_blocks(text: str, pattern: re.Pattern, block: str) -> str | None:
     return text[: matches[0].start()] + block + text[matches[0].end():]
 
 
-def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict, probes: dict) -> tuple[dict[Path, str], list[str]]:
+def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict, probes: dict, stacks: list[dict]) -> tuple[dict[Path, str], list[str]]:
     """Return {path: expected content} for every generated output, and the problems found."""
     outputs: dict[Path, str] = {}
     problems: list[str] = []
@@ -466,11 +575,17 @@ def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[d
         problems.append(f"{scoring_md}: expected exactly one generated priority-matrix block and one launch-gate block")
     else:
         outputs[scoring_md] = text
-    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources, scoring, patterns, probes)
+    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources, scoring, patterns, probes, stacks)
     outputs[skill_dir / "references" / "patterns.md"] = render_patterns(patterns)
     outputs[skill_dir / "references" / "native-probes.md"] = render_probes(probes)
     outputs[skill_dir / "references" / "sources.md"] = render_sources(sources)
-    lock_problems, lock = lock_problems_and_content(skill_dir / "criteria", documents, patterns, probes)
+    outputs[skill_dir / "references" / "stacks.md"] = render_stack_index(stacks)
+    for stack in stacks:
+        outputs[skill_dir / "references" / "stacks" / f"{stack['id']}.md"] = render_stack(stack)
+    stacks_dir = skill_dir / "references" / "stacks"
+    known = {f"{s['id']}.md" for s in stacks}
+    problems += [f"{p}: no criteria/stacks/{p.stem}.yaml for this pack" for p in sorted(stacks_dir.glob("*.md")) if p.name not in known]
+    lock_problems, lock = lock_problems_and_content(skill_dir / "criteria", documents, patterns, probes, stacks)
     problems += lock_problems
     outputs[skill_dir / "criteria" / LOCK_FILE] = lock
     return outputs, problems
@@ -487,7 +602,10 @@ def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]
     problems += probe_problems
     if problems:
         return problems
-    outputs, problems = planned_outputs(skill_dir, documents, sources, scoring, patterns, probes)
+    stacks, problems = load_stacks(skill_dir / "criteria", documents, {p["id"] for p in probes["probes"]})
+    if problems:
+        return problems
+    outputs, problems = planned_outputs(skill_dir, documents, sources, scoring, patterns, probes, stacks)
     for path, content in outputs.items():
         current = path.read_text(encoding="utf-8") if path.exists() else None
         if current == content:
@@ -495,6 +613,7 @@ def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]
         if check:
             problems.append(f"{path}: out of date with criteria/*.yaml; run scripts/generate.py")
         else:
+            path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(content, encoding="utf-8")
     # After writing, so citations are checked against the regenerated tables.
     return problems + check_citations(skill_dir, documents, sources, list(extra_files))

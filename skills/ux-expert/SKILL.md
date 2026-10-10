@@ -50,6 +50,7 @@ Read when needed:
 - `references/codebase-recon.md`: at the start of any audit of a codebase (Phase 1).
 - `references/laws-and-numbers.md`: when a finding needs a threshold or a research citation.
 - `references/sources.md`: to check how a number was verified before stating it; never state the numbers of an **unconfirmed** source as fact.
+- `references/stacks.md`: when recon detects a framework, component library or test tool that has a stack pack (Next.js, shadcn/ui, Radix…); read that pack before judging code built on it, because its defaults turn some generic findings into false positives.
 - `references/native-probes.md`: when the product is a native or cross-platform mobile app; run `scripts/probe.py` to apply them.
 - `references/patterns.md`: when writing a recommendation, cite a proven pattern by ID (e.g. `govuk-validation`) when one fits the finding.
 - `references/report-template.md`: when writing the final report (Phase 8).
