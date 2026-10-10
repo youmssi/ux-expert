@@ -5,6 +5,12 @@
 </p>
 
 <p align="center">
+    <a href="https://youmssi.github.io/ux-expert/"><strong>Documentation</strong></a> ·
+    <a href="https://youmssi.github.io/ux-expert/criteria/">Criteria explorer</a> ·
+    <a href="https://youmssi.github.io/ux-expert/docs/getting-started/install/">Install</a>
+</p>
+
+<p align="center">
     <a href="https://github.com/youmssi/ux-expert/actions/workflows/ci.yml?query=branch%3Adevelop"><img src="https://img.shields.io/github/actions/workflow/status/youmssi/ux-expert/ci.yml?branch=develop&label=ci" alt="CI status"/></a>
     <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-compatible-6f42c1" alt="Agent Skills compatible"/></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/code-MIT-blue" alt="Code license: MIT"/></a>
@@ -31,7 +37,7 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 - **Evidence-first findings**: every finding has a location, evidence type, severity, reach, confidence, priority, fix and verification step
 - **Proven patterns**: 17 patterns from the public design systems of GOV.UK, GitHub (Primer), Shopify (Polaris) and IBM (Carbon), linked to the criteria they satisfy and cited in recommendations
 - **Consistent scoring**: one model for every agent: severity S0–S4 × reach R1–R3 → priority P0–P3, with an explicit launch gate
-- **Built for codebases**: search patterns for React, Vue, Svelte, Angular, CLIs and SDKs, plus 45 native probes for SwiftUI, Jetpack Compose, Flutter and React Native (`scripts/probe.py`), locate evidence in real code
+- **Built for codebases**: search patterns for React, Vue, Svelte, Angular, CLIs and SDKs, plus 41 native probes for SwiftUI, Jetpack Compose, Flutter and React Native (`scripts/probe.py`), locate evidence in real code
 - **Measured, not guessed**: `scripts/ux_check.mjs` takes screenshots and runs axe, target-size, focus and reflow checks on the running product
 - **Stack packs**: versioned knowledge of Next.js, shadcn/ui, Radix and Playwright (with regression-guard recipes that compile against Playwright 1.64), read from their own repositories at recorded commits: where the evidence is, defaults that make generic findings false positives, and probes ([list](skills/ux-expert/references/stacks.md))
 - **Stable IDs**: criterion, pattern and probe IDs never change meaning or disappear within a major version ([stability policy](docs/stability.md))

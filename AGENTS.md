@@ -95,14 +95,15 @@ file and add what is specific to that tool.
 ## 5. Checks before every push
 
 ```bash
-pip install -r scripts/requirements.txt                  # once: PyYAML, jsonschema, Markdown
+pip install -r scripts/requirements.txt                  # once: PyYAML, jsonschema
 python3 -m unittest discover -s scripts -p "test_*.py"  # script tests
 python3 -m unittest discover -s evals -p "test_*.py"    # eval grader and answer keys
 python3 scripts/validate.py                              # repo rules: links, line budget
 python3 scripts/generate.py --check                      # criteria schema, IDs, tables in sync
 skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
 (cd mcp && npm ci && npm test)                           # MCP server: build, unit, protocol, stdio
-(cd tools/runtime-check && npm ci && npm test)           # runtime checks, docs site audit, pack recipes type-check (needs Chromium; UX_CHECK_CHROMIUM=<path>)
+(cd website && npm ci && npm run types:check && npm run build && npm test)  # docs site: types, build, links
+(cd tools/runtime-check && npm ci && npm test)           # runtime checks, docs site audit (build the site first), pack recipes (needs Chromium; UX_CHECK_CHROMIUM=<path>)
 ```
 
 `skills-ref` is installed from the pinned commit in
@@ -135,7 +136,7 @@ mcp/                         the MCP server package (TypeScript, built from the 
 scripts/                     validation and generation scripts
 evals/                       eval cases, seeded-defect fixtures, grader, runner
 tools/runtime-check/         tests for skills/ux-expert/scripts/ux_check.mjs, and the docs site audited with it
-docs/site/                   documentation site stylesheet (pages built by scripts/build_site.py)
+website/                     documentation site (Next.js + Fumadocs + shadcn/ui), generated from the repository
 docs/stability.md            what is public and stable within a major version
 docs/adr/                    architecture decision records
 docs/backlog/                roadmap and stories

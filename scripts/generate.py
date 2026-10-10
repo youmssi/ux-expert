@@ -473,7 +473,8 @@ def render_stack(stack: dict) -> str:
     if stack.get("recipes"):
         lines += ["", "## Recipes"]
         for r in stack["recipes"]:
-            lines += ["", f"### {r['title']} ({', '.join(r['criteria'])})", "", f"```{r['language']}", r["code"].rstrip("\n"), "```"]
+            # Criteria on their own line: headings feed tables of contents, where links would nest.
+            lines += ["", f"### {r['title']}", "", f"Criteria: {', '.join(r['criteria'])}.", "", f"```{r['language']}", r["code"].rstrip("\n"), "```"]
     return "\n".join(lines) + "\n"
 
 
