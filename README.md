@@ -33,7 +33,7 @@ It works with Claude, ChatGPT, Gemini, Codex, Cursor, DeepSeek, Grok and any age
 - **Consistent scoring**: one model for every agent: severity S0–S4 × reach R1–R3 → priority P0–P3, with an explicit launch gate
 - **Built for codebases**: search patterns for React, Vue, Svelte, Angular, CLIs and SDKs, plus 45 native probes for SwiftUI, Jetpack Compose, Flutter and React Native (`scripts/probe.py`), locate evidence in real code
 - **Measured, not guessed**: `scripts/ux_check.mjs` takes screenshots and runs axe, target-size, focus and reflow checks on the running product
-- **Stack packs**: versioned knowledge of Next.js, shadcn/ui and Radix, read from their own repositories at recorded commits: where the evidence is, defaults that make generic findings false positives, and probes ([list](skills/ux-expert/references/stacks.md))
+- **Stack packs**: versioned knowledge of Next.js, shadcn/ui, Radix and Playwright (with regression-guard recipes that compile against Playwright 1.64), read from their own repositories at recorded commits: where the evidence is, defaults that make generic findings false positives, and probes ([list](skills/ux-expert/references/stacks.md))
 - **Stable IDs**: criterion, pattern and probe IDs never change meaning or disappear within a major version ([stability policy](docs/stability.md))
 - **Queryable catalogue**: criteria are validated YAML with a JSON Schema, ready for tools and the MCP server
 

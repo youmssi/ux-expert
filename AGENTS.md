@@ -102,7 +102,7 @@ python3 scripts/validate.py                              # repo rules: links, li
 python3 scripts/generate.py --check                      # criteria schema, IDs, tables in sync
 skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
 (cd mcp && npm ci && npm test)                           # MCP server: build, unit, protocol, stdio
-(cd tools/runtime-check && npm ci && npm test)           # runtime checks and the docs site audit (needs Chromium; UX_CHECK_CHROMIUM=<path>)
+(cd tools/runtime-check && npm ci && npm test)           # runtime checks, docs site audit, pack recipes type-check (needs Chromium; UX_CHECK_CHROMIUM=<path>)
 ```
 
 `skills-ref` is installed from the pinned commit in
