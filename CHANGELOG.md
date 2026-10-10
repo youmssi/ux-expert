@@ -7,6 +7,30 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-10
+
+### Added
+
+- Documentation site rebuilt on Next.js 16, Fumadocs and shadcn/ui (ADR-008),
+  generated from the repository at build time: a landing page with an example
+  finding and counts from the catalogue, docs with search, sidebar, table of
+  contents and dark mode, a criteria explorer with shareable filters, and
+  `llms.txt` for agents. CI type-checks, builds and link-checks it, and audits
+  it with `ux_check.mjs`.
+
+### Fixed
+
+- The native probe count is 41 (README, changelog and UXE-14 said 39, then 45);
+  a test now checks it against the catalogue.
+- `ux_check.mjs` no longer reports inline links in headings as small targets
+  (WCAG 2.5.8 inline exception).
+- Stack pack recipes list their criteria below the heading, so tables of
+  contents no longer nest links.
+
+### Removed
+
+- `scripts/build_site.py` and its stylesheet, replaced by `website/`.
+
 ## [1.0.0] - 2026-10-10
 
 First stable release. Criterion, pattern, probe and stack pack IDs, the skill
@@ -38,7 +62,7 @@ layout, `catalogue.json` and the MCP interface are now covered by the
   (AES), with sources for notification permissions, one-click unsubscribe and
   EU price-reduction rules.
 - Native mobile probes (`criteria/probes.yaml`, generated
-  `references/native-probes.md`): 45 code search probes for iOS (SwiftUI,
+  `references/native-probes.md`): 41 code search probes for iOS (SwiftUI,
   UIKit), Android (Compose, Views), Flutter and React Native, with platform
   notes checked against each platform's source; `scripts/probe.py` detects the
   platforms in a project and runs them.

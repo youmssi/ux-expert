@@ -8,12 +8,22 @@ Commit the skill into the repository, so every developer and every agent working
 
 ```sh
 mkdir -p .claude/skills
-git clone --depth 1 --branch v1.0.0 https://github.com/youmssi/ux-expert /tmp/ux-expert
+git clone --depth 1 --branch v1.1.0 https://github.com/youmssi/ux-expert /tmp/ux-expert
 cp -r /tmp/ux-expert/skills/ux-expert .claude/skills/
-git add .claude/skills/ux-expert && git commit -m "chore: add ux-expert skill v1.0.0"
+git add .claude/skills/ux-expert && git commit -m "chore: add ux-expert skill v1.1.0"
 ```
 
 Use the folder your agents read (`.claude/skills/` for Claude Code; see [install.md](install.md) for other clients). To update, repeat with the new tag and review the diff and the [CHANGELOG](../CHANGELOG.md): criterion IDs never change meaning, so stories and reports keep working.
+
+**Or share the MCP server** instead, for clients that use MCP (Cursor, VS Code, Codex, Gemini CLI, Claude Code). Commit a project config such as `.mcp.json`, pinned to the major version:
+
+```json
+{
+  "mcpServers": {
+    "ux-expert": { "command": "npx", "args": ["-y", "ux-expert-mcp@1"] }
+  }
+}
+```
 
 ## 2. Tell your agents when to use it
 
@@ -61,7 +71,20 @@ In your Definition of Done, add the product-level UX checklist that design mode 
 | Paying down UX debt | Full audit, then Refactor | "Audit the app with ux-expert", then "Plan how to fix these findings safely." | Report, then a sequenced plan of stories |
 | One area | Area deep-dive | "Use ux-expert to check our forms." | Findings for that area |
 
-## 5. Keep it honest
+## 5. Let it measure, not guess
+
+Audits are stronger when the agent can run the product and knows your stack:
+
+```sh
+npm i -D playwright @axe-core/playwright @playwright/test   # runtime checks and regression guards
+npx playwright install chromium
+```
+
+- With the app running, the agent uses `scripts/ux_check.mjs` for screenshots, axe, target size, focus and reflow at 320 px, and `scripts/contrast.py` for exact contrast ratios.
+- `scripts/probe.py` detects your stack. On Next.js, shadcn/ui, Radix or Playwright projects it tells the agent which [stack pack](../skills/ux-expert/references/stacks.md) to read, so it does not report what the framework already handles; on SwiftUI, Compose, Flutter or React Native it runs the native probes.
+- Refactor-mode guards start from the Playwright recipes in the stack pack, which compile against the pinned Playwright version.
+
+## 6. Keep it honest
 
 - Findings are only as good as the evidence: let the agent run the app (screenshots, axe, keyboard) whenever it can, and treat static-only visual findings as Medium confidence.
 - Validate the riskiest findings with users (`references/areas/measurement-validation.md` produces a usability test plan).

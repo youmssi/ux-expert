@@ -39,6 +39,7 @@ describe('ux_check.mjs on a fixture with known problems', () => {
         assert.ok(desktop.small_targets.some(t => t.size === '16x16'));
         // WCAG 2.5.8 exempts inline links in text, including text in table cells.
         assert.ok(!desktop.small_targets.some(t => t.element.includes('cell-link')));
+        assert.ok(!desktop.small_targets.some(t => t.element.includes('heading-link')));
         assert.ok(desktop.focus_without_indicator.some(e => e.includes('no-focus')));
         assert.ok(!desktop.focus_without_indicator.some(e => e.includes('ring')));
     });

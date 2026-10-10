@@ -1,6 +1,6 @@
 {
   "name": "ux-expert-mcp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MCP server for ux-expert: principal-level UX design, refactor and audit expertise (565 criteria, sources, scoring) for any MCP client.",
   "license": "MIT",
   "author": "youmssi",

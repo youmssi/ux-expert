@@ -43,7 +43,9 @@ Files: `.ts`, `.js`, `.mjs`. Run with `python3 scripts/probe.py <project root>`;
 
 ## Recipes
 
-### Name and structure of a dialog, as users of assistive technology get them (A11Y-10, A11Y-11, INT-11)
+### Name and structure of a dialog, as users of assistive technology get them
+
+Criteria: A11Y-10, A11Y-11, INT-11.
 
 ```ts
 test('delete dialog is named and offers both choices', async ({ page }) => {
@@ -57,7 +59,9 @@ test('delete dialog is named and offers both choices', async ({ page }) => {
 });
 ```
 
-### Escape closes the dialog and focus returns to its trigger (A11Y-06, INT-11)
+### Escape closes the dialog and focus returns to its trigger
+
+Criteria: A11Y-06, INT-11.
 
 ```ts
 test('focus returns to the trigger', async ({ page }) => {
@@ -71,7 +75,9 @@ test('focus returns to the trigger', async ({ page }) => {
 });
 ```
 
-### Automated WCAG A/AA scan of a critical screen, including revealed UI (A11Y-01)
+### Automated WCAG A/AA scan of a critical screen, including revealed UI
+
+Criteria: A11Y-01.
 
 ```ts
 import AxeBuilder from '@axe-core/playwright';
@@ -86,7 +92,9 @@ test('checkout has no detectable WCAG A/AA violations', async ({ page }) => {
 });
 ```
 
-### Field errors are announced, not only shown (FORM-10, A11Y-24)
+### Field errors are announced, not only shown
+
+Criteria: FORM-10, A11Y-24.
 
 ```ts
 test("email error is the field's accessible error message", async ({ page }) => {
@@ -97,7 +105,9 @@ test("email error is the field's accessible error message", async ({ page }) => 
 });
 ```
 
-### A server error shows an actionable message, and offline is handled (STATE-07, STATE-08, STATE-11)
+### A server error shows an actionable message, and offline is handled
+
+Criteria: STATE-07, STATE-08, STATE-11.
 
 ```ts
 test('failed save keeps input and explains', async ({ page, context }) => {
@@ -114,7 +124,9 @@ test('failed save keeps input and explains', async ({ page, context }) => {
 });
 ```
 
-### Session expiry warns before signing out (STATE-12, A11Y-23)
+### Session expiry warns before signing out
+
+Criteria: STATE-12, A11Y-23.
 
 ```ts
 test('inactivity warning appears before logout', async ({ page }) => {
@@ -125,7 +137,9 @@ test('inactivity warning appears before logout', async ({ page }) => {
 });
 ```
 
-### Dark mode and reduced motion, as a screenshot guard (COL-12, INT-09, DS-14)
+### Dark mode and reduced motion, as a screenshot guard
+
+Criteria: COL-12, INT-09, DS-14.
 
 ```ts
 test.use({ colorScheme: 'dark', reducedMotion: 'reduce' });
@@ -138,7 +152,9 @@ test('dashboard in dark mode', async ({ page }) => {
 });
 ```
 
-### No horizontal scrolling at 320 CSS px (A11Y-17, RESP-02)
+### No horizontal scrolling at 320 CSS px
+
+Criteria: A11Y-17, RESP-02.
 
 ```ts
 test('pricing reflows at 320 px', async ({ page }) => {
