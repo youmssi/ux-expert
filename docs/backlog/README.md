@@ -65,7 +65,7 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 
 | Story | Title | Size | Status |
 |---|---|---|---|
-| [UXE-20](UXE-20-website.md) | Documentation site on Next.js, Fumadocs and shadcn/ui, generated from the repository and audited with the skill | L | in progress |
+| [UXE-20](UXE-20-website.md) | Documentation site on Next.js, Fumadocs and shadcn/ui, generated from the repository and audited with the skill | L | done |
 
 ## Known limitations (tracked by the stories above)
 

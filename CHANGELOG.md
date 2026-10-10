@@ -7,6 +7,8 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-10
+
 ### Added
 
 - Documentation site rebuilt on Next.js 16, Fumadocs and shadcn/ui (ADR-008),
