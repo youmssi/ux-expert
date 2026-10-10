@@ -567,6 +567,11 @@
   "TYP-17": "typography",
   "TYP-18": "typography"
  },
+ "stacks": [
+  "nextjs",
+  "radix-ui",
+  "shadcn-ui"
+ ],
  "patterns": [
   "carbon-dialogs",
   "carbon-disabled-states",
@@ -619,6 +624,17 @@
   "ios-screens",
   "ios-states",
   "ios-tap-gesture",
+  "nextjs-error-boundary-reset-only",
+  "nextjs-image-priority",
+  "nextjs-loading-boundaries",
+  "nextjs-pending-state",
+  "nextjs-raw-img",
+  "nextjs-revalidate-tag",
+  "nextjs-viewport-zoom-blocked",
+  "radix-as-child",
+  "radix-escape-prevented",
+  "radix-non-modal",
+  "radix-prevented-focus-default",
   "rn-font-scaling-off",
   "rn-hardcoded-string",
   "rn-hidden-from-accessibility",
@@ -627,6 +643,10 @@
   "rn-pressables",
   "rn-reduce-motion",
   "rn-screens",
-  "rn-states"
+  "rn-states",
+  "shadcn-aria-invalid",
+  "shadcn-dialog-without-title",
+  "shadcn-hardcoded-color-class",
+  "shadcn-icon-button-unlabeled"
  ]
 }

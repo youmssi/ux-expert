@@ -21,6 +21,7 @@ FRONTMATTER = re.compile(r"\A---\n.*?\n---\n", re.DOTALL)
 SHARED = ["references/finding-format.md", "references/severity-and-scoring.md", "references/laws-and-numbers.md", "references/sources.md",
           "references/patterns.md"]
 AREAS = sorted(f"references/areas/{p.name}" for p in (SKILL / "references" / "areas").glob("*.md"))
+STACKS = sorted(f"references/stacks/{p.name}" for p in (SKILL / "references" / "stacks").glob("*.md"))
 BUNDLES = {
     "design": {
         "task": "turn a brief or user stories into UX requirements and testable acceptance criteria (Design mode)",
@@ -30,7 +31,7 @@ BUNDLES = {
     },
     "audit": {
         "task": "audit a product, flow, area or change, and decide launch readiness (audit modes)",
-        "files": ["SKILL.md", *SHARED, "references/codebase-recon.md", "references/native-probes.md", "references/report-template.md", *AREAS],
+        "files": ["SKILL.md", *SHARED, "references/codebase-recon.md", "references/native-probes.md", "references/stacks.md", *STACKS, "references/report-template.md", *AREAS],
         "design_criteria": False,
     },
     "refactor": {
@@ -41,7 +42,7 @@ BUNDLES = {
     "full": {
         "task": "design, audit and refactor (every mode)",
         "files": ["SKILL.md", "references/design-mode.md", "references/refactor-mode.md", "assets/story-ux.md", *SHARED,
-                  "references/codebase-recon.md", "references/native-probes.md", "references/report-template.md", *AREAS],
+                  "references/codebase-recon.md", "references/native-probes.md", "references/stacks.md", *STACKS, "references/report-template.md", *AREAS],
         "design_criteria": True,
     },
 }

@@ -10,6 +10,7 @@ internal and can change in any release.
 |---|---|---|
 | **Criterion IDs** (`FORM-09`) | An ID never disappears, never changes area and never changes meaning. A criterion that no longer applies is retired (`status: retired`), and its ID is never reused. Wording, fail signals and default severities can be clarified in a minor release. | `criteria/ids.lock.json`, checked by `scripts/generate.py --check` |
 | **Pattern and probe IDs** (`govuk-validation`, `ios-fixed-font-size`) | Never removed or reused. Their rules and regular expressions can be improved in a minor release. | `criteria/ids.lock.json` |
+| **Stack pack IDs** (`nextjs`, `shadcn-ui`) | A pack keeps its ID and its page `references/stacks/<id>.md`. Its gotchas follow the stack's releases and change in minor releases. | `criteria/ids.lock.json` |
 | **Skill layout** | `SKILL.md`, `references/areas/<area>.md`, `references/*.md` named in `SKILL.md`, `criteria/catalogue.json`, `scripts/*` named in `SKILL.md` keep their paths. Areas and references can be added. | `skills-ref validate`, link checks in `scripts/validate.py` |
 | **`criteria/catalogue.json`** | Keys present in `schema_version` 1 keep their name and type. New keys can be added; read the file tolerantly. | `schema_version` field; `scripts/test_generate.py` |
 | **MCP server** | Tool names, their input fields and which are required; prompt names and arguments; the `skill://ux-expert/` resource URIs. New tools, prompts and optional inputs can be added. | `mcp/interface.json`, checked by `mcp/test/interface.test.ts` |
