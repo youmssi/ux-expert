@@ -110,7 +110,7 @@ export default function HomePage() {
       <section className="border-b">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-24 lg:grid-cols-[1.1fr_1fr]">
           <div>
-            <Badge variant="brand">Agent Skill · MCP server · v1.0</Badge>
+            <Badge variant="brand">Agent Skill · MCP server · v1.1</Badge>
             <h1 className="mt-5 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
               Principal-level UX expertise for your AI agent
             </h1>
@@ -207,7 +207,7 @@ export default function HomePage() {
           <Tab value="Any Agent Skills client">
             <CodeBlock title="From your project root">
               <Pre>
-                <code>{'git clone --depth 1 --branch v1.0.0 https://github.com/youmssi/ux-expert /tmp/ux-expert\ncp -r /tmp/ux-expert/skills/ux-expert .claude/skills/ux-expert'}</code>
+                <code>{'git clone --depth 1 --branch v1.1.0 https://github.com/youmssi/ux-expert /tmp/ux-expert\ncp -r /tmp/ux-expert/skills/ux-expert .claude/skills/ux-expert'}</code>
               </Pre>
             </CodeBlock>
           </Tab>
