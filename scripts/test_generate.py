@@ -305,7 +305,7 @@ class GenerateTest(unittest.TestCase):
         self.assertIn("Verified against Demo FW 2.x on 2026-10-10", text)
         self.assertIn(f"Source: [docs/a.md](https://github.com/o/demo-fw/blob/{'b' * 40}/docs/a.md).", text)
         self.assertIn("| `demo-fw-reset` | review |", text)
-        self.assertIn("```ts\nexpect(1).toBe(1)\n```", text)
+        self.assertIn("### Guard\n\nCriteria: DEMO-01.\n\n```ts\nexpect(1).toBe(1)\n```", text)
         self.assertIn("[Demo FW](stacks/demo-fw.md)", (self.skill / "references" / "stacks.md").read_text())
         catalogue = json.loads((self.skill / "criteria" / "catalogue.json").read_text())
         self.assertEqual(catalogue["stacks"][0]["id"], "demo-fw")

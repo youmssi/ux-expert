@@ -45,18 +45,16 @@ jobs:
         working-directory: tools/runtime-check
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: scripts/requirements.txt
-      - name: Install script dependencies (the site builder)
-        run: pip install -r ../../scripts/requirements.txt
       - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: tools/runtime-check/package-lock.json
+          cache-dependency-path: |
+            tools/runtime-check/package-lock.json
+            website/package-lock.json
+      - name: Build the documentation site to audit it
+        working-directory: website
+        run: npm ci && npm run build
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Runtime checks on a fixture with known problems, and on the documentation site
@@ -81,3 +79,23 @@ jobs:
         run: |
           npm pack --dry-run --json > pack.json
           node -e "const f=require('./pack.json')[0].files.map(x=>x.path); for (const p of ['skill/SKILL.md','skill/criteria/catalogue.json','dist/index.js','LICENSE-CONTENT']) if (!f.includes(p)) { console.error('missing from package: '+p); process.exit(1) }"
+
+  website:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: website
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm ci
+      - name: Type-check
+        run: npm run types:check
+      - name: Build (static export)
+        run: npm run build
+      - name: Every page and link resolves
+        run: npm test

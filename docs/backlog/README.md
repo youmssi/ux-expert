@@ -61,6 +61,12 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 | [UXE-18](UXE-18-stack-packs.md) | Stack packs: versioned framework knowledge read from upstream repositories (Next.js, shadcn/ui, Radix) | M | done |
 | [UXE-19](UXE-19-playwright-pack.md) | Playwright pack: turn criteria into regression guards (ARIA snapshots, axe, emulation, screenshots) | S | done |
 
+## v1.1: the site
+
+| Story | Title | Size | Status |
+|---|---|---|---|
+| [UXE-20](UXE-20-website.md) | Documentation site on Next.js, Fumadocs and shadcn/ui, generated from the repository and audited with the skill | L | in progress |
+
 ## Known limitations (tracked by the stories above)
 
 - The eval harness exists (UXE-10), but no clean-context benchmark has been
