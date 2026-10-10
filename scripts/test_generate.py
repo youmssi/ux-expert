@@ -32,11 +32,12 @@ class GenerateTest(unittest.TestCase):
         (self.skill / "references" / "areas").mkdir(parents=True)
         shutil.copy(SCHEMA, self.skill / "criteria" / "schema.json")
         shutil.copy(SOURCES_SCHEMA, self.skill / "criteria" / "sources.schema.json")
-        for name in ("scoring.yaml", "scoring.schema.json", "patterns.schema.json"):
+        for name in ("scoring.yaml", "scoring.schema.json", "patterns.schema.json", "probes.schema.json"):
             shutil.copy(CRITERIA / name, self.skill / "criteria" / name)
         (self.skill / "references" / "severity-and-scoring.md").write_text(SCORING_MD)
         self.write_sources([SOURCE])
         self.write_patterns(["DEMO-01"])
+        self.write_probes()
         self.area_md = self.skill / "references" / "areas" / "demo.md"
         self.area_md.write_text(AREA_MD)
         (self.skill / "SKILL.md").write_text(SKILL_MD)
@@ -51,6 +52,14 @@ class GenerateTest(unittest.TestCase):
                     "patterns": [{"id": "clear-labels", "name": "Clear labels", "design_system": "ds", "observed_on": "2026-10-09",
                                   "source": f"https://github.com/o/r/blob/{sha}/labels.md", "rule": "Label every field.", "criteria": criteria}]}
         (self.skill / "criteria" / "patterns.yaml").write_text(yaml.safe_dump(patterns))
+
+    def write_probes(self, **overrides):
+        probe = {"id": "demo-fixed-font", "platform": "demo", "kind": "smell", "pattern": r"\.system\(size:",
+                 "look_for": "Text that ignores Dynamic Type.", "criteria": ["DEMO-01"],
+                 "example": ".font(.system(size: 13))", "counter_example": ".font(.body)"} | overrides
+        probes = {"platforms": [{"id": "demo", "name": "Demo OS", "extensions": [".swift"], "detect": "any .swift file",
+                                 "sources": ["spec"], "notes": ["A note."]}], "probes": [probe]}
+        (self.skill / "criteria" / "probes.yaml").write_text(yaml.safe_dump(probes))
 
     def write_sources(self, sources):
         (self.skill / "criteria" / "sources.yaml").write_text(yaml.safe_dump({"sources": sources}, allow_unicode=True))
@@ -210,6 +219,43 @@ class GenerateTest(unittest.TestCase):
     def test_a_pattern_citing_an_unknown_criterion_is_rejected(self):
         self.write_patterns(["DEMO-77"])
         self.assertIn("clear-labels cites DEMO-77, which is not an active criterion", run(self.skill, check=True)[0])
+
+    def test_probes_are_rendered_and_in_the_catalogue(self):
+        self.assertEqual(run(self.skill, check=False), [])
+        text = (self.skill / "references" / "native-probes.md").read_text()
+        self.assertIn("## Demo OS", text)
+        self.assertIn("| `demo-fixed-font` | smell | `\\.system\\(size:` | Text that ignores Dynamic Type. | DEMO-01 |", text)
+        catalogue = json.loads((self.skill / "criteria" / "catalogue.json").read_text())
+        self.assertEqual(catalogue["probes"][0]["pattern"], r"\.system\(size:")
+        self.assertEqual(catalogue["platforms"][0]["extensions"], [".swift"])
+
+    def test_pipes_in_a_probe_pattern_are_escaped_in_the_table_only(self):
+        self.write_probes(pattern=r"\.system\(size:|fixedSize:")
+        self.assertEqual(run(self.skill, check=False), [])
+        self.assertIn(r"`\.system\(size:\|fixedSize:`", (self.skill / "references" / "native-probes.md").read_text())
+
+    def test_a_probe_that_misses_its_example_or_matches_its_counter_example_is_rejected(self):
+        self.write_probes(example=".font(.body)")
+        self.assertIn("demo-fixed-font: pattern does not match its example", run(self.skill, check=True)[0])
+        self.write_probes(counter_example=".font(.system(size: 20))")
+        self.assertIn("demo-fixed-font: pattern matches its counter-example", run(self.skill, check=True)[0])
+
+    def test_a_probe_pattern_ripgrep_cannot_run_is_rejected(self):
+        for pattern in (r"(?<!\.)system\(size:", r"(a)\1"):
+            self.write_probes(pattern=pattern)
+            self.assertIn("lookaround or a backreference", run(self.skill, check=True)[0], pattern)
+
+    def test_a_smell_probe_without_a_counter_example_is_rejected(self):
+        probes = yaml.safe_load((self.skill / "criteria" / "probes.yaml").read_text())
+        del probes["probes"][0]["counter_example"]
+        (self.skill / "criteria" / "probes.yaml").write_text(yaml.safe_dump(probes))
+        self.assertIn("'counter_example' is a required property", run(self.skill, check=True)[0])
+
+    def test_a_probe_citing_an_unknown_criterion_or_platform_is_rejected(self):
+        self.write_probes(criteria=["DEMO-77"], platform="other")
+        problems = run(self.skill, check=True)
+        self.assertTrue(any("unknown platform 'other'" in p for p in problems), problems)
+        self.assertTrue(any("cites DEMO-77, which is not an active criterion" in p for p in problems), problems)
 
     def test_an_area_file_without_criteria_is_reported(self):
         run(self.skill, check=False)

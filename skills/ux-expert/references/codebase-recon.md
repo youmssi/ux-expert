@@ -26,8 +26,7 @@ Shared procedure used by `SKILL.md` (Phase 1) and by any area that needs to loca
 - Next.js pages router: `pages/**/*.(tsx|jsx)`
 - Remix / React Router: `routes/**`, `createBrowserRouter`, `<Route path=`
 - SvelteKit: `src/routes/**/+page.svelte`; Nuxt: `pages/**/*.vue`; Angular: `RouterModule.forRoot`, `Routes = [`
-- React Native: `createStackNavigator`, `expo-router` `app/**`
-- Flutter: `MaterialPageRoute`, `GoRoute(`
+- Native mobile (SwiftUI, Compose, Flutter, React Native): the `*-screens` probes in `references/native-probes.md`; `expo-router` routes are the files under `app/`
 - CLI: command definitions (`#[derive(Subcommand)]`, `.command(`, `@click.command`)
 - SDK: public exports (`index.ts` exports, `pub fn` in `lib.rs`, `__init__.py`)
 
@@ -64,6 +63,8 @@ Record the result as a table: `area | route/screen | file | purpose | in critica
 ## 6. Accessibility quick probes
 
 `outline:\s*none|outline:\s*0`, `<div[^>]*onClick`, `<img(?![^>]*alt=)`, `tabIndex=\{?["']?[1-9]`, `aria-hidden="true"` on focusable elements, `role="button"` without key handlers, `autoFocus`, `user-scalable=no`, `maximum-scale=1`.
+
+**Native mobile:** run `python3 scripts/probe.py <project root>`. It detects iOS, Android, Flutter and React Native and runs the probes in `references/native-probes.md` (text scaling, accessibility labels and roles, custom tap targets, hard-coded colors and strings, safe areas, Reduce Motion, states). Read the platform notes there first: they say what is *not* a defect on that platform.
 
 ## 7. Runtime ability
 

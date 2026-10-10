@@ -74,6 +74,7 @@ Captions for prerecorded and live video audio (1.2.2, 1.2.4), transcripts for au
 - Android: `contentDescription`, `importantForAccessibility`, touch targets 48 dp, `sp` units.
 - React Native: `accessible`, `accessibilityLabel`, `accessibilityRole`, `accessibilityState`.
 - Flutter: `Semantics` widgets, `excludeSemantics`, `MergeSemantics`.
+- Find candidates with `python3 scripts/probe.py <project root>` (`references/native-probes.md`).
 
 ### Step 10: Produce the conformance view
 Map the findings to WCAG success criteria. For pre-launch or enterprise mode, recommend producing an **Accessibility Conformance Report (VPAT)** and an **accessibility statement** page (required for EU public sector, and good practice elsewhere).
