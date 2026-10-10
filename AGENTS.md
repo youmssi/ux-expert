@@ -100,6 +100,7 @@ python3 scripts/validate.py                              # repo rules: links, li
 python3 scripts/generate.py --check                      # criteria schema, IDs, tables in sync
 skills-ref validate skills/ux-expert                     # Agent Skills spec compliance
 (cd mcp && npm ci && npm test)                           # MCP server: build, unit, protocol, stdio
+(cd tools/runtime-check && npm ci && npm test)           # runtime checks (needs Chromium; UX_CHECK_CHROMIUM=<path>)
 ```
 
 `skills-ref` is installed from the pinned commit in
@@ -131,6 +132,7 @@ mcp/                         the MCP server package (TypeScript, built from the 
 .claude-plugin/              Claude Code plugin marketplace manifest
 scripts/                     validation and generation scripts
 evals/                       eval cases, seeded-defect fixtures, grader, runner
+tools/runtime-check/         test harness for skills/ux-expert/scripts/ux_check.mjs
 docs/adr/                    architecture decision records
 docs/backlog/                roadmap and stories
 docs/engineering/            principles (code) and content rules

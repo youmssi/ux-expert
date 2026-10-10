@@ -88,7 +88,8 @@ const TEXT_TYPES: Record<string, string> = {
     '.md': 'text/markdown',
     '.json': 'application/json',
     '.yaml': 'application/yaml',
-    '.py': 'text/x-python'
+    '.py': 'text/x-python',
+    '.mjs': 'text/javascript'
 };
 
 /**

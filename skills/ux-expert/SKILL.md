@@ -57,6 +57,7 @@ Read when needed:
 - `assets/story-ux.md`: the per-story template for Design mode.
 - `criteria/catalogue.json`: every criterion with its phases (`design`, `build`) and product types.
   To list what applies, run `python3 scripts/select_criteria.py --product <type> [--phase design|build] [--area <area>]`.
+- `scripts/ux_check.mjs` (runtime checks with screenshots and axe) and `scripts/contrast.py`: whenever the product can run, to turn static claims into measured evidence; see `references/codebase-recon.md` §7.
 
 ### Areas
 

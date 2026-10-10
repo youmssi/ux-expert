@@ -69,7 +69,8 @@ Record the result as a table: `area | route/screen | file | purpose | in critica
 
 - Check for a dev script: `npm run dev`, `pnpm dev`, `cargo run`, `flutter run`, `expo start`.
 - Check for a browser: Playwright/Chromium (e.g. `/opt/pw-browsers`), or a browser tool.
-- If it runs: capture screenshots of each critical-flow screen at 375px, 768px and 1440px widths, in light and dark mode. Run axe-core and Lighthouse if possible. Record terminal transcripts for CLIs.
+- If it runs, run `node scripts/ux_check.mjs <url>` from the project root for each critical-flow screen (needs `npm i -D playwright @axe-core/playwright`). It saves screenshots at 375, 768 and 1440 px in light and dark mode, and reports axe violations (WCAG 2.2 A/AA), targets under 24 px, focus without a visible indicator, overflow at 320 px and blocked zoom, each mapped to criterion IDs. Look at the screenshots for the visual criteria (attention order, primary action, density). Check each reported item before turning it into a finding. Record terminal transcripts for CLIs.
+- For a contrast pair from code or a screenshot, run `python3 scripts/contrast.py <fg> <bg> [--size px] [--bold]`.
 - If it does not run: say so in the report. Visual and behavioral findings stay at Medium confidence or lower.
 
 ## 8. Output of recon
