@@ -30,7 +30,7 @@ BUNDLES = {
     },
     "audit": {
         "task": "audit a product, flow, area or change, and decide launch readiness (audit modes)",
-        "files": ["SKILL.md", *SHARED, "references/codebase-recon.md", "references/report-template.md", *AREAS],
+        "files": ["SKILL.md", *SHARED, "references/codebase-recon.md", "references/native-probes.md", "references/report-template.md", *AREAS],
         "design_criteria": False,
     },
     "refactor": {
@@ -41,7 +41,7 @@ BUNDLES = {
     "full": {
         "task": "design, audit and refactor (every mode)",
         "files": ["SKILL.md", "references/design-mode.md", "references/refactor-mode.md", "assets/story-ux.md", *SHARED,
-                  "references/codebase-recon.md", "references/report-template.md", *AREAS],
+                  "references/codebase-recon.md", "references/native-probes.md", "references/report-template.md", *AREAS],
         "design_criteria": True,
     },
 }

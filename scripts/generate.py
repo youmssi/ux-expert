@@ -12,7 +12,9 @@ them this script writes:
 - ``references/sources.md``: the bibliography, from ``criteria/sources.yaml``;
 - the priority matrix and launch-gate tables in ``references/severity-and-scoring.md``,
   from ``criteria/scoring.yaml``;
-- ``references/patterns.md``: proven patterns, from ``criteria/patterns.yaml``.
+- ``references/patterns.md``: proven patterns, from ``criteria/patterns.yaml``;
+- ``references/native-probes.md``: code search probes for native mobile stacks,
+  from ``criteria/probes.yaml`` (also in ``catalogue.json`` for ``scripts/probe.py``).
 
 Usage:
     python3 scripts/generate.py           # validate the catalogue, rewrite the outputs
@@ -49,7 +51,15 @@ SOURCE_CITATION = re.compile(r"\[src:([a-z0-9]+(?:-[a-z0-9]+)*)\]")
 SOURCES_FILE = "sources.yaml"
 SCORING_FILE = "scoring.yaml"
 PATTERNS_FILE = "patterns.yaml"
-NOT_AREAS = {SOURCES_FILE, SCORING_FILE, PATTERNS_FILE}
+PROBES_FILE = "probes.yaml"
+NOT_AREAS = {SOURCES_FILE, SCORING_FILE, PATTERNS_FILE, PROBES_FILE}
+# Probe patterns also run in ripgrep, which has no lookaround or backreferences.
+NOT_PORTABLE = re.compile(r"\(\?<?[=!]|\(\?<\w|\\[1-9]")
+PROBE_KINDS = {
+    "inventory": "locate and count",
+    "review": "each hit needs a look, often fine",
+    "smell": "usually a defect; confirm before reporting",
+}
 SOURCE_STATUS = {
     "primary": "checked against the source's own text",
     "secondary": "confirmed through reputable secondary sources",
@@ -102,6 +112,41 @@ def load_patterns(criteria_dir: Path, documents: dict[str, dict]) -> tuple[dict,
         if pattern["design_system"] not in systems:
             problems.append(f"{path}: {pattern['id']} names unknown design system '{pattern['design_system']}'")
         problems += [f"{path}: {pattern['id']} cites {c}, which is not an active criterion" for c in pattern["criteria"] if c not in ids]
+    return data, problems
+
+
+def load_probes(criteria_dir: Path, documents: dict[str, dict], sources: list[dict]) -> tuple[dict, list[str]]:
+    path = criteria_dir / PROBES_FILE
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    problems = schema_errors(criteria_dir / "probes.schema.json", data, path)
+    if problems:
+        return data, problems
+    platforms = {p["id"] for p in data["platforms"]}
+    source_ids = {s["id"] for s in sources}
+    ids = {c["id"] for doc in documents.values() for c in active(doc)}
+    for platform in data["platforms"]:
+        problems += [f"{path}: platform {platform['id']} cites unknown source '{s}'" for s in platform["sources"] if s not in source_ids]
+    seen: set[str] = set()
+    for probe in data["probes"]:
+        where = f"{path}: {probe['id']}"
+        if probe["id"] in seen:
+            problems.append(f"{where}: duplicate probe ID")
+        seen.add(probe["id"])
+        if probe["platform"] not in platforms:
+            problems.append(f"{where}: unknown platform '{probe['platform']}'")
+        problems += [f"{where}: cites {c}, which is not an active criterion" for c in probe["criteria"] if c not in ids]
+        if NOT_PORTABLE.search(probe["pattern"]):
+            problems.append(f"{where}: pattern uses lookaround or a backreference, which ripgrep does not support")
+            continue
+        try:
+            pattern = re.compile(probe["pattern"])
+        except re.error as error:
+            problems.append(f"{where}: pattern does not compile: {error}")
+            continue
+        if not pattern.search(probe["example"]):
+            problems.append(f"{where}: pattern does not match its example")
+        if "counter_example" in probe and pattern.search(probe["counter_example"]):
+            problems.append(f"{where}: pattern matches its counter-example")
     return data, problems
 
 
@@ -286,7 +331,34 @@ def render_patterns(patterns: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
-def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict) -> str:
+def render_probes(probes: dict) -> str:
+    lines = [
+        "# Native mobile probes",
+        "",
+        "<!-- Generated from criteria/probes.yaml by scripts/generate.py. Edit the YAML, then run the script. -->",
+        "",
+        "Code search probes for iOS, Android, Flutter and React Native, used in recon (`references/codebase-recon.md`)",
+        "and by the areas that cite them. Run them all at once with `python3 scripts/probe.py <project root>`, or",
+        "search one pattern with Grep or `rg`. A hit is a place to look, never a finding by itself: open the code and",
+        "check it against the criterion before reporting. In the tables, `\\|` is an escaped `|`; `probe.py` and",
+        "`criteria/catalogue.json` carry the raw patterns.",
+        "",
+        "Kinds: " + "; ".join(f"**{k}**: {v}" for k, v in PROBE_KINDS.items()) + ".",
+    ]
+    for platform in probes["platforms"]:
+        lines += ["", f"## {platform['name']}", "",
+                  f"Files: {', '.join(f'`{e}`' for e in platform['extensions'])} · detected by {platform['detect']} · "
+                  f"sources: {', '.join(f'[src:{s}]' for s in platform['sources'])}", ""]
+        lines += [f"- {note}" for note in platform["notes"]]
+        lines += ["", "| Probe | Kind | Pattern | Look for | Criteria |", "|---|---|---|---|---|"]
+        for p in probes["probes"]:
+            if p["platform"] == platform["id"]:
+                pattern = p["pattern"].replace("|", "\\|")
+                lines.append(f"| `{p['id']}` | {p['kind']} | `{pattern}` | {p['look_for']} | {', '.join(p['criteria']) or '—'} |")
+    return "\n".join(lines) + "\n"
+
+
+def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict, probes: dict) -> str:
     areas, criteria, retired = [], [], []
     for area, document in documents.items():
         entry = {"area": area, "prefix": document["prefix"], "file": f"references/areas/{area}.md",
@@ -314,6 +386,8 @@ def render_catalogue(documents: dict[str, dict], sources: list[dict], scoring: d
         "scoring": scoring,
         "design_systems": patterns["design_systems"],
         "patterns": patterns["patterns"],
+        "platforms": probes["platforms"],
+        "probes": probes["probes"],
     }
     return json.dumps(catalogue, ensure_ascii=False, indent=1) + "\n"
 
@@ -326,7 +400,7 @@ def replace_blocks(text: str, pattern: re.Pattern, block: str) -> str | None:
     return text[: matches[0].start()] + block + text[matches[0].end():]
 
 
-def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict) -> tuple[dict[Path, str], list[str]]:
+def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[dict], scoring: dict, patterns: dict, probes: dict) -> tuple[dict[Path, str], list[str]]:
     """Return {path: expected content} for every generated output, and the problems found."""
     outputs: dict[Path, str] = {}
     problems: list[str] = []
@@ -360,8 +434,9 @@ def planned_outputs(skill_dir: Path, documents: dict[str, dict], sources: list[d
         problems.append(f"{scoring_md}: expected exactly one generated priority-matrix block and one launch-gate block")
     else:
         outputs[scoring_md] = text
-    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources, scoring, patterns)
+    outputs[skill_dir / "criteria" / "catalogue.json"] = render_catalogue(documents, sources, scoring, patterns, probes)
     outputs[skill_dir / "references" / "patterns.md"] = render_patterns(patterns)
+    outputs[skill_dir / "references" / "native-probes.md"] = render_probes(probes)
     outputs[skill_dir / "references" / "sources.md"] = render_sources(sources)
     return outputs, problems
 
@@ -373,9 +448,11 @@ def run(skill_dir: Path, check: bool, extra_files: list[Path] = ()) -> list[str]
     if problems:
         return problems
     patterns, problems = load_patterns(skill_dir / "criteria", documents)
+    probes, probe_problems = load_probes(skill_dir / "criteria", documents, sources)
+    problems += probe_problems
     if problems:
         return problems
-    outputs, problems = planned_outputs(skill_dir, documents, sources, scoring, patterns)
+    outputs, problems = planned_outputs(skill_dir, documents, sources, scoring, patterns, probes)
     problems += check_citations(skill_dir, documents, sources, list(extra_files))
     for path, content in outputs.items():
         current = path.read_text(encoding="utf-8") if path.exists() else None

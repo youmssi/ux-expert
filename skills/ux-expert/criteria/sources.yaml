@@ -163,3 +163,35 @@ sources:
     verified_on: '2026-10-09'
     verified_against: Search results quoting MedlinePlus; consistent with Birch (2010, Eye) and a 2025 pooled analysis
     supports: Red–green color vision deficiency affects about 1 in 12 males and 1 in 200 females of Northern European ancestry; rates are lower in other populations.
+  - id: apple-swiftui-docs
+    title: SwiftUI and UIKit API documentation (Font, DynamicTypeSize, accessibilityReduceMotion, UIFontMetrics)
+    publisher: Apple
+    url: https://developer.apple.com/documentation/swiftui/font
+    status: primary
+    verified_on: '2026-10-10'
+    verified_against: Apple developer documentation pages for Font.system(size:weight:design:), Font.custom(_:size:), Font.custom(_:fixedSize:), View.dynamicTypeSize(_:), Text.init(_:tableName:bundle:comment:), Image.init(_:bundle:), Image.init(decorative:bundle:), EnvironmentValues.accessibilityReduceMotion and UIFontMetrics
+    supports: Font.custom(_:size:) scales with the body text style; Font.custom(_:fixedSize:) does not scale with Dynamic Type; dynamicTypeSize(_:) limits Dynamic Type within a view; accessibilityReduceMotion reports the Reduce Motion setting; UIFontMetrics makes custom UIKit fonts scale; Text with a string literal is looked up for localization; Image(_:) is a labeled image and Image(decorative:) is ignored by accessibility.
+  - id: androidx-compose-source
+    title: Jetpack Compose source (Clickable.kt, InteractiveComponentSize.kt, BackHandler.kt)
+    publisher: Google (androidx)
+    url: https://github.com/androidx/androidx/tree/b2dcba37aea417626ed77a230e961f405d893c4c/compose
+    status: primary
+    verified_on: '2026-10-10'
+    verified_against: androidx source at commit b2dcba37aea417626ed77a230e961f405d893c4c
+    supports: Modifier.clickable takes onClickLabel and role, both null by default; Material 3 components reserve 48 × 48 dp through minimumInteractiveComponentSize(); BackHandler(enabled, onBack) intercepts system back.
+  - id: flutter-source
+    title: Flutter framework source (TextScaler, IconButton, Image, MediaQuery, kMinInteractiveDimension)
+    publisher: Google (Flutter)
+    url: https://github.com/flutter/flutter/tree/c2362b30d1e4e0ebcc8ed4b5672752d3198bd796/packages/flutter/lib/src
+    status: primary
+    verified_on: '2026-10-10'
+    verified_against: flutter/flutter source at commit c2362b30d1e4e0ebcc8ed4b5672752d3198bd796
+    supports: TextScaler.noScaling turns text scaling off and TextScaler.clamp caps it; textScaleFactor is deprecated; IconButton.tooltip is used for accessibility; Image.semanticLabel and excludeFromSemantics; MediaQuery.disableAnimationsOf and accessibleNavigationOf; kMinInteractiveDimension is 48.
+  - id: react-native-docs
+    title: React Native documentation (Text, Image, Pressable, Accessibility, AccessibilityInfo)
+    publisher: Meta (React Native)
+    url: https://github.com/facebook/react-native-website/tree/b477b73b70162ae23b8d3062be2902b0ba660aec/docs
+    status: primary
+    verified_on: '2026-10-10'
+    verified_against: facebook/react-native-website docs at commit b477b73b70162ae23b8d3062be2902b0ba660aec
+    supports: Text.allowFontScaling defaults to true and maxFontSizeMultiplier caps scaling; Image accepts alt and accessibilityLabel; Pressable hitSlop extends the press area; role and accessibilityRole props; AccessibilityInfo.isReduceMotionEnabled().

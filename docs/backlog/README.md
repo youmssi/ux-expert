@@ -44,8 +44,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
 | Story | Title | Size | Status |
 |---|---|---|---|
 | [UXE-12](UXE-12-pattern-library.md) | Best-in-class pattern library: dated, sourced patterns from the public design systems of widely used products | M | done |
-| [UXE-13](UXE-13-runtime-checks.md) | Runtime scripts: contrast calculator, axe scan, screenshot matrix, visual review | L | in progress |
-| UXE-14 | Native platform probes: SwiftUI, Jetpack Compose, Flutter, React Native | M | to refine |
+| [UXE-13](UXE-13-runtime-checks.md) | Runtime scripts: contrast calculator, axe scan, screenshot matrix, visual review | L | done |
+| [UXE-14](UXE-14-native-probes.md) | Native platform probes: SwiftUI, Jetpack Compose, Flutter, React Native | M | in progress |
 
 ## v0.6: breadth
 
@@ -65,7 +65,8 @@ Priorities: web SaaS and AI products first, then mobile. Content is in English.
   recorded yet: recall and false-positive rates are still unmeasured.
 - Research figures are traced to sources (UXE-7); 3 remain unconfirmed and are
   not stated as fact. Sources need re-checking when standards change.
-- Code search patterns favour web and React (UXE-14).
+- Native mobile evidence comes from code probes (UXE-14); there are no runtime
+  checks on devices or simulators.
 - Visual review relies on runtime screenshots (UXE-13); comparison with design
   files (Figma) is not covered.
 - Severity defaults are calibrated against the escalation rules (UXE-11), not

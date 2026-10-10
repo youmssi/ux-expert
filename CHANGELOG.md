@@ -9,6 +9,11 @@ the skill layout, criterion schema or MCP interface is a major version.
 
 ### Added
 
+- Native mobile probes (`criteria/probes.yaml`, generated
+  `references/native-probes.md`): 39 code search probes for iOS (SwiftUI,
+  UIKit), Android (Compose, Views), Flutter and React Native, with platform
+  notes checked against each platform's source; `scripts/probe.py` detects the
+  platforms in a project and runs them.
 - Runtime checks: `scripts/ux_check.mjs` (Playwright + axe) saves screenshots
   per width and color scheme and reports axe violations, small targets, missing
   focus indicators, reflow overflow and blocked zoom, mapped to criterion IDs;

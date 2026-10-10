@@ -9738,6 +9738,46 @@
    "verified_on": "2026-10-09",
    "verified_against": "Search results quoting MedlinePlus; consistent with Birch (2010, Eye) and a 2025 pooled analysis",
    "supports": "Red–green color vision deficiency affects about 1 in 12 males and 1 in 200 females of Northern European ancestry; rates are lower in other populations."
+  },
+  {
+   "id": "apple-swiftui-docs",
+   "title": "SwiftUI and UIKit API documentation (Font, DynamicTypeSize, accessibilityReduceMotion, UIFontMetrics)",
+   "publisher": "Apple",
+   "url": "https://developer.apple.com/documentation/swiftui/font",
+   "status": "primary",
+   "verified_on": "2026-10-10",
+   "verified_against": "Apple developer documentation pages for Font.system(size:weight:design:), Font.custom(_:size:), Font.custom(_:fixedSize:), View.dynamicTypeSize(_:), Text.init(_:tableName:bundle:comment:), Image.init(_:bundle:), Image.init(decorative:bundle:), EnvironmentValues.accessibilityReduceMotion and UIFontMetrics",
+   "supports": "Font.custom(_:size:) scales with the body text style; Font.custom(_:fixedSize:) does not scale with Dynamic Type; dynamicTypeSize(_:) limits Dynamic Type within a view; accessibilityReduceMotion reports the Reduce Motion setting; UIFontMetrics makes custom UIKit fonts scale; Text with a string literal is looked up for localization; Image(_:) is a labeled image and Image(decorative:) is ignored by accessibility."
+  },
+  {
+   "id": "androidx-compose-source",
+   "title": "Jetpack Compose source (Clickable.kt, InteractiveComponentSize.kt, BackHandler.kt)",
+   "publisher": "Google (androidx)",
+   "url": "https://github.com/androidx/androidx/tree/b2dcba37aea417626ed77a230e961f405d893c4c/compose",
+   "status": "primary",
+   "verified_on": "2026-10-10",
+   "verified_against": "androidx source at commit b2dcba37aea417626ed77a230e961f405d893c4c",
+   "supports": "Modifier.clickable takes onClickLabel and role, both null by default; Material 3 components reserve 48 × 48 dp through minimumInteractiveComponentSize(); BackHandler(enabled, onBack) intercepts system back."
+  },
+  {
+   "id": "flutter-source",
+   "title": "Flutter framework source (TextScaler, IconButton, Image, MediaQuery, kMinInteractiveDimension)",
+   "publisher": "Google (Flutter)",
+   "url": "https://github.com/flutter/flutter/tree/c2362b30d1e4e0ebcc8ed4b5672752d3198bd796/packages/flutter/lib/src",
+   "status": "primary",
+   "verified_on": "2026-10-10",
+   "verified_against": "flutter/flutter source at commit c2362b30d1e4e0ebcc8ed4b5672752d3198bd796",
+   "supports": "TextScaler.noScaling turns text scaling off and TextScaler.clamp caps it; textScaleFactor is deprecated; IconButton.tooltip is used for accessibility; Image.semanticLabel and excludeFromSemantics; MediaQuery.disableAnimationsOf and accessibleNavigationOf; kMinInteractiveDimension is 48."
+  },
+  {
+   "id": "react-native-docs",
+   "title": "React Native documentation (Text, Image, Pressable, Accessibility, AccessibilityInfo)",
+   "publisher": "Meta (React Native)",
+   "url": "https://github.com/facebook/react-native-website/tree/b477b73b70162ae23b8d3062be2902b0ba660aec/docs",
+   "status": "primary",
+   "verified_on": "2026-10-10",
+   "verified_against": "facebook/react-native-website docs at commit b477b73b70162ae23b8d3062be2902b0ba660aec",
+   "supports": "Text.allowFontScaling defaults to true and maxFontSizeMultiplier caps scaling; Image accepts alt and accessibilityLabel; Pressable hitSlop extends the press area; role and accessibilityRole props; AccessibilityInfo.isReduceMotionEnabled()."
   }
  ],
  "scoring": {
@@ -10049,6 +10089,590 @@
     "INT-12",
     "INT-11"
    ]
+  }
+ ],
+ "platforms": [
+  {
+   "id": "ios",
+   "name": "iOS (SwiftUI, UIKit)",
+   "extensions": [
+    ".swift"
+   ],
+   "detect": "any .swift file",
+   "sources": [
+    "apple-swiftui-docs",
+    "apple-hig-targets"
+   ],
+   "notes": [
+    "`Text(\"Save\")` with a literal is a `LocalizedStringKey`: SwiftUI looks it up in the string catalog. Hard-coded strings are not a defect by themselves; check that a catalog exists and covers them.",
+    "`Image(\"hero\")` takes its accessibility label from the asset name. Check the name reads well, or use `Image(decorative:)` for decoration.",
+    "Targets are 44 × 44 pt; a smaller visible control is fine when `.contentShape` or padding gives it a larger tappable area."
+   ]
+  },
+  {
+   "id": "android",
+   "name": "Android (Jetpack Compose, Views)",
+   "extensions": [
+    ".kt",
+    ".xml"
+   ],
+   "detect": "any .kt file or an AndroidManifest.xml",
+   "sources": [
+    "androidx-compose-source",
+    "material-targets"
+   ],
+   "notes": [
+    "Material 3 components (`Button`, `IconButton`, `Checkbox`…) reserve 48 × 48 dp through `minimumInteractiveComponentSize()`; custom `clickable` elements do not.",
+    "Text sized in `sp` follows the user's font size; `dp` and `px` do not.",
+    "Colors and strings defined in theme files (`Color.kt`, `colors.xml`, `strings.xml`) are expected; probe hits there are not drift."
+   ]
+  },
+  {
+   "id": "flutter",
+   "name": "Flutter",
+   "extensions": [
+    ".dart"
+   ],
+   "detect": "a pubspec.yaml",
+   "sources": [
+    "flutter-source"
+   ],
+   "notes": [
+    "`IconButton.tooltip` is also its accessible label: an icon button without one is unnamed for screen readers.",
+    "`kMinInteractiveDimension` is 48 logical pixels; Material buttons meet it, `GestureDetector` and `InkWell` children do not by default.",
+    "`textScaleFactor` is deprecated in favour of `TextScaler`; both appear in older code."
+   ]
+  },
+  {
+   "id": "react-native",
+   "name": "React Native (and Expo)",
+   "extensions": [
+    ".tsx",
+    ".jsx",
+    ".ts",
+    ".js"
+   ],
+   "detect": "a package.json that depends on react-native or expo",
+   "sources": [
+    "react-native-docs"
+   ],
+   "notes": [
+    "`allowFontScaling` defaults to `true` on `Text`; turning it off, globally (`Text.defaultProps`) or per element, ignores the user's text size.",
+    "`role` (or the older `accessibilityRole`) and `accessibilityLabel` are not set by `Pressable` and the `Touchable*` components; add them when the content is not plain text.",
+    "Web probes (`references/codebase-recon.md` §3 to §6) still apply to style objects and copy."
+   ]
+  }
+ ],
+ "probes": [
+  {
+   "id": "ios-screens",
+   "platform": "ios",
+   "kind": "inventory",
+   "pattern": "NavigationStack|NavigationSplitView|NavigationView|TabView|\\.sheet\\(|\\.fullScreenCover\\(|class \\w+: UIViewController",
+   "look_for": "Screens and overlays for the surface map.",
+   "criteria": [],
+   "example": "NavigationStack {"
+  },
+  {
+   "id": "ios-fixed-font-size",
+   "platform": "ios",
+   "kind": "smell",
+   "pattern": "\\.system\\(size:|\\.custom\\([^)]*fixedSize:|UIFont\\.(systemFont|boldSystemFont)\\(ofSize:",
+   "look_for": "Text that ignores Dynamic Type. Text styles (`.body`) and `.custom(_:size:)` scale; `.system(size:)`, `fixedSize:` and UIKit fonts without `UIFontMetrics` do not.",
+   "criteria": [
+    "TYP-10",
+    "A11Y-32",
+    "RESP-12"
+   ],
+   "example": ".font(.system(size: 13))",
+   "counter_example": ".font(.custom(\"Inter\", size: 13))"
+  },
+  {
+   "id": "ios-dynamic-type-limit",
+   "platform": "ios",
+   "kind": "review",
+   "pattern": "\\.dynamicTypeSize\\(",
+   "look_for": "A cap on Dynamic Type. Acceptable on compact chrome; a defect on body content.",
+   "criteria": [
+    "TYP-10",
+    "A11Y-32"
+   ],
+   "example": ".dynamicTypeSize(...DynamicTypeSize.large)",
+   "counter_example": ".font(.body)"
+  },
+  {
+   "id": "ios-tap-gesture",
+   "platform": "ios",
+   "kind": "smell",
+   "pattern": "\\.onTapGesture",
+   "look_for": "A tappable view that is not a `Button`. VoiceOver gets no button trait unless `.accessibilityAddTraits(.isButton)` is added, and there is no pressed state.",
+   "criteria": [
+    "A11Y-11",
+    "A11Y-32",
+    "INT-03"
+   ],
+   "example": ".onTapGesture { open() }",
+   "counter_example": "Button(\"Open\") { open() }"
+  },
+  {
+   "id": "ios-images",
+   "platform": "ios",
+   "kind": "review",
+   "pattern": "Image\\(\"|UIImage\\(named:",
+   "look_for": "Asset images. Meaningful ones need a readable label; decorative ones `Image(decorative:)`.",
+   "criteria": [
+    "A11Y-14",
+    "A11Y-32"
+   ],
+   "example": "Image(\"onboarding-hero\")",
+   "counter_example": "Image(decorative: \"onboarding-hero\")"
+  },
+  {
+   "id": "ios-accessibility-modifiers",
+   "platform": "ios",
+   "kind": "inventory",
+   "pattern": "\\.accessibility(Label|Hint|AddTraits|Element|Value)\\(|accessibilityLabel =",
+   "look_for": "Accessibility work in the code. Zero hits in a custom UI is a strong signal for A11Y-32.",
+   "criteria": [
+    "A11Y-10",
+    "A11Y-32"
+   ],
+   "example": ".accessibilityLabel(\"Close\")"
+  },
+  {
+   "id": "ios-hardcoded-color",
+   "platform": "ios",
+   "kind": "smell",
+   "pattern": "Color\\(red:|UIColor\\(red:|#colorLiteral|Color\\(hex:",
+   "look_for": "Colors outside the asset catalog or theme. They do not adapt to dark mode or increased contrast.",
+   "criteria": [
+    "COL-01",
+    "COL-12",
+    "DS-03"
+   ],
+   "example": "Color(red: 0.2, green: 0.4, blue: 0.9)",
+   "counter_example": "Color(\"AccentColor\")"
+  },
+  {
+   "id": "ios-animations",
+   "platform": "ios",
+   "kind": "inventory",
+   "pattern": "withAnimation|\\.animation\\(|\\.transition\\(|matchedGeometryEffect",
+   "look_for": "Animations; compare with ios-reduce-motion.",
+   "criteria": [
+    "INT-08"
+   ],
+   "example": "withAnimation(.spring) {"
+  },
+  {
+   "id": "ios-reduce-motion",
+   "platform": "ios",
+   "kind": "inventory",
+   "pattern": "accessibilityReduceMotion|isReduceMotionEnabled",
+   "look_for": "Reduce Motion handling. Zero hits while large or looping animations exist is a finding.",
+   "criteria": [
+    "INT-09",
+    "A11Y-22"
+   ],
+   "example": "@Environment(\\.accessibilityReduceMotion) var reduceMotion"
+  },
+  {
+   "id": "ios-safe-area",
+   "platform": "ios",
+   "kind": "review",
+   "pattern": "\\.ignoresSafeArea|\\.edgesIgnoringSafeArea",
+   "look_for": "Content extended under the notch and home indicator. Fine for backgrounds; a defect for text and controls.",
+   "criteria": [
+    "RESP-10"
+   ],
+   "example": ".ignoresSafeArea()",
+   "counter_example": ".safeAreaInset(edge: .bottom) {"
+  },
+  {
+   "id": "ios-states",
+   "platform": "ios",
+   "kind": "inventory",
+   "pattern": "ProgressView\\(|ContentUnavailableView|\\.refreshable|\\.redacted\\(",
+   "look_for": "Loading, empty and refresh states.",
+   "criteria": [
+    "STATE-01",
+    "STATE-04",
+    "STATE-02"
+   ],
+   "example": "ContentUnavailableView(\"No results\", systemImage: \"magnifyingglass\")"
+  },
+  {
+   "id": "android-screens",
+   "platform": "android",
+   "kind": "inventory",
+   "pattern": "NavHost\\(|composable\\(|composable<|ModalBottomSheet\\(|AlertDialog\\(|: (AppCompat|Component)?Activity\\(",
+   "look_for": "Screens and overlays for the surface map.",
+   "criteria": [],
+   "example": "composable(\"settings\") {"
+  },
+  {
+   "id": "android-text-size-dp",
+   "platform": "android",
+   "kind": "smell",
+   "pattern": "\\.dp\\.toSp\\(\\)|textSize=\"[0-9.]+(dp|px)\"",
+   "look_for": "Text sized so that it ignores the user's font size.",
+   "criteria": [
+    "TYP-10",
+    "A11Y-32",
+    "RESP-13"
+   ],
+   "example": "fontSize = with(density) { 14.dp.toSp() }",
+   "counter_example": "fontSize = 14.sp"
+  },
+  {
+   "id": "android-clickable",
+   "platform": "android",
+   "kind": "review",
+   "pattern": "\\.clickable\\s*\\{|\\.clickable\\(\\s*onClick\\s*=",
+   "look_for": "A custom clickable without `role` or `onClickLabel`. TalkBack announces no role; prefer a Material component or pass `role = Role.Button`. Check its size too.",
+   "criteria": [
+    "A11Y-11",
+    "INT-03",
+    "RESP-07"
+   ],
+   "example": "Modifier.clickable { open() }",
+   "counter_example": "Modifier.clickable(role = Role.Button) { open() }"
+  },
+  {
+   "id": "android-null-description",
+   "platform": "android",
+   "kind": "review",
+   "pattern": "contentDescription\\s*=\\s*null|android:contentDescription=\"@null\"",
+   "look_for": "An image or icon hidden from TalkBack. Right for decoration; a defect on an actionable icon.",
+   "criteria": [
+    "A11Y-14",
+    "A11Y-10"
+   ],
+   "example": "Icon(Icons.Default.Close, contentDescription = null)",
+   "counter_example": "contentDescription = stringResource(R.string.close)"
+  },
+  {
+   "id": "android-small-size",
+   "platform": "android",
+   "kind": "review",
+   "pattern": "\\.(size|height|width)\\(([0-9]|[1-3][0-9]|4[0-7])\\.dp\\)",
+   "look_for": "A size under 48 dp. Only matters on a custom tappable element; icons inside Material buttons are fine.",
+   "criteria": [
+    "RESP-07",
+    "A11Y-20",
+    "LAY-12"
+   ],
+   "example": ".size(32.dp)",
+   "counter_example": ".size(48.dp)"
+  },
+  {
+   "id": "android-hardcoded-string",
+   "platform": "android",
+   "kind": "smell",
+   "pattern": "Text\\(\\s*(text\\s*=\\s*)?\"[A-Za-z]|android:text=\"[A-Za-z]",
+   "look_for": "User-facing text not in `strings.xml`.",
+   "criteria": [
+    "I18N-01"
+   ],
+   "example": "Text(\"Save changes\")",
+   "counter_example": "Text(stringResource(R.string.save))"
+  },
+  {
+   "id": "android-hardcoded-color",
+   "platform": "android",
+   "kind": "smell",
+   "pattern": "Color\\(0x[0-9A-Fa-f]{6,8}\\)|android:(textColor|background)=\"#",
+   "look_for": "Colors outside the theme (`Color.kt`, `colors.xml`). They bypass dark theme and dynamic color.",
+   "criteria": [
+    "COL-01",
+    "COL-12",
+    "DS-03"
+   ],
+   "example": "color = Color(0xFF1A73E8)",
+   "counter_example": "color = MaterialTheme.colorScheme.primary"
+  },
+  {
+   "id": "android-insets",
+   "platform": "android",
+   "kind": "inventory",
+   "pattern": "enableEdgeToEdge\\(|WindowInsets|windowInsetsPadding|safeDrawing|imePadding",
+   "look_for": "Edge-to-edge and keyboard insets. Zero hits on a recent target SDK means content may sit under system bars.",
+   "criteria": [
+    "RESP-13",
+    "RESP-10",
+    "RESP-09"
+   ],
+   "example": "Modifier.windowInsetsPadding(WindowInsets.safeDrawing)"
+  },
+  {
+   "id": "android-back",
+   "platform": "android",
+   "kind": "inventory",
+   "pattern": "BackHandler\\(|PredictiveBackHandler\\(|OnBackPressedCallback",
+   "look_for": "Custom back handling; check that system back still goes back and never loses work silently.",
+   "criteria": [
+    "RESP-13",
+    "STATE-16"
+   ],
+   "example": "BackHandler(enabled = hasChanges) {"
+  },
+  {
+   "id": "android-states",
+   "platform": "android",
+   "kind": "inventory",
+   "pattern": "CircularProgressIndicator|LinearProgressIndicator|PullToRefresh|LoadState\\.",
+   "look_for": "Loading and refresh states.",
+   "criteria": [
+    "STATE-01",
+    "STATE-04"
+   ],
+   "example": "CircularProgressIndicator()"
+  },
+  {
+   "id": "flutter-screens",
+   "platform": "flutter",
+   "kind": "inventory",
+   "pattern": "GoRoute\\(|MaterialPageRoute|CupertinoPageRoute|Navigator\\.(of\\(context\\)\\.)?push|showModalBottomSheet|showDialog",
+   "look_for": "Screens and overlays for the surface map.",
+   "criteria": [],
+   "example": "GoRoute(path: \"/settings\", builder: (c, s) => const SettingsPage())"
+  },
+  {
+   "id": "flutter-text-scaling-off",
+   "platform": "flutter",
+   "kind": "smell",
+   "pattern": "TextScaler\\.noScaling|TextScaler\\.linear\\(1(\\.0)?\\)|textScaleFactor:\\s*1(\\.0)?\\b",
+   "look_for": "Text scaling turned off, often app-wide in a `MediaQuery` override.",
+   "criteria": [
+    "TYP-10",
+    "A11Y-32"
+   ],
+   "example": "textScaler: TextScaler.noScaling",
+   "counter_example": "textScaler: MediaQuery.textScalerOf(context)"
+  },
+  {
+   "id": "flutter-text-scaling-clamp",
+   "platform": "flutter",
+   "kind": "review",
+   "pattern": "\\.clamp\\(\\s*(minScaleFactor|maxScaleFactor)",
+   "look_for": "A cap on text scaling. A low maximum (under about 2) on body text is a defect.",
+   "criteria": [
+    "TYP-10",
+    "A11Y-32"
+   ],
+   "example": "textScaler.clamp(maxScaleFactor: 1.3)",
+   "counter_example": "value.clamp(0, 1)"
+  },
+  {
+   "id": "flutter-gesture",
+   "platform": "flutter",
+   "kind": "review",
+   "pattern": "GestureDetector\\(|InkWell\\(",
+   "look_for": "A custom tap target. It needs `Semantics(button: true, label: …)` or a button widget, and 48 × 48.",
+   "criteria": [
+    "A11Y-11",
+    "INT-03",
+    "RESP-07"
+   ],
+   "example": "GestureDetector(onTap: open, child: const Icon(Icons.close))",
+   "counter_example": "IconButton(onPressed: open, tooltip: \"Close\", icon: const Icon(Icons.close))"
+  },
+  {
+   "id": "flutter-icon-button",
+   "platform": "flutter",
+   "kind": "review",
+   "pattern": "IconButton\\(",
+   "look_for": "Icon buttons; each needs `tooltip:`, which is also its accessible label.",
+   "criteria": [
+    "A11Y-10"
+   ],
+   "example": "IconButton(onPressed: open, icon: const Icon(Icons.close))",
+   "counter_example": "TextButton(onPressed: open, child: const Text(\"Close\"))"
+  },
+  {
+   "id": "flutter-images",
+   "platform": "flutter",
+   "kind": "review",
+   "pattern": "Image\\.(asset|network|file|memory)\\(|SvgPicture\\.",
+   "look_for": "Images; each needs `semanticLabel:` or `excludeFromSemantics: true`.",
+   "criteria": [
+    "A11Y-14"
+   ],
+   "example": "Image.asset(\"assets/hero.png\")",
+   "counter_example": "const Icon(Icons.close)"
+  },
+  {
+   "id": "flutter-hardcoded-string",
+   "platform": "flutter",
+   "kind": "smell",
+   "pattern": "Text\\(\\s*['\"][A-Za-z]",
+   "look_for": "User-facing text not in the localization files (ARB).",
+   "criteria": [
+    "I18N-01"
+   ],
+   "example": "Text(\"Save changes\")",
+   "counter_example": "Text(AppLocalizations.of(context)!.save)"
+  },
+  {
+   "id": "flutter-hardcoded-color",
+   "platform": "flutter",
+   "kind": "smell",
+   "pattern": "Color\\(0x[0-9A-Fa-f]{8}\\)|Color\\.fromARGB\\(|Color\\.fromRGBO\\(",
+   "look_for": "Colors outside `ThemeData`. They bypass dark mode and the color scheme.",
+   "criteria": [
+    "COL-01",
+    "COL-12",
+    "DS-03"
+   ],
+   "example": "color: Color(0xFF1A73E8)",
+   "counter_example": "color: Theme.of(context).colorScheme.primary"
+  },
+  {
+   "id": "flutter-reduce-motion",
+   "platform": "flutter",
+   "kind": "inventory",
+   "pattern": "disableAnimationsOf|\\.disableAnimations|accessibleNavigationOf",
+   "look_for": "Reduce Motion handling. Zero hits while custom animations exist is a finding.",
+   "criteria": [
+    "INT-09",
+    "A11Y-22"
+   ],
+   "example": "if (MediaQuery.disableAnimationsOf(context)) {"
+  },
+  {
+   "id": "flutter-insets",
+   "platform": "flutter",
+   "kind": "inventory",
+   "pattern": "SafeArea\\(|viewPaddingOf|paddingOf|viewInsetsOf|MediaQuery\\.of\\(context\\)\\.(padding|viewPadding|viewInsets)",
+   "look_for": "Safe areas and keyboard insets.",
+   "criteria": [
+    "RESP-10",
+    "RESP-09"
+   ],
+   "example": "SafeArea(child: body)"
+  },
+  {
+   "id": "flutter-states",
+   "platform": "flutter",
+   "kind": "inventory",
+   "pattern": "CircularProgressIndicator|FutureBuilder|StreamBuilder|ConnectionState\\.|RefreshIndicator",
+   "look_for": "Loading, error and refresh states; check each builder handles `hasError`.",
+   "criteria": [
+    "STATE-01",
+    "STATE-04",
+    "STATE-07"
+   ],
+   "example": "FutureBuilder<List<Item>>("
+  },
+  {
+   "id": "rn-screens",
+   "platform": "react-native",
+   "kind": "inventory",
+   "pattern": "create(NativeStack|Stack|BottomTab|Drawer)Navigator|<(Stack|Tabs|Drawer)\\.Screen|<Modal\\b",
+   "look_for": "Screens and overlays for the surface map. With expo-router, the files under `app/` are the routes.",
+   "criteria": [],
+   "example": "<Stack.Screen name=\"settings\" />"
+  },
+  {
+   "id": "rn-font-scaling-off",
+   "platform": "react-native",
+   "kind": "smell",
+   "pattern": "allowFontScaling(=\\{|\\s*[:=]\\s*)false|maxFontSizeMultiplier=\\{1(\\.0)?\\}",
+   "look_for": "Text that ignores the user's text size, per element or globally.",
+   "criteria": [
+    "TYP-10",
+    "A11Y-32"
+   ],
+   "example": "<Text allowFontScaling={false}>",
+   "counter_example": "<Text maxFontSizeMultiplier={2}>"
+  },
+  {
+   "id": "rn-pressables",
+   "platform": "react-native",
+   "kind": "review",
+   "pattern": "<(Pressable|TouchableOpacity|TouchableHighlight|TouchableWithoutFeedback)\\b",
+   "look_for": "Tap targets. Each needs `role` (or `accessibilityRole`), a label when the content is not text, and 44–48 points or `hitSlop`.",
+   "criteria": [
+    "A11Y-11",
+    "A11Y-10",
+    "RESP-07"
+   ],
+   "example": "<Pressable onPress={close}>",
+   "counter_example": "<Button title=\"Close\" onPress={close} />"
+  },
+  {
+   "id": "rn-images",
+   "platform": "react-native",
+   "kind": "review",
+   "pattern": "<(Image|ImageBackground|FastImage)\\b",
+   "look_for": "Images; meaningful ones need `alt` or `accessibilityLabel`.",
+   "criteria": [
+    "A11Y-14"
+   ],
+   "example": "<Image source={hero} />",
+   "counter_example": "<Icon name=\"close\" />"
+  },
+  {
+   "id": "rn-hidden-from-accessibility",
+   "platform": "react-native",
+   "kind": "review",
+   "pattern": "importantForAccessibility=\"no-hide-descendants\"|accessibilityElementsHidden|accessible=\\{false\\}",
+   "look_for": "Content hidden from screen readers. Check nothing meaningful or actionable is hidden.",
+   "criteria": [
+    "A11Y-11",
+    "A11Y-32"
+   ],
+   "example": "<View accessibilityElementsHidden>",
+   "counter_example": "<View accessible>"
+  },
+  {
+   "id": "rn-hardcoded-string",
+   "platform": "react-native",
+   "kind": "smell",
+   "pattern": "<Text[^>]*>\\s*[A-Za-z][^<{]*</Text>",
+   "look_for": "User-facing text not in the message catalog.",
+   "criteria": [
+    "I18N-01"
+   ],
+   "example": "<Text style={styles.title}>Save changes</Text>",
+   "counter_example": "<Text style={styles.title}>{t(\"save\")}</Text>"
+  },
+  {
+   "id": "rn-reduce-motion",
+   "platform": "react-native",
+   "kind": "inventory",
+   "pattern": "isReduceMotionEnabled|reduceMotionChanged|useReducedMotion|ReduceMotion\\.",
+   "look_for": "Reduce Motion handling. Zero hits while custom animations exist is a finding.",
+   "criteria": [
+    "INT-09",
+    "A11Y-22"
+   ],
+   "example": "AccessibilityInfo.isReduceMotionEnabled()"
+  },
+  {
+   "id": "rn-insets",
+   "platform": "react-native",
+   "kind": "inventory",
+   "pattern": "SafeAreaView|useSafeAreaInsets|SafeAreaProvider|KeyboardAvoidingView|keyboardShouldPersistTaps|KeyboardAwareScrollView",
+   "look_for": "Safe areas and keyboard handling.",
+   "criteria": [
+    "RESP-10",
+    "RESP-09"
+   ],
+   "example": "const insets = useSafeAreaInsets();"
+  },
+  {
+   "id": "rn-states",
+   "platform": "react-native",
+   "kind": "inventory",
+   "pattern": "ActivityIndicator|RefreshControl|isLoading|isPending|ListEmptyComponent",
+   "look_for": "Loading, refresh and empty states.",
+   "criteria": [
+    "STATE-01",
+    "STATE-04",
+    "STATE-02"
+   ],
+   "example": "<FlatList ListEmptyComponent={<Empty />} />"
   }
  ]
 }
